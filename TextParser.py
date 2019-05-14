@@ -14,6 +14,11 @@ from nltk.corpus import words
 import enchant
 import re
 import string
+import Sentence
+from Text import Text
+from Sentence import Sentence
+from Word import Word
+from Lemma import Lemma
 
 allTexts = {}
 allSentences = {}
@@ -24,73 +29,6 @@ def isCompoundWord(word):
     specialChar = u'­'
     pattern = re.compile(u'.*(-|­|­}).*')
     return pattern.match(word)
-
-
-def shouldIgnore(rawWord):
-    return not (1 < len(rawWord) and rawWord[0] != "`" and rawWord[0] != "'") \
-           or isCompoundWord(rawWord) #I don't care much for compound words
-
-
-
-class Text:
-    def __init__(self, rawText):
-        self.text = rawText
-        rawSentences = nltk.sent_tokenize(rawText)
-        self.sentences = []
-        for rawSentence in rawSentences:
-            sentence = Sentence(self, rawSentence)
-            self.sentences.append(sentence)
-
-
-class Sentence:
-    def __init__(self, originText, rawSentence):
-        self.text = originText
-        self.rawSentence = rawSentence
-        rawWords = nltk.word_tokenize(rawSentence)
-        self.words = []
-        self.uncoveredWords = set()#All the words found in the sentence, that haven't been learned yet. Must be initialized
-        for rawWord in rawWords:
-            #Ignores word if 1 => length, as it is probably just something like a comma or \":
-            if not shouldIgnore(rawWord):
-                word = re.sub('[' + string.punctuation + ']', '', rawWord)
-                if 0 < len(word):
-                    self.words.append(Word(word.lower(), self))
-
-    def initializeForAnalysis(self):
-        for word in self.words:
-            self.uncoveredWords.add(word)
-
-    def getNumberOfUncoveredWords(self):
-        return len(self.uncoveredWords)
-
-
-class Word:
-    def __init__(self, rawWord, originSentence):
-        self.rawWord = rawWord
-        self.sentences = {originSentence.rawSentence: originSentence}
-        self.frequency = 1
-        self.lemma = None
-
-    #Marks the word as covered in the sentences it is found in.
-    def coverSentences(self):
-        for sentence in self.sentences.values():
-            sentence.uncoveredWords.remove(self)
-
-class Lemma:
-    def __init__(self, rawLemma, conjugatedWord):
-        self.rawLemma = rawLemma
-        self.conjugatedWords = {conjugatedWord}
-        conjugatedWord.lemma = self
-
-    def addNewWord(self, word):
-        self.conjugatedWords.add(word)
-        word.lemma = self
-
-    def getSumOfFrequencies(self):
-        sum = 0
-        for word in self.conjugatedWords:
-            sum += word.frequency
-        return sum
 
 def addAllTextsFromDirectoryToDatabase(directory):
     files = [f for f in glob.glob(directory + "/*.txt")]
