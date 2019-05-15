@@ -18,11 +18,11 @@ import string
 
 missingWordFrequency = -100000000
 
-def getUnforcedSentence(sentenceQueue):
+def getHighestScoringUnforcedSentence(sentenceQueue):
     return sentenceQueue.popitem()[0]
 
 
-def getMostFrequentUnlearnedWord(mostFrequentWords):
+def getHighestScoringWord(mostFrequentWords):
     return mostFrequentWords.peekitem()[0] #learnWord will pop it
 
 
@@ -41,21 +41,48 @@ def learnWord(newWord, wordList, sentenceQueue, wordQueue):
         sentenceQueue[sentence] = sentence.getNumberOfUncoveredWords()
 
 
-def learnWordAndHandleSentencesWithWordFrequency(newWord, wordList, sentenceQueue, wordQueue):
+def getSentenceScoreByNextUnlockableWord(learnedSentence, direclyUnlockableWords):
+    # Teknisk set ikke helt korrekt metode, da den tjekker det bedste par af to ord man kan lære,
+    # men ikke tvinger en til at lære de ord lige efter hinanden:
+    # så bliver de nogen gange ikke valgt lige efter hinanden, og det er dermed ikke et optimalt par.
+    # Man skal være meget præcist for at få det helt korrekt, hvilket jeg ikke gider at være
+
+    unlockedWord = list(learnedSentence.uncoveredWords)[0]
+    maxFrequencyUnlocked = 0
+
+    for sentence in unlockedWord.sentences.values():
+        if sentence.getNumberOfUncoveredWords() == 2: #Learning unlockedWord might unlock a new word in this sentence:
+            unlockedWords = list(sentence.uncoveredWords)
+            newUnlockedWord = unlockedWords[1] if (unlockedWords[0] == unlockedWord) else unlockedWords[0]
+            if newUnlockedWord not in direclyUnlockableWords: #Now we know it definetly will unlock a new word!
+                maxFrequencyUnlocked = newUnlockedWord.frequency if maxFrequencyUnlocked < newUnlockedWord.frequency else maxFrequencyUnlocked
+
+    return -unlockedWord.frequency - maxFrequencyUnlocked
+
+def getSentenceScoreAsWordFrequency(sentence):
+    return -list(sentence.uncoveredWords)[0].frequency
+
+def learnWordAndHandleSentencesWithWordFrequency(newWord, wordList, sentenceQueue, wordQueue, directlyUnlockableWords, getSentenceScore):
     wordList.append(newWord)
     #It is learned: new sentences become available:
-    if newWord.rawWord == "dragons":
-        print()
     newWord.coverSentences()
     wordQueue.pop(newWord)
+    if newWord in directlyUnlockableWords:
+        directlyUnlockableWords.remove(newWord)
+    #Finds all words that now has become unlockable
+    for sentence in newWord.sentences.values():
+        if sentence.getNumberOfUncoveredWords() == 1:
+            directlyUnlockableWords.add(list(sentence.uncoveredWords)[0])
+
+    #Scores all the sentences, especially those with newly unlockable words
     for sentence in newWord.sentences.values():
         if sentence.getNumberOfUncoveredWords() == 0:
             sentenceQueue[sentence] = missingWordFrequency
         elif sentence.getNumberOfUncoveredWords() == 1:
-            sentenceQueue[sentence] = -list(sentence.uncoveredWords)[0].frequency
+            sentenceQueue[sentence] = getSentenceScore(sentence, directlyUnlockableWords)
 
 
-def learnWordsAsTheyBecomeAvailable():
+def learnWords(getSentenceScore):
     # Scheme: Learn words as they become possible to learn, in terms of sentences.
 
     # Initialize
@@ -71,7 +98,6 @@ def learnWordsAsTheyBecomeAvailable():
     while mostCoveredSentences.peekitem()[1] == 0:
         mostCoveredSentences.popitem()
     firstSentence = mostCoveredSentences.peekitem()
-    print ("")
 
     mostFrequentWords = heapdict()
     for word in TextParser.allWords.values():
@@ -85,7 +111,7 @@ def learnWordsAsTheyBecomeAvailable():
     while len(mostCoveredSentences) != 0:
         mostUncoveredNumber = mostCoveredSentences.peekitem()[1]
         while len(mostCoveredSentences) != 0 and mostCoveredSentences.peekitem()[1] <= 1:
-            currentSentence = getUnforcedSentence(mostCoveredSentences)
+            currentSentence = getHighestScoringUnforcedSentence(mostCoveredSentences)
             # No new word in the sentence:
             if currentSentence.getNumberOfUncoveredWords() == 0:
                 continue
@@ -103,40 +129,43 @@ def learnWordsAsTheyBecomeAvailable():
     return orderedLearningList
 
 
-def learnFrequentAvailableWords():
-    # Scheme: Learn words as they become possible to learn, in terms of sentences, in their order of frequency.
+def learnWordsByOrderOfScore(getSentenceScore):
+    # Scheme: Learn words as they become possible to learn, in terms of sentences, in order of score
 
     # Initialize: Load all texts in Texts folder:
     TextParser.addAllTextsFromDirectoryToDatabase("Texts")
 
-    # Will only contain sentences with fewer than or equal to one missing word, marked in order of the missings words frequency
-    sentencesByFrequencyOfWords = GetPriorityQueueOfDirectlyLearnableSentencesByWordFrequency()
+
+    # Will only contain sentences with fewer than or equal to one missing word, marked in order of the missing words frequency
+    sentencesByFrequencyOfWords, directlyUnlockableWords = GetPriorityQueueOfDirectlyLearnableSentencesByWordFrequency()
     wordsByFrequency = getPriorityQueueOfWordsByFrequency()
 
     # Find which words one is forced to learn, without being able to isolate it to one sentence:
     forcedToLearn = []
     notForcedToLearn = []
     orderedLearningList = []
-
+    i = 1
     while hasLearnedAllWords(orderedLearningList) == False:
         while hasDirectlyLearnableSentence(sentencesByFrequencyOfWords):
-            currentSentence = getUnforcedSentence(sentencesByFrequencyOfWords)
+            currentSentence = getHighestScoringUnforcedSentence(sentencesByFrequencyOfWords)
             # No new word in the sentence:
-            if currentSentence.getNumberOfUncoveredWords() == 0:
+            if currentSentence.getNumberOfUncoveredWords() == 0:# or len(currentSentence.words) <= 3:
                 continue
             # A new word to learn: lets do it!
             newWord = getUnlearnedWordFromSentence(currentSentence)
             orderedLearningList.append((newWord, currentSentence))
-            learnWordAndHandleSentencesWithWordFrequency(newWord, notForcedToLearn, sentencesByFrequencyOfWords, wordsByFrequency)
-
-        if hasLearnedAllWords(orderedLearningList):  # I have no idea why this case can occur
+            learnWordAndHandleSentencesWithWordFrequency(newWord, notForcedToLearn, sentencesByFrequencyOfWords, wordsByFrequency, directlyUnlockableWords, getSentenceScore)
+            print(str(i) + ", " + newWord.rawWord + ", " + str(newWord.frequency) + " -> " + currentSentence.rawSentence)
+            i += 1
+        if hasLearnedAllWords(orderedLearningList):  # When all words have been learned in the loop above
             continue
 
         # There are no more free words: time to learn a frequent word:
-        newWord = getMostFrequentUnlearnedWord(wordsByFrequency)
-
-        orderedLearningList.append((newWord, currentSentence))
-        learnWordAndHandleSentencesWithWordFrequency(newWord, forcedToLearn, sentencesByFrequencyOfWords, wordsByFrequency)
+        newWord = getHighestScoringWord(wordsByFrequency)
+        orderedLearningList.append((newWord, "NONE"))
+        print(str(i) + ", " + newWord.rawWord + ", " + str(newWord.frequency) + " -> " + "NONE")
+        learnWordAndHandleSentencesWithWordFrequency(newWord, forcedToLearn, sentencesByFrequencyOfWords, wordsByFrequency, directlyUnlockableWords, getSentenceScore)
+        i += 1
 
     return orderedLearningList
 
@@ -157,6 +186,7 @@ def getPriorityQueueOfWordsByFrequency():
     return mostFrequentWords
 
 def GetPriorityQueueOfDirectlyLearnableSentencesByWordFrequency():
+    directlyUnlockableWords = set()
     sentencesByFrequencyOfWords = heapdict()
     for sentence in TextParser.allSentences.values():
         sentence.initializeForAnalysis()
@@ -164,7 +194,8 @@ def GetPriorityQueueOfDirectlyLearnableSentencesByWordFrequency():
             sentencesByFrequencyOfWords[sentence] = missingWordFrequency
         elif sentence.getNumberOfUncoveredWords() == 1:
             sentencesByFrequencyOfWords[sentence] = -list(sentence.uncoveredWords)[0].frequency
-    return sentencesByFrequencyOfWords
+            directlyUnlockableWords.add(list(sentence.uncoveredWords)[0])
+    return sentencesByFrequencyOfWords, directlyUnlockableWords
 
 def downloadWebsites(learningList):
 
@@ -229,11 +260,14 @@ def wordStemmingUsingLemmaConjugationPairs(learningList):
         print (str(i) + ": " + uncontainedWords[i])
 
 if __name__ == '__main__':
-    learningList = learnFrequentAvailableWords()
+    #learningList = learnWordsByOrderOfScore(getSentenceScoreAsWordFrequency)
+    learningList = learnWordsByOrderOfScore(getSentenceScoreByNextUnlockableWord)
+    sentences = TextParser.allSentences
     TextParser.addLemmasToDatabase()
+
     allLemmas = list(TextParser.allLemmas.values())
     allLemmas.sort(key=lambda x: x.getSumOfFrequencies(), reverse=True)
-
+    print(len(sentences))
     print("done")
 
 #https://www.dictionary.com/browse/walked

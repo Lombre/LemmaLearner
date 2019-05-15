@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2daf0287-ce81-4b57-9606-54c146bf75e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Lemma.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Sentence.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Text.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Word.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/TextParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleLearnerScheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleLearnerScheme.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,14 +13,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SimpleLearnerScheme.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="202" selection-start-line="202" selection-end-line="202" />
+            <state relative-caret-position="115">
+              <caret line="151" column="101" selection-start-line="151" selection-start-column="101" selection-end-line="151" selection-end-column="101" />
               <folding>
                 <element signature="e#24#41#0" expanded="true" />
+                <element signature="e#1778#3816#0" />
+                <element signature="e#7842#8827#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Texts/book_1.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="2450" column="11" selection-start-line="2450" selection-start-column="1" selection-end-line="2450" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -38,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sentence.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="9" selection-end-column="30" />
+            <state relative-caret-position="255">
+              <caret line="16" column="38" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
               </folding>
@@ -47,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TextParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="97" column="17" lean-forward="true" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
+            <state relative-caret-position="1428">
+              <caret line="103" column="29" selection-start-line="103" selection-start-column="29" selection-end-line="103" selection-end-column="29" />
               <folding>
                 <element signature="e#24#35#0" expanded="true" />
               </folding>
@@ -71,11 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Text.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="68">
+              <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -83,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29869">
-              <caret line="1757" selection-start-line="1757" selection-end-line="1757" />
+            <state relative-caret-position="444">
+              <caret line="1146" selection-start-line="1146" selection-end-line="1146" />
             </state>
           </provider>
         </entry>
@@ -100,10 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$</find>
-      <find>æ</find>
-      <find>wordList</find>
-      <find>é</find>
       <find>sentenceQueueu</find>
       <find>study</find>
       <find>. . .</find>
@@ -130,6 +129,10 @@
       <find>centaur.</find>
       <find>jewel</find>
       <find>sort</find>
+      <find>getMostFrequentUnlearnedWord</find>
+      <find>learnWord</find>
+      <find>what the</find>
+      <find>what the —</find>
     </findStrings>
     <replaceStrings>
       <replace>-</replace>
@@ -161,13 +164,13 @@
         <option value="$PROJECT_DIR$/Texts/HarryPotter4.txt" />
         <option value="$PROJECT_DIR$/Texts/HarryPotter3.txt" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/Texts/book_1.txt" />
-        <option value="$PROJECT_DIR$/SimpleLearnerScheme.py" />
         <option value="$PROJECT_DIR$/Word.py" />
         <option value="$PROJECT_DIR$/Text.py" />
         <option value="$PROJECT_DIR$/Lemma.py" />
         <option value="$PROJECT_DIR$/Sentence.py" />
         <option value="$PROJECT_DIR$/TextParser.py" />
+        <option value="$PROJECT_DIR$/Texts/book_1.txt" />
+        <option value="$PROJECT_DIR$/SimpleLearnerScheme.py" />
       </list>
     </option>
   </component>
@@ -182,7 +185,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -190,10 +192,16 @@
               <item name="LemmaLearner" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="C:\Users\jespe\PycharmProjects\LemmaLearner" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
+            <path>
+              <item name="LemmaLearner" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\jespe\PycharmProjects\LemmaLearner" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Texts" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -357,7 +365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1557846298273</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Simplified more code">
+      <created>1557863161590</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1557863161591</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -371,19 +386,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.48878205" visible="true" weight="0.18763326" />
-      <window_info id="Structure" order="2" sideWeight="0.51121795" side_tool="true" visible="true" weight="0.18763326" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4882943" visible="true" weight="0.18976545" />
+      <window_info id="Structure" order="2" sideWeight="0.5117057" side_tool="true" visible="true" weight="0.18976545" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="2" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.32394367" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.23943663" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.32394367" />
+      <window_info anchor="bottom" id="Debug" order="7" visible="true" weight="0.35211268" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.32936078" />
@@ -397,7 +411,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Simplified some of the code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simplified some of the code" />
+    <MESSAGE value="Simplified more code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplified more code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -410,6 +425,16 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Test.py</url>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SimpleLearnerScheme.py</url>
+          <line>268</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SimpleLearnerScheme.py</url>
+          <line>145</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -507,13 +532,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Texts/book_1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="5948" column="150" selection-start-line="5948" selection-start-column="145" selection-end-line="5948" selection-end-column="150" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/nltk/tag/perceptron.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
@@ -528,22 +546,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29869">
-          <caret line="1757" selection-start-line="1757" selection-end-line="1757" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Word.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Text.py">
+    <entry file="file://$PROJECT_DIR$/TextParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        <state relative-caret-position="1428">
+          <caret line="103" column="29" selection-start-line="103" selection-start-column="29" selection-end-line="103" selection-end-column="29" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#24#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -555,32 +566,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleLearnerScheme.py">
+    <entry file="file://$PROJECT_DIR$/Text.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="202" selection-start-line="202" selection-end-line="202" />
-          <folding>
-            <element signature="e#24#41#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Sentence.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="9" selection-end-column="30" />
+        <state relative-caret-position="255">
+          <caret line="16" column="38" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TextParser.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="97" column="17" lean-forward="true" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
+        <state relative-caret-position="444">
+          <caret line="1146" selection-start-line="1146" selection-end-line="1146" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Texts/book_1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="2450" column="11" selection-start-line="2450" selection-start-column="1" selection-end-line="2450" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleLearnerScheme.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="151" column="101" selection-start-line="151" selection-start-column="101" selection-end-line="151" selection-end-column="101" />
           <folding>
-            <element signature="e#24#35#0" expanded="true" />
+            <element signature="e#24#41#0" expanded="true" />
+            <element signature="e#1778#3816#0" />
+            <element signature="e#7842#8827#0" />
           </folding>
         </state>
       </provider>
