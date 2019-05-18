@@ -20,10 +20,17 @@ from Sentence import Sentence
 from Word import Word
 from Lemma import Lemma
 
-allTexts = {}
-allSentences = {}
-allWords = {}
-allLemmas = {}
+
+NotAText = Text("NotAWord.")
+NotASentence = NotAText.sentences[0]
+NotAWord = NotASentence.words[0]
+NotAWordLemma = Lemma("NotALemma", NotAWord)
+
+
+allTexts = {NotAText.rawText:NotAText}
+allSentences = {NotASentence.rawSentence:NotASentence}
+allWords = {NotAWord.rawWord:NotAWord}
+allLemmas = {NotAWordLemma.rawLemma:NotAWordLemma}
 
 def isCompoundWord(word):
     specialChar = u'­'
@@ -35,6 +42,7 @@ def addAllTextsFromDirectoryToDatabase(directory):
     for file in files:
         rawText = loadText(file)
         addRawTextToDatabase(rawText)
+    addLemmasToDatabase()
 
 def addRawTextToDatabase(rawText):
     #Simply adds the text to the database: it all its sentences to allSentences,
@@ -59,6 +67,7 @@ def isCompoundWord(word):
 
 def get_wordnet_pos(word):
     """Map POS tag to first character lemmatize() accepts"""
+
     tag = nltk.pos_tag([word])[0][1][0].upper()
     tag_dict = {"J": wordnet.ADJ,
                 "N": wordnet.NOUN,
@@ -102,7 +111,7 @@ def addLemmasToDatabase():
     lemmatizer = WordNetLemmatizer()
 
     # Initializing them here,
-    # because we don't want to use all that sweet sweet computer power on repeatedly doing this later
+    # because we don't want to use all that sweet sweet computing power on repeatedly doing this later
     dictionary = enchant.Dict("en_US")
     wordSet = set(words.words())
     allWordValues = allWords.values()
@@ -110,9 +119,15 @@ def addLemmasToDatabase():
         lemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
         if isActualWord(dictionary, wordSet, lemma):
             if lemma in allLemmas:
+                # The lemma is already registered,
+                # but the word might be a different conjugation than the ones already added to the lemma:
                 allLemmas[lemma].addNewWord(word)
             else:
                 allLemmas[lemma] = Lemma(lemma, word)
+        else:
+            # It is not a real word, and it is added to the token "NotAWordLemma" Lemma,
+            # to ensure that all words have an associated lemma.
+            NotAWordLemma.addNewWord(word)
 
 
 def loadText(filename):

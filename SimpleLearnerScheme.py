@@ -22,14 +22,12 @@ def getHighestScoringUnforcedSentence(sentenceQueue):
     return sentenceQueue.popitem()[0]
 
 
-def getHighestScoringWord(mostFrequentWords):
-    return mostFrequentWords.peekitem()[0] #learnWord will pop it
+def getHighestScoringLemma(mostFrequentLemmas):
+    return mostFrequentLemmas.peekitem()[0] #learnWord will pop it
 
 
-def getUnlearnedWordFromSentence(currentSentence):
-    if currentSentence.getNumberOfUncoveredWords() != 1:
-        raise Exception("Error! There should be exactely one new word in this sentence!")
-    return list(currentSentence.uncoveredWords)[0]
+def getUnlearnedLemmaFromSentence(currentSentence):
+    return currentSentence.getOnlyUncoveredLemma()
 
 
 def learnWord(newWord, wordList, sentenceQueue, wordQueue):
@@ -41,45 +39,48 @@ def learnWord(newWord, wordList, sentenceQueue, wordQueue):
         sentenceQueue[sentence] = sentence.getNumberOfUncoveredWords()
 
 
-def getSentenceScoreByNextUnlockableWord(learnedSentence, direclyUnlockableWords):
+def getSentenceScoreByNextUnlockableLemma(learnedSentence, directlyUnlockableLemmas):
     # Teknisk set ikke helt korrekt metode, da den tjekker det bedste par af to ord man kan lære,
     # men ikke tvinger en til at lære de ord lige efter hinanden:
     # så bliver de nogen gange ikke valgt lige efter hinanden, og det er dermed ikke et optimalt par.
-    # Man skal være meget præcist for at få det helt korrekt, hvilket jeg ikke gider at være
+    # Man skal være meget præcist for at få det helt korrekt, hvilket jeg ikke gider at være lige nu!
 
-    unlockedWord = list(learnedSentence.uncoveredWords)[0]
+    unlockedLemma = learnedSentence.getOnlyUncoveredLemma()
     maxFrequencyUnlocked = 0
+    sentences = unlockedLemma.getSentences()
 
-    for sentence in unlockedWord.sentences.values():
-        if sentence.getNumberOfUncoveredWords() == 2: #Learning unlockedWord might unlock a new word in this sentence:
-            unlockedWords = list(sentence.uncoveredWords)
-            newUnlockedWord = unlockedWords[1] if (unlockedWords[0] == unlockedWord) else unlockedWords[0]
-            if newUnlockedWord not in direclyUnlockableWords: #Now we know it definetly will unlock a new word!
-                maxFrequencyUnlocked = newUnlockedWord.frequency if maxFrequencyUnlocked < newUnlockedWord.frequency else maxFrequencyUnlocked
+    for sentence in sentences:
+        if sentence.getNumberOfUncoveredLemmas() == 2: #Learning unlockedLemma might unlock a new word in this sentence:
+            unlockedLemmas = list(sentence.uncoveredLemmas)
+            newUnlockedLemma = unlockedLemmas[1] if (unlockedLemmas[0] == unlockedLemma) else unlockedLemmas[0]
+            if newUnlockedLemma not in directlyUnlockableLemmas: #Now we know it definetly will unlock a new word!
+                maxFrequencyUnlocked = newUnlockedLemma.getFrequency() if maxFrequencyUnlocked < newUnlockedLemma.getFrequency() else maxFrequencyUnlocked
 
-    return -unlockedWord.frequency - maxFrequencyUnlocked
+    return -unlockedLemma.getFrequency() - maxFrequencyUnlocked
 
-def getSentenceScoreAsWordFrequency(sentence):
-    return -list(sentence.uncoveredWords)[0].frequency
+def getSentenceScoreAsLemmaFrequency(sentence):
+    return sentence.getOnlyUncoveredLemma().getFrequency()
 
-def learnWordAndHandleSentencesWithWordFrequency(newWord, wordList, sentenceQueue, wordQueue, directlyUnlockableWords, getSentenceScore):
-    wordList.append(newWord)
+def learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma, wordList, sentenceQueue, lemmaQueue, directlyUnlockableLemmas, getSentenceScore):
+    wordList.append(newLemma)
     #It is learned: new sentences become available:
-    newWord.coverSentences()
-    wordQueue.pop(newWord)
-    if newWord in directlyUnlockableWords:
-        directlyUnlockableWords.remove(newWord)
+    newLemma.coverSentences()
+    lemmaQueue.pop(newLemma)
+    if newLemma in directlyUnlockableLemmas:
+        directlyUnlockableLemmas.remove(newLemma)
+
+    lemmaSentences = newLemma.getSentences()
     #Finds all words that now has become unlockable
-    for sentence in newWord.sentences.values():
-        if sentence.getNumberOfUncoveredWords() == 1:
-            directlyUnlockableWords.add(list(sentence.uncoveredWords)[0])
+    for sentence in lemmaSentences:
+        if sentence.getNumberOfUncoveredLemmas() == 1:
+            directlyUnlockableLemmas.add(sentence.getOnlyUncoveredLemma())
 
     #Scores all the sentences, especially those with newly unlockable words
-    for sentence in newWord.sentences.values():
-        if sentence.getNumberOfUncoveredWords() == 0:
+    for sentence in lemmaSentences:
+        if sentence.getNumberOfUncoveredLemmas() == 0:
             sentenceQueue[sentence] = missingWordFrequency
-        elif sentence.getNumberOfUncoveredWords() == 1:
-            sentenceQueue[sentence] = getSentenceScore(sentence, directlyUnlockableWords)
+        elif sentence.getNumberOfUncoveredLemmas() == 1:
+            sentenceQueue[sentence] = getSentenceScore(sentence, directlyUnlockableLemmas)
 
 
 def learnWords(getSentenceScore):
@@ -129,73 +130,81 @@ def learnWords(getSentenceScore):
     return orderedLearningList
 
 
-def learnWordsByOrderOfScore(getSentenceScore):
+def learnLemmasByOrderOfScore(getSentenceScore):
     # Scheme: Learn words as they become possible to learn, in terms of sentences, in order of score
 
     # Initialize: Load all texts in Texts folder:
     TextParser.addAllTextsFromDirectoryToDatabase("Texts")
 
-
     # Will only contain sentences with fewer than or equal to one missing word, marked in order of the missing words frequency
-    sentencesByFrequencyOfWords, directlyUnlockableWords = GetPriorityQueueOfDirectlyLearnableSentencesByWordFrequency()
-    wordsByFrequency = getPriorityQueueOfWordsByFrequency()
+    sentencesByFrequencyOfLemmas, directlyUnlockableLemmas = getPriorityQueueOfDirectlyLearnableSentencesByLemmaFrequency()
+    lemmasByFrequency = getPriorityQueueOfLemmasByFrequency()
 
     # Find which words one is forced to learn, without being able to isolate it to one sentence:
     forcedToLearn = []
     notForcedToLearn = []
     orderedLearningList = []
+    #First we remove all words that are not true "words", for example names, by learning the NotAWordLemma lemma:
+    learnLemmaAndHandleSentencesWithLemmaFrequency(TextParser.NotAWordLemma, notForcedToLearn, sentencesByFrequencyOfLemmas, lemmasByFrequency, directlyUnlockableLemmas, getSentenceScore)
+
     i = 1
-    while hasLearnedAllWords(orderedLearningList) == False:
-        while hasDirectlyLearnableSentence(sentencesByFrequencyOfWords):
-            currentSentence = getHighestScoringUnforcedSentence(sentencesByFrequencyOfWords)
+
+    while not hasLearnedAllLemmas(lemmasByFrequency):
+        while hasDirectlyLearnableSentence(sentencesByFrequencyOfLemmas):
+            currentSentence = getHighestScoringUnforcedSentence(sentencesByFrequencyOfLemmas)
             # No new word in the sentence:
-            if currentSentence.getNumberOfUncoveredWords() == 0:# or len(currentSentence.words) <= 3:
+            if currentSentence.getNumberOfUncoveredLemmas() == 0:# or len(currentSentence.words) <= 3:
                 continue
             # A new word to learn: lets do it!
-            newWord = getUnlearnedWordFromSentence(currentSentence)
-            orderedLearningList.append((newWord, currentSentence))
-            learnWordAndHandleSentencesWithWordFrequency(newWord, notForcedToLearn, sentencesByFrequencyOfWords, wordsByFrequency, directlyUnlockableWords, getSentenceScore)
-            print(str(i) + ", " + newWord.rawWord + ", " + str(newWord.frequency) + " -> " + currentSentence.rawSentence)
+            newLemma = currentSentence.getOnlyUncoveredLemma()
+            orderedLearningList.append((newLemma, currentSentence))
+            learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma, notForcedToLearn, sentencesByFrequencyOfLemmas, lemmasByFrequency, directlyUnlockableLemmas, getSentenceScore)
+            if i < 6000:
+                print(str(i) + ", " + newLemma.getRawLemma() + ", " + str(newLemma.getFrequency()) + " -> " + currentSentence.rawSentence)
             i += 1
-        if hasLearnedAllWords(orderedLearningList):  # When all words have been learned in the loop above
-            continue
+
+        if hasLearnedAllLemmas(lemmasByFrequency):  # When all words have been learned in the loop above
+            break
 
         # There are no more free words: time to learn a frequent word:
-        newWord = getHighestScoringWord(wordsByFrequency)
-        orderedLearningList.append((newWord, "NONE"))
-        print(str(i) + ", " + newWord.rawWord + ", " + str(newWord.frequency) + " -> " + "NONE")
-        learnWordAndHandleSentencesWithWordFrequency(newWord, forcedToLearn, sentencesByFrequencyOfWords, wordsByFrequency, directlyUnlockableWords, getSentenceScore)
+        newLemma = getHighestScoringLemma(lemmasByFrequency)
+        orderedLearningList.append((newLemma, "NONE"))
+        learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma, forcedToLearn, sentencesByFrequencyOfLemmas, lemmasByFrequency, directlyUnlockableLemmas, getSentenceScore)
+        if i < 6000:
+            print(str(i) + ", " + newLemma.getRawLemma() + ", " + str(newLemma.getFrequency()) + " -> " + "NONE")
         i += 1
 
     return orderedLearningList
 
 
-def hasLearnedAllWords(orderedLearningList):
-    return len(orderedLearningList) == len(TextParser.allWords)
+def hasLearnedAllLemmas(lemmasByFrequency):
+    return len(lemmasByFrequency) == 0
 
 
-def hasDirectlyLearnableSentence(sentencesByFrequencyOfWords):
-    can = len(sentencesByFrequencyOfWords) != 0 and sentencesByFrequencyOfWords.peekitem()[0].getNumberOfUncoveredWords() <= 1
+def hasDirectlyLearnableSentence(sentencesByFrequencyOfLemmas):
+    can = len(sentencesByFrequencyOfLemmas) != 0 and sentencesByFrequencyOfLemmas.peekitem()[0].getNumberOfUncoveredLemmas() <= 1
     return can
 
 
-def getPriorityQueueOfWordsByFrequency():
-    mostFrequentWords = heapdict()
-    for word in TextParser.allWords.values():
-        mostFrequentWords[word] = -word.frequency
-    return mostFrequentWords
+def getPriorityQueueOfLemmasByFrequency():
+    mostFrequentLemmas = heapdict()
+    for lemma in TextParser.allLemmas.values():
+        mostFrequentLemmas[lemma] = -lemma.getFrequency()
+    return mostFrequentLemmas
 
-def GetPriorityQueueOfDirectlyLearnableSentencesByWordFrequency():
-    directlyUnlockableWords = set()
-    sentencesByFrequencyOfWords = heapdict()
+def getPriorityQueueOfDirectlyLearnableSentencesByLemmaFrequency():
+    directlyUnlockableLemmas= set()
+    sentencesByFrequencyOfLemmas = heapdict()
+    TextParser.NotASentence.initializeForAnalysis()
     for sentence in TextParser.allSentences.values():
         sentence.initializeForAnalysis()
-        if sentence.getNumberOfUncoveredWords() == 0:
-            sentencesByFrequencyOfWords[sentence] = missingWordFrequency
-        elif sentence.getNumberOfUncoveredWords() == 1:
-            sentencesByFrequencyOfWords[sentence] = -list(sentence.uncoveredWords)[0].frequency
-            directlyUnlockableWords.add(list(sentence.uncoveredWords)[0])
-    return sentencesByFrequencyOfWords, directlyUnlockableWords
+        if sentence.getNumberOfUncoveredLemmas() == 0:
+            sentencesByFrequencyOfLemmas[sentence] = missingWordFrequency
+        elif sentence.getNumberOfUncoveredLemmas() == 1:
+            unlockableLemma = sentence.getOnlyUncoveredLemma()
+            sentencesByFrequencyOfLemmas[sentence] = -unlockableLemma.getFrequency()
+            directlyUnlockableLemmas.add(unlockableLemma)
+    return sentencesByFrequencyOfLemmas, directlyUnlockableLemmas
 
 def downloadWebsites(learningList):
 
@@ -261,12 +270,21 @@ def wordStemmingUsingLemmaConjugationPairs(learningList):
 
 if __name__ == '__main__':
     #learningList = learnWordsByOrderOfScore(getSentenceScoreAsWordFrequency)
-    learningList = learnWordsByOrderOfScore(getSentenceScoreByNextUnlockableWord)
-    sentences = TextParser.allSentences
-    TextParser.addLemmasToDatabase()
+    learningList = learnLemmasByOrderOfScore(getSentenceScoreByNextUnlockableLemma)
 
-    allLemmas = list(TextParser.allLemmas.values())
-    allLemmas.sort(key=lambda x: x.getSumOfFrequencies(), reverse=True)
+    token = nltk.word_tokenize("stared")
+    taggedToken = nltk.pos_tag(token)
+
+    tokens = nltk.word_tokenize("Ron stared at him.")
+    taggedTokens = nltk.pos_tag(tokens)
+
+    lemmatizer = WordNetLemmatizer()
+
+    pos = TextParser.get_wordnet_pos("stared")
+    kage = lemmatizer.lemmatize("stared", pos)
+
+    sentences = TextParser.allSentences
+
     print(len(sentences))
     print("done")
 
