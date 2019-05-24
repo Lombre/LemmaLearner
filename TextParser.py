@@ -19,36 +19,50 @@ from Text import Text
 from Sentence import Sentence
 from Word import Word
 from Lemma import Lemma
+#import pickle as pickle
+import cPickle as dill
+import sys
+import threading
 
 
-NotAText = Text("NotAWord.")
+
+NotATextRawTitle = "NotAFile"
+NotATextRawText = "NotAWord."
+NotALemmaRawLemma = "NotALemma"
+
+NotAText = Text(NotATextRawText, NotATextRawTitle)
 NotASentence = NotAText.sentences[0]
 NotAWord = NotASentence.words[0]
-NotAWordLemma = Lemma("NotALemma", NotAWord)
+NotAWordLemma = Lemma(NotALemmaRawLemma, NotAWord)
 
 
-allTexts = {NotAText.rawText:NotAText}
+allTexts = {NotAText.name:NotAText}
 allSentences = {NotASentence.rawSentence:NotASentence}
 allWords = {NotAWord.rawWord:NotAWord}
 allLemmas = {NotAWordLemma.rawLemma:NotAWordLemma}
 
-def isCompoundWord(word):
-    specialChar = u'­'
-    pattern = re.compile(u'.*(-|­|­}).*')
-    return pattern.match(word)
+everything = {"texts": allTexts, "sentences":allSentences, "words":allWords, "lemmas":allLemmas}
+
+compoundWordPattern = re.compile(u'.*(-|­|­}).*')
 
 def addAllTextsFromDirectoryToDatabase(directory):
     files = [f for f in glob.glob(directory + "/*.txt")]
+    hasNewFile = False
     for file in files:
-        rawText = loadText(file)
-        addRawTextToDatabase(rawText)
-    addLemmasToDatabase()
+        fileName = os.path.splitext(os.path.basename(file))[0]
+        if not allTexts.has_key(fileName):
+            hasNewFile = True
+            rawText = loadText(file)
+            getBookCharacterset(rawText)
+            addRawTextToDatabase(rawText, fileName)
+    if hasNewFile:
+        addLemmasToDatabase()
 
-def addRawTextToDatabase(rawText):
+def addRawTextToDatabase(rawText, fileName):
     #Simply adds the text to the database: it all its sentences to allSentences,
     #and all its words to allWords, so that it can be used later.
-    text = Text(rawText)
-    allTexts[rawText] = text
+    text = Text(rawText, fileName)
+    allTexts[text.name] = text
     for sentence in text.sentences:
         allSentences[sentence.rawSentence] = sentence
         for i in range(0,len(sentence.words)):
@@ -60,10 +74,9 @@ def addRawTextToDatabase(rawText):
             else:
                 allWords[word.rawWord] = word
 
+
 def isCompoundWord(word):
-    specialChar = u'­'
-    pattern = re.compile(u'.*(-|­|­}).*')
-    return pattern.match(word)
+    return compoundWordPattern.match(word)
 
 def get_wordnet_pos(word):
     """Map POS tag to first character lemmatize() accepts"""
@@ -115,8 +128,16 @@ def addLemmasToDatabase():
     dictionary = enchant.Dict("en_US")
     wordSet = set(words.words())
     allWordValues = allWords.values()
+    i = 0
     for word in allWordValues:
+        if word.lemma != None:
+            #It already has an associated lemma, and as such can be skiped:
+            continue
+
         lemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
+        if i % 100 == 0:
+            print(str(i) + " of " + str(len(allWords)) + ": " + lemma)
+        i += 1
         if isActualWord(dictionary, wordSet, lemma):
             if lemma in allLemmas:
                 # The lemma is already registered,
@@ -133,4 +154,56 @@ def addLemmasToDatabase():
 def loadText(filename):
     file = io.open(filename, 'rU', encoding='utf-8')
     return file.read()
+
+def saveProcessedData(data):
+    currentRecursionLimit = sys.getrecursionlimit()
+    sys.setrecursionlimit(100000)
+    dill.dump(data, open('everything.pkl', 'wb'))
+    sys.setrecursionlimit(currentRecursionLimit)
+
+def loadProcessedData(fileName):
+    currentRecursionLimit = sys.getrecursionlimit()
+    sys.setrecursionlimit(100000)
+    rawPickleData = io.open(fileName + ".pkl", 'rb').read()
+    sys.setrecursionlimit(currentRecursionLimit)
+    processedData = dill.loads(str(rawPickleData))
+
+    global allTexts, allSentences, allWords, allLemmas, everything
+    allTexts = processedData["texts"]
+    allSentences = processedData["sentences"]
+    allWords = processedData["words"]
+    allLemmas = processedData["lemmas"]
+    everything = {"texts": allTexts, "sentences": allSentences, "words": allWords, "lemmas": allLemmas}
+
+    #Some data was deleted during pickeling: this is recovered below
+    sentences = processedData["sentences"].values()
+    words = processedData["words"].values()
+
+    for sentence in sentences:
+        sentence.recoverWords(allWords)
+    for word in words:
+        word.recoverLemma(allLemmas)
+
+    resetNothingTerms()
+
+    return processedData
+
+def getBookCharacterset(rawText):
+
+    alphabetSet = set()
+    for i in range(0, len(rawText)):
+        currentChar = rawText[i]
+        alphabetSet.add(currentChar)
+    alphabetList = list(alphabetSet)
+    alphabetList.sort()
+    for char in alphabetList:
+        print(char)
+    return alphabetList
+
+def resetNothingTerms():
+    global NotAText, NotASentence, NotAWord, NotAWordLemma
+    NotAText = allTexts[NotATextRawTitle]
+    NotASentence = NotAText.sentences[0]
+    NotAWord = NotASentence.words[0]
+    NotAWordLemma = NotAWord.lemma
 

@@ -246,12 +246,14 @@ def wordStemmingUsingLemmaConjugationPairs(learningList):
     lemmaText = file.read()
     lemmaTextLines = lemmaText.splitlines()
     wordToWordStem = {}
+
     for lemma in lemmaTextLines:
         dividedLemma = lemma.split("\t")
         wordStem = dividedLemma[0]
         wordConjugation = dividedLemma[1]
         addStemConjugationPair(wordToWordStem, wordStem, wordConjugation)
         addStemConjugationPair(wordToWordStem, wordStem, wordStem)
+
     print("Loaded lemmas")
 
     allWordStems = set()
@@ -269,19 +271,28 @@ def wordStemmingUsingLemmaConjugationPairs(learningList):
         print (str(i) + ": " + uncontainedWords[i])
 
 if __name__ == '__main__':
-    #learningList = learnWordsByOrderOfScore(getSentenceScoreAsWordFrequency)
+
+    test = TextParser.loadProcessedData("everything")
     learningList = learnLemmasByOrderOfScore(getSentenceScoreByNextUnlockableLemma)
+    # TextParser.addAllTextsFromDirectoryToDatabase("Texts")
+    TextParser.saveProcessedData(TextParser.everything)
 
-    token = nltk.word_tokenize("stared")
-    taggedToken = nltk.pos_tag(token)
+    # texts = test["texts"].values()
 
-    tokens = nltk.word_tokenize("Ron stared at him.")
-    taggedTokens = nltk.pos_tag(tokens)
 
-    lemmatizer = WordNetLemmatizer()
 
-    pos = TextParser.get_wordnet_pos("stared")
-    kage = lemmatizer.lemmatize("stared", pos)
+
+    # token = nltk.word_tokenize("stared")
+    # taggedToken = nltk.pos_tag(token)
+    #
+    # tokens = nltk.word_tokenize("Ron stared at him.")
+    # taggedTokens = nltk.pos_tag(tokens)
+
+    # lemmatizer = WordNetLemmatizer()
+
+    # pos = TextParser.get_wordnet_pos("stared")
+    # kage = lemmatizer.lemmatize("stared", pos)
+    #
 
     sentences = TextParser.allSentences
 
@@ -292,6 +303,7 @@ if __name__ == '__main__':
 #https://cran.r-project.org/web/packages/corpus/vignettes/stemmer.html
 #https://github.com/michmech/lemmatization-lists/
 #https://www.machinelearningplus.com/nlp/lemmatization-examples-python/
+#https://www.nltk.org/book/ch07.html
 
 # #Start learning the n most common words.
 # n = 300

@@ -32,9 +32,12 @@ class Lemma:
                 allSentences.add(sentence)
         return allSentences
 
-
     #Marks the lemma as covered in the sentences it is found in.
     def coverSentences(self):
         sentences = self.getSentences()
         for sentence in sentences:
             sentence.uncoveredLemmas.remove(self)
+
+    def __getstate__(self):
+        self.conjugatedWords = set()
+        return  self.__dict__
