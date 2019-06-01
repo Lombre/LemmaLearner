@@ -9,6 +9,7 @@ class Lemma:
         self.rawLemma = rawLemma
         self.conjugatedWords = {conjugatedWord}
         conjugatedWord.lemma = self
+        self.sentences = None
 
     def addNewWord(self, word):
         self.conjugatedWords.add(word)
@@ -25,12 +26,8 @@ class Lemma:
         return self.rawLemma
 
     def getSentences(self):
-        allSentences = set()
-        for word in self.conjugatedWords:
-            wordSentences = word.sentences.values()
-            for sentence in wordSentences:
-                allSentences.add(sentence)
-        return allSentences
+        return self.sentences
+        #return self.sentences
 
     #Marks the lemma as covered in the sentences it is found in.
     def coverSentences(self):
@@ -38,6 +35,17 @@ class Lemma:
         for sentence in sentences:
             sentence.uncoveredLemmas.remove(self)
 
+    def setSentences(self):
+        allSentences = set()
+        for word in self.conjugatedWords:
+            wordSentences = word.sentences.values()
+            for sentence in wordSentences:
+                allSentences.add(sentence)
+        self.sentences = allSentences
+
     def __getstate__(self):
         self.conjugatedWords = set()
+        self.sentences = None
         return  self.__dict__
+
+   

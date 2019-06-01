@@ -11,10 +11,10 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import nltk
 from nltk.corpus import wordnet
 from nltk.corpus import words
-import enchant
 import re
 import string
 import Sentence
+import enchant
 from Text import Text
 from Sentence import Sentence
 from Word import Word
@@ -57,6 +57,7 @@ def addAllTextsFromDirectoryToDatabase(directory):
             addRawTextToDatabase(rawText, fileName)
     if hasNewFile:
         addLemmasToDatabase()
+    initializeLemmas()
 
 def addRawTextToDatabase(rawText, fileName):
     #Simply adds the text to the database: it all its sentences to allSentences,
@@ -90,7 +91,9 @@ def get_wordnet_pos(word):
     return trueTag
 
 
-def isInOnlineDictionary(word):
+def isInOnlineDictionary(word, onlineDictionary):
+    if onlineDictionary.has_key(word):
+        return onlineDictionary[word]
     baseURL = 'https://www.dictionary.com/browse/'
     fullURL = baseURL + word
     filePath = "Websites/" + word + ".txt"
@@ -98,7 +101,8 @@ def isInOnlineDictionary(word):
     if os.path.isfile(filePath):
         with open(filePath, 'r') as file:
             possibleErrorCode = file.read(len(ERROR_CODE))
-            return possibleErrorCode != ERROR_CODE
+            inDictionary = possibleErrorCode != ERROR_CODE
+            onlineDictionary[word] = inDictionary
     else:
         time.sleep(2) # So the website isn't getting spammed
         try:
@@ -106,19 +110,20 @@ def isInOnlineDictionary(word):
         except:
             with open(filePath, 'w+') as file:
                 file.write(ERROR_CODE)
-            return False
+            onlineDictionary[word] = False
         webContent = response.read()
         with open(filePath, 'w+') as file:
             file.write(webContent)
-        return True
+        onlineDictionary[word] = True
+    return onlineDictionary[word]
 
 
 
-def isActualWord(dictionary, wordSet, lemma):
+def isActualWord(dictionary, wordSet, onlineDictionary, lemma):
     isInWordnet = lemma in wordSet
     isInDictionary = dictionary.check(lemma)
     isCompound = isCompoundWord(lemma)
-    return not isCompound and (isInWordnet or isInDictionary or isInOnlineDictionary(lemma))
+    return not isCompound and (isInWordnet or isInDictionary or isInOnlineDictionary(lemma, onlineDictionary))
 
 def addLemmasToDatabase():
     lemmatizer = WordNetLemmatizer()
@@ -128,17 +133,18 @@ def addLemmasToDatabase():
     dictionary = enchant.Dict("en_US")
     wordSet = set(words.words())
     allWordValues = allWords.values()
+    onlineDictionary = loadOnlineDictionary()
     i = 0
     for word in allWordValues:
-        if word.lemma != None:
-            #It already has an associated lemma, and as such can be skiped:
+
+        if word.lemma != None: #It already has an associated lemma, and as such can be skiped:
             continue
 
         lemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
         if i % 100 == 0:
             print(str(i) + " of " + str(len(allWords)) + ": " + lemma)
         i += 1
-        if isActualWord(dictionary, wordSet, lemma):
+        if isActualWord(dictionary, wordSet, onlineDictionary, lemma):
             if lemma in allLemmas:
                 # The lemma is already registered,
                 # but the word might be a different conjugation than the ones already added to the lemma:
@@ -149,16 +155,22 @@ def addLemmasToDatabase():
             # It is not a real word, and it is added to the token "NotAWordLemma" Lemma,
             # to ensure that all words have an associated lemma.
             NotAWordLemma.addNewWord(word)
+    saveProcessedData(onlineDictionary, "onlineDictionary")
+
+def initializeLemmas():
+    lemmas = allLemmas.values()
+    for lemma in lemmas:
+        lemma.setSentences()
 
 
 def loadText(filename):
     file = io.open(filename, 'rU', encoding='utf-8')
     return file.read()
 
-def saveProcessedData(data):
+def saveProcessedData(data, fileName):
     currentRecursionLimit = sys.getrecursionlimit()
     sys.setrecursionlimit(100000)
-    dill.dump(data, open('everything.pkl', 'wb'))
+    dill.dump(data, open(fileName + '.pkl', 'wb'))
     sys.setrecursionlimit(currentRecursionLimit)
 
 def loadProcessedData(fileName):
@@ -178,15 +190,25 @@ def loadProcessedData(fileName):
     #Some data was deleted during pickeling: this is recovered below
     sentences = processedData["sentences"].values()
     words = processedData["words"].values()
+    #lemmas = processedData["lemmas"].values()
 
     for sentence in sentences:
         sentence.recoverWords(allWords)
     for word in words:
         word.recoverLemma(allLemmas)
+    #for lemma in lemmas:
+    #    lemma.recoverSentences()
 
     resetNothingTerms()
 
     return processedData
+
+def loadOnlineDictionary(): 
+    if os.path.isfile("onlineDictionary.pkl"):
+        rawData = io.open("onlineDictionary" + ".pkl", 'rb').read()
+        return dill.loads(str(rawData))
+    else:
+       return {}
 
 def getBookCharacterset(rawText):
 

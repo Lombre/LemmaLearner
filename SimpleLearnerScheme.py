@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+PYTHONIOENCODING="UTF-8"
 import TextParser
 import glob
 import urllib2
@@ -12,9 +13,13 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import nltk
 from nltk.corpus import wordnet
 from nltk.corpus import words
-import enchant
 import re
 import string
+import enchant
+import sys
+import codecs
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+
 
 missingWordFrequency = -100000000
 
@@ -47,14 +52,18 @@ def getSentenceScoreByNextUnlockableLemma(learnedSentence, directlyUnlockableLem
 
     unlockedLemma = learnedSentence.getOnlyUncoveredLemma()
     maxFrequencyUnlocked = 0
-    sentences = unlockedLemma.getSentences()
 
-    for sentence in sentences:
-        if sentence.getNumberOfUncoveredLemmas() == 2: #Learning unlockedLemma might unlock a new word in this sentence:
-            unlockedLemmas = list(sentence.uncoveredLemmas)
-            newUnlockedLemma = unlockedLemmas[1] if (unlockedLemmas[0] == unlockedLemma) else unlockedLemmas[0]
-            if newUnlockedLemma not in directlyUnlockableLemmas: #Now we know it definetly will unlock a new word!
-                maxFrequencyUnlocked = newUnlockedLemma.getFrequency() if maxFrequencyUnlocked < newUnlockedLemma.getFrequency() else maxFrequencyUnlocked
+    if True:
+        sentences = unlockedLemma.getSentences()
+        for sentence in sentences:
+            if sentence.getNumberOfUncoveredLemmas() == 2: #Learning unlockedLemma might unlock a new word in this sentence:
+                unlockedLemmas = list(sentence.uncoveredLemmas)
+                newUnlockedLemma = unlockedLemmas[1] if (unlockedLemmas[0] == unlockedLemma) else unlockedLemmas[0]
+                if newUnlockedLemma not in directlyUnlockableLemmas: #Now we know it definetly will unlock a new word!
+                    maxFrequencyUnlocked = newUnlockedLemma.getFrequency() if maxFrequencyUnlocked < newUnlockedLemma.getFrequency() else maxFrequencyUnlocked
+                else:
+                    #Her mangler der at håndretes et case
+                    continue
 
     return -unlockedLemma.getFrequency() - maxFrequencyUnlocked
 
@@ -80,7 +89,8 @@ def learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma, wordList, sentenceQ
         if sentence.getNumberOfUncoveredLemmas() == 0:
             sentenceQueue[sentence] = missingWordFrequency
         elif sentence.getNumberOfUncoveredLemmas() == 1:
-            sentenceQueue[sentence] = getSentenceScore(sentence, directlyUnlockableLemmas)
+            sentenceScore = getSentenceScore(sentence, directlyUnlockableLemmas)
+            sentenceQueue[sentence] = sentenceScore
 
 
 def learnWords(getSentenceScore):
@@ -148,6 +158,7 @@ def learnLemmasByOrderOfScore(getSentenceScore):
     learnLemmaAndHandleSentencesWithLemmaFrequency(TextParser.NotAWordLemma, notForcedToLearn, sentencesByFrequencyOfLemmas, lemmasByFrequency, directlyUnlockableLemmas, getSentenceScore)
 
     i = 1
+    print("Start learning lemmas: " + str(len(lemmasByFrequency)))
 
     while not hasLearnedAllLemmas(lemmasByFrequency):
         while hasDirectlyLearnableSentence(sentencesByFrequencyOfLemmas):
@@ -159,8 +170,11 @@ def learnLemmasByOrderOfScore(getSentenceScore):
             newLemma = currentSentence.getOnlyUncoveredLemma()
             orderedLearningList.append((newLemma, currentSentence))
             learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma, notForcedToLearn, sentencesByFrequencyOfLemmas, lemmasByFrequency, directlyUnlockableLemmas, getSentenceScore)
+            if i % 1000 == 0:
+                print(i)
             if i < 6000:
-                print(str(i) + ", " + newLemma.getRawLemma() + ", " + str(newLemma.getFrequency()) + " -> " + currentSentence.rawSentence)
+                i = i
+                #print(str(i) + ", " + newLemma.getRawLemma() + ", " + str(newLemma.getFrequency()) + " -> " + currentSentence.rawSentence)
             i += 1
 
         if hasLearnedAllLemmas(lemmasByFrequency):  # When all words have been learned in the loop above
@@ -271,11 +285,11 @@ def wordStemmingUsingLemmaConjugationPairs(learningList):
         print (str(i) + ": " + uncontainedWords[i])
 
 if __name__ == '__main__':
-
+    print(u'\u201cRon, what \u2014 ?\u201d\n\n\u201cSCABBERS!')
     test = TextParser.loadProcessedData("everything")
     learningList = learnLemmasByOrderOfScore(getSentenceScoreByNextUnlockableLemma)
     # TextParser.addAllTextsFromDirectoryToDatabase("Texts")
-    TextParser.saveProcessedData(TextParser.everything)
+    TextParser.saveProcessedData(TextParser.everything, "everything")
 
     # texts = test["texts"].values()
 
@@ -304,16 +318,3 @@ if __name__ == '__main__':
 #https://github.com/michmech/lemmatization-lists/
 #https://www.machinelearningplus.com/nlp/lemmatization-examples-python/
 #https://www.nltk.org/book/ch07.html
-
-# #Start learning the n most common words.
-# n = 300
-# mostFrequentWords = heapdict()
-# for word in TextParser.allWords.values():
-#     mostFrequentWords[word] = -word.frequency
-#
-# for i in range(0, n):
-#     currentWord = mostFrequentWords.popitem()
-#     currentWord.coverSentences()
-#     for sentence in currentWord.sentences.values():
-#         mostCoveredSentences[sentence] = sentence.getNumberUncoveredWords()
-
