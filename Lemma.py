@@ -29,6 +29,12 @@ class Lemma:
         return self.sentences
         #return self.sentences
 
+    def getDirectlyUnlockingSentence(self):
+        for sentence in self.sentences:
+            if sentence.getNumberOfUncoveredLemmas() == 1:
+                return sentence
+        raise Exception("No sentence can directle unlock the lemma: " + self.rawLemma)
+
     #Marks the lemma as covered in the sentences it is found in.
     def coverSentences(self):
         sentences = self.getSentences()

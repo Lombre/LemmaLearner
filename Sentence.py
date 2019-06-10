@@ -28,6 +28,8 @@ class Sentence:
                 word = re.sub('[' + string.punctuation + extraPunctuation + ']', '', rawWord)
                 if 0 < len(word):
                     self.words.append(Word(word.lower(), self))
+        self.associatedLearnableSentence = None
+        self.scoreDependentSentences = set()
 
     def initializeForAnalysis(self):
         #Reseting:
@@ -37,6 +39,9 @@ class Sentence:
         for word in self.words:
             self.uncoveredWords.add(word)
             self.uncoveredLemmas.add(word.lemma)
+
+    def rescoreScoreDependentSentences(getSentenceScore):
+        return None
 
     def getNumberOfUncoveredWords(self):
         return len(self.uncoveredWords)

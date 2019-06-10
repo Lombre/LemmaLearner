@@ -27,6 +27,37 @@ class Tree:
     def __init__(self):
         self.rod = None
 
+    def minPunkt(self, punkt):
+        while punkt.venstre != None:
+            punkt = punkt.venstre
+        return punkt
+
+    def maksPunkt(self, punkt):
+        while punkt.hoejre != None:
+            punkt = punkt.hoejre
+        return punkt
+
+    def successor(self, punkt, soegeVaerdi):
+        #Baseret på algoritme fra kurset "Algoritmer og datastrukturer" på DTU
+        if punkt == None:
+            return None
+        elif punkt.vaerdi == soegeVaerdi:
+            return punkt
+        elif punkt.vaerdi < soegevaerdi:
+            #Man skal til hoejre -> vi forsætter søgningen:
+            return successor(punkt.hoejre, soegeVaerdi)
+        else:
+            #Nu er vi helt til hoejre, lige før at man bliver nød til at gå til venstre.
+            #Vi vil derfor gerne have successoren til elementet i venstre træ.
+            venstreSuccessor = successor(punkt.vestre, soegeVaerdi)
+            if venstreSuccessor != None:
+                return venstreSuccessor
+            else:
+                return punkt
+
+        
+
+
     def soeg(self, soegevaerdi, punkt):
         #Baseret på CLRS
         if punkt == None or punkt.vaerdi == soegevaerdi:
@@ -58,9 +89,10 @@ print(tree.soeg(3, tree.rod))
 tree.indsaet(100)
 print(tree.soeg(100, tree.rod).vaerdi)
 tree.indsaet(3)
-tree.indsaet(10)
 tree.indsaet(200)
+tree.indsaet(10)
 print(tree.soeg(3, tree.rod).vaerdi)
 print(tree.soeg(10, tree.rod).vaerdi)
 print(tree.soeg(200, tree.rod).vaerdi)
-
+print("Maks vaerdien = " + str(tree.maksPunkt(tree.rod).vaerdi))
+print("Min vaerdien = "  + str(tree.minPunkt(tree.rod).vaerdi))
