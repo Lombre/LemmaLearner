@@ -171,7 +171,7 @@ def learnLemmasByOrderOfScore(getSentenceScore):
                 newLemma = sentence.getOnlyUncoveredLemma()
                 orderedLearningList.append((newLemma, sentence))
                 learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma, notForcedToLearn, sentencePairsBySentenceScore, lemmasByFrequency, directlyUnlockableLemmasScore, directlyUnlockableLemmas, getSentenceScore)            
-                if i % 100 == 0:# or i < 5000:
+                if i % 1 == 0 or i < 4000:
                     print(str(i) + ", " + newLemma.getRawLemma() + ", " + str(newLemma.getFrequency()) + " -> " + sentence.rawSentence)
                 i += 1  
                 
@@ -264,27 +264,22 @@ if __name__ == '__main__':
         TextParser.saveProcessedData(TextParser.everything, "everything")
     else: 
         test = TextParser.loadProcessedData("everything")
+        #numberOfConjugatedVerbs = 0
+        #for lemma in TextParser.allLemmas:
+        #    if lemma.endswith("ed"):
+        #        numberOfConjugatedVerbs += 1
         learningList = learnLemmasByOrderOfScore(getSentenceScoreByNextUnlockableLemma)
         print(len(learningList))
 
-    # texts = test["texts"].values()
+    #Mulige forbedringer:
+        #Bedre lemma classefier. Der er f.eks. mange -ed bøjninger der bliver klassificeret som sit eget ord. Kan nok fjerne 1/10 til 1/20 af alle lemaer.
+        #Fjern navne og lignende.
+        #Hastighedsforbedinger. 
+        #Fjern meget korte sætninger, og meget lange sætninger.
+        #Håndtering af "" i sætninger.
+        #Skoring af sætninger, så der ses forskellige bøjninger af et ord.
 
 
-
-
-    # token = nltk.word_tokenize("stared")
-    # taggedToken = nltk.pos_tag(token)
-    #
-    # tokens = nltk.word_tokenize("Ron stared at him.")
-    # taggedTokens = nltk.pos_tag(tokens)
-
-    # lemmatizer = WordNetLemmatizer()
-
-    # pos = TextParser.get_wordnet_pos("stared")
-    # kage = lemmatizer.lemmatize("stared", pos)
-    #
-
-    sentences = TextParser.allSentences
 
     print("done")
 

@@ -6,7 +6,13 @@ class Text:
     def __init__(self, rawText, name):
         self.rawText = rawText#self.formatText(rawText)
         self.name = name
-        rawSentences = nltk.sent_tokenize(rawText)
+
+        splitAtNewlines = [s.strip() for s in rawText.splitlines()]
+        rawSentences = []
+        for line in splitAtNewlines:
+            sentencesInLine = nltk.sent_tokenize(line)
+            rawSentences.extend(sentencesInLine)
+
         self.sentences = []
         for rawSentence in rawSentences:
             sentence = Sentence(self, rawSentence)
