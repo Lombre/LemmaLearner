@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\LemmaLearner"
+    "\\.idea",
+    "\\LemmaLearner",
+    "\\Tests"
   ],
-  "SelectedNode": "\\SimpleLearnerScheme.py",
   "PreviewInSolutionExplorer": false
 }
