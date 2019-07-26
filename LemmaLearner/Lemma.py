@@ -29,9 +29,9 @@ class Lemma:
         return self.sentences
         #return self.sentences
 
-    def getDirectlyUnlockingSentence(self):
+    def getDirectlyUnlockingSentence(self, isSentenceDirectlyUnlockable):
         for sentence in self.sentences:
-            if sentence.getNumberOfUncoveredLemmas() == 1:
+            if isSentenceDirectlyUnlockable(sentence):
                 return sentence
         raise Exception("No sentence can directle unlock the lemma: " + self.rawLemma)
 

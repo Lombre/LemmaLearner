@@ -106,6 +106,7 @@ class TextParser():
                 #getBookCharacterset(rawText, shouldPrintToConsole)
                 self.addRawTextToDatabase(rawText, fileName)
         self.addLemmasToDatabase(shouldPrintToConsole)
+        self.recognizeNamesInSentences()
         self.initialize()
 
     def addRawTextToDatabase(self, rawText, fileName):
@@ -124,7 +125,9 @@ class TextParser():
                 else:
                     self.allWords[word.rawWord] = word
 
-
+    def recognizeNamesInSentences(self):
+        for sentence in self.allSentences:
+            kage = 1
 
     def addLemmasToDatabase(self, shouldPrintToConsole):
         lemmatizer = WordNetLemmatizer()
@@ -148,7 +151,7 @@ class TextParser():
                 continue
 
             lemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
-            if (i == 1 or i % 1 == 0 or i == len(allWordValues)) and shouldPrintToConsole:
+            if (i == 1 or i % 100 == 0 or i == len(allWordValues)) and shouldPrintToConsole:
                 print(str(i) + " of " + str(len(allWordValues)) + ": " + lemma)
             if isActualWord(wordSet, onlineDictionary, lemma):
                 if lemma in self.allLemmas:

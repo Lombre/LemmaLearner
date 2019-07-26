@@ -30,7 +30,7 @@ class Test_test1(unittest.TestCase):
         lemma3 = textDatabase.allLemmas[rawLemma3]
         lemma4 = textDatabase.allLemmas[rawLemma4]
 
-        directlyUnlockableLemmasScore, sentencePairsBySentenceScore, directlyUnlockableLemmas = SimpleLearnerScheme.getPriorityQueueOfDirectlyLearnableSentencesByLemmaFrequency(textDatabase, SimpleLearnerScheme.getSentenceScoreByNextUnlockableLemma)
+        directlyUnlockableLemmasScore, sentencePairsBySentenceScore, directlyUnlockableLemmas = SimpleLearnerScheme.getPriorityQueueOfDirectlyLearnableSentencesByLemmaScore(textDatabase, SimpleLearnerScheme.getSentenceScoreByNextUnlockableLemma)
         lemmasByFrequency = SimpleLearnerScheme.getPriorityQueueOfLemmasByFrequency(textDatabase)
         forcedToLearn = []
         notForcedToLearn = []
@@ -90,8 +90,6 @@ class Test_test1(unittest.TestCase):
             self.assertEquals(currentLemma, textParserLemma)
         #NotAWordLemma must also be learned correctly
         self.assertEquals( textDatabase.allLemmas[textDatabase.NotAWordLemma.rawLemma], textDatabase.NotAWordLemma)
-
-    
-
+            
 if __name__ == '__main__':
     unittest.main()

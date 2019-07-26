@@ -23,9 +23,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BinarySearchTree.py" />
+    <Compile Include="SimpelDynamiskTabel.py" />
     <Compile Include="k.py" />
     <Compile Include="Lemma.py" />
     <Compile Include="LemmaLearner.py" />
+    <Compile Include="DynamiskTabel.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="onlinedictionary.py" />
     <Compile Include="Sentence.py" />
     <Compile Include="SimpleLearnerScheme.py" />
