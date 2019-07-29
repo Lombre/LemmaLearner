@@ -55,11 +55,12 @@ def getBookCharacterset(rawText, shouldPrintToConsole):
     return alphabetList
 
 
-def isActualWord(wordSet, onlineDictionary, lemma):
+def isActualWord(wordSet, onlineDictionary, lemma: str) -> bool:
     #isInDictionary = dictionary.check(lemma)
+    isNumber = lemma.isdigit()
     isInWordnet = lemma in wordSet
     isCompound = isCompoundWord(lemma)
-    return not isCompound and (isInWordnet or onlinedictionary.isInOnlineDictionary(lemma, onlineDictionary))
+    return (not isNumber) and (not isCompound) and (isInWordnet or onlinedictionary.isInOnlineDictionary(lemma, onlineDictionary))
     
 def loadText(filename):
     file = io.open(filename, 'rU', encoding='utf-8')

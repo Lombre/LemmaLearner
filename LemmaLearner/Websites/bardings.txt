@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+    <html lang="en" prefix="og: http://ogp.me/ns#">
+      <head>
+        <script>
+!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);
+perfMetrics.onFirstInputDelay(function(delay, evt) {
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+        event: 'FID',
+        action: evt.type,
+        value: delay
+    });
+});
+</script>
+        
+        
+  <meta charSet="utf-8">
+  
+  
+  <link rel="preload" href="https://www.dictionary.com/assets/dictionary-font-197ce9c0670c69363ae3d5c9aa6fa398.woff" as="font" type="font/woff" crossorigin="anonymous">
+  <meta name="robots" content="noindex">
+  
+  
+  
+  <meta property="og:image" content="https://www.dictionary.com/assets/dictionary-social-logo-a60fa43a7f4c5e78893e1b228bdc74b3.png">
+  <meta property="og:site_name" content="www.dictionary.com">
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:site" content="@Dictionarycom">
+  <meta property="fb:app_id" content="127444090629600"><meta property="fb:admins" content="100000304287730;109125464873">
+  <meta name="msvalidate.01" content="DF5542D7723770377E9ABFF59AC1DC97">
+  <link rel="icon" type="image/png" href="https://www.dictionary.com/assets/favicon-1bff2f1b49c077ed504e55c3649f2a4b.png">
+  <title>Bardings | Definition of Bardings at Dictionary.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="preconnect" href="https://ads.pubmatic.com">
+  <link rel="preconnect" href="https://www.googletagservices.com">
+  <link rel="preconnect" href="https://c.amazon-adsystem.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://connect.facebook.net">
+
+        
+          
+          <script defer src="https://www.dictionary.com/assets/client-f85412ec.js"></script>
+          <script defer src="https://www.dictionary.com/assets/standalone-analytics-40f195ee.js"></script>
+          
+        <!-- Ad integration with callback begins here, must be in head, expects page type to get appropriate configs -->
+        <script type="text/javascript" src="https://ads.pubmatic.com/AdServer/js/pwt/103207/815/pwt.js"></script>
+    <script type="text/javascript">
+      window.performance.mark('adStackStart');
+      var page = 'dcom-misspell';
+      var notifyId;
+      window.dataLayer = window.dataLayer || [];
+      notifyId = window.OWT.registerExternalBidders();
+      window.performance.mark('gptLoadStart');
+    </script>
+    <script async="async" src="https://www.googletagservices.com/tag/js/gpt.js" onload="(function() {
+        window.performance.mark('gptLoadEnd');
+        window.performance.measure('gptLoad', 'gptLoadStart', 'gptLoadEnd');
+        var timing = window.performance.getEntriesByName('gptLoad')[0].duration;
+        window.dataLayer.push({
+          event: 'gptLoad',
+          page: page,
+          timing: timing
+        });
+      })()">
+    </script>
+    <!-- OneTrust Cookies Consent Notice (Production CDN, www.dictionary.com, en-US) start -->
+
+      <script src="https://cdn.cookielaw.org/consent/165aec66-c4e9-4f8c-8ac2-f16e4f293f24.js" type="text/javascript" charset="UTF-8">
+      </script>
+
+      <script type="text/javascript">
+        function OptanonWrapper() { }
+      </script>
+
+    <!-- OneTrust Cookies Consent Notice (Production CDN, www.dictionary.com, en-US) end -->
+    <script type="text/javascript">
+      adboiler: {
+          
+          var page = 'dcom-misspell';
+          var isEU = true;
+          /**---------- Page level ad targeting configs ----------*/
+          var pageTargeting = {"tx1":"results","tx2":"misspelled_0_n","ptype":"content","ld":0,"spe":"n","kw":"","loc":"US","rpv":"10","evince":"ad","mup":""};
+          pageTargeting.dow = new Date().getDay().toString();
+          var slotConfigs = [{"placement":"dcom-misspell-lb-728x90","code":"/23219321/iac.dict.dictry.dw/dic-spell/misspelled_0_n","ad_uuid":"728x90_top","targeting":{"pos":"top","pos2":"728x90_1"},"sizes":[[728,90]],"rtf":true},{"placement":"dcom-misspell-top-300x250","code":"/23219321/iac.dict.dictry.dw/dic-spell/misspelled_0_n","ad_uuid":"300x250_top","targeting":{"pos":"top","pos2":"300x250_1"},"sizes":[[300,250]],"rtf":true},{"placement":"dcom-misspell-bottom-lb-728x90","code":"/23219321/iac.dict.dictry.dw/dic-spell/misspelled_0_n","ad_uuid":"728x90_bot","targeting":{"pos":"bot","pos2":"728x90_2"},"sizes":[[728,90]],"rtf":true}];
+          var lazySlotConfigs = [];
+          /**---------- Targeting runtime setup ----------*/
+          pageTargeting.ref = window.document.referrer.search(
+            "dictionary.com|thesaurus.com|reference.com"
+          ) > -1 ? "organic" : "direct";
+          pageTargeting.lang = window.navigator.userLanguage || window.navigator.language;
+          pageTargeting.pv = typeof SCCookie !== "undefined" ? SCCookie.getPageViewCount() + "" : "";
+          /**---------- Pubmatic wrapper and GPT Tag with Callback begins here ----------*/
+          var apstagSlots = [{"slotID":"dcom-misspell-lb-728x90","sizes":[[728,90]]},{"slotID":"dcom-misspell-top-300x250","sizes":[[300,250]]},{"slotID":"dcom-misspell-bottom-lb-728x90","sizes":[[728,90]]}];
+          var googletag = googletag || {};
+          googletag.cmd = googletag.cmd || [];
+          var adSlots = adSlots || {
+            slots: {},
+            lazySlots: {}
+          };
+          var setupDFP = function() {
+            console.log("Setup DFP");
+            /**---------- Set page level targeting for DFP ----------*/
+            (function setPageLevelTargeting(googletag) {
+  googletag = googletag || window.googletag;
+  Object.keys(pageTargeting).forEach(function (pageTarget) {
+    if (Object.prototype.hasOwnProperty.call(pageTargeting, pageTarget)) {
+      (function (key, value) {
+        googletag.cmd.push(function () {
+          googletag.pubads().setTargeting(key, value);
+        });
+      })(pageTarget, pageTargeting[pageTarget]);
+    }
+  });
+})(googletag);
+            /**---------- Set ad slot level targeting for DFP ----------*/
+            if (typeof slotConfigs === "object") {
+              (function setAdSlotTargeting(googletag) {
+  var adSlotRenderPeriods = {};
+  googletag = googletag || window.googletag;
+  slotConfigs.forEach(function (slot) {
+    googletag.cmd.push(function () {
+      adSlots.slots[slot.placement] = googletag.defineSlot(slot.code, slot.sizes, slot.placement).addService(googletag.pubads());
+      googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+        if (event.slot === adSlots.slots[slot.placement]) {
+          adSlotRenderPeriods[slot.placement] = Date.now();
+        }
+      });
+      googletag.pubads().addEventListener('slotOnload', function (event) {
+        if (event.slot === adSlots.slots[slot.placement]) {
+          window.dataLayer.push({
+            event: 'gptSlotRenderPeriod',
+            page: page,
+            slotId: slot.placement,
+            code: slot.code,
+            position: slot.targeting.pos,
+            position2: slot.targeting.pos2,
+            time: Date.now() - adSlotRenderPeriods[slot.placement]
+          });
+        }
+      });
+      googletag.pubads().addEventListener('impressionViewable', function (event) {
+        if (event.slot === adSlots.slots[slot.placement]) {
+          window.dataLayer.push({
+            event: 'gptImpressionViewable',
+            page: page,
+            slotId: slot.placement,
+            code: slot.code,
+            position: slot.targeting.pos,
+            position2: slot.targeting.pos2
+          });
+        }
+      });
+      Object.keys(slot.targeting).forEach(function (target) {
+        if (Object.prototype.hasOwnProperty.call(slot.targeting, target)) {
+          adSlots.slots[slot.placement].setTargeting(target, slot.targeting[target]);
+        }
+      });
+      adSlots.slots[slot.placement].setTargeting('adrefresh', 'n');
+    });
+  });
+})(googletag);
+            }
+            /**---------- Push gpt ad slots to DFP ----------*/
+            (function pushAdSlots(googletag) {
+  googletag = googletag || window.googletag;
+  googletag.cmd.push(function () {
+    googletag.pubads().enableSingleRequest();
+    googletag.pubads().disableInitialLoad();
+    googletag.enableServices();
+    window.dfpReady = true;
+  });
+})(googletag);
+          }
+          var allSlotConfigs = (slotConfigs || []).concat(lazySlotConfigs);
+          /**---------- Rtf integration ----------*/
+    var rtfValues;
+    var rtfConfig = {"adlerGeo":"ROWLO","detectedDevice":"Desktop","rtfApiEndpoint":"https://irene.dictionary.com/v1","site":"dcom"};
+    function setRtfInstrumentationKV(rtfSlotConfigs, status, error) {
+  rtfSlotConfigs.forEach(function (slotConfig) {
+    slotConfig.targeting.adler_status = status;
+
+    if (error) {
+      slotConfig.targeting.adler_error = error;
+    }
+  });
+};
+    function getRtfParams(rtfSlotConfigs) {
+  var r = {};
+  var geo = rtfConfig.adlerGeo || '';
+
+  if (geo === '') {
+    setRtfInstrumentationKV(rtfSlotConfigs, 'nogeo', 'nogeo');
+  }
+
+  rtfSlotConfigs.forEach(function (slotConfig) {
+    r[slotConfig.ad_uuid] = {
+      site: rtfConfig.site,
+      geo: geo,
+      platform: rtfConfig.detectedDevice,
+      sizes: slotConfig.sizes,
+      position: slotConfig.targeting.pos
+    };
+  });
+  return r;
+};
+    function rtfFallback(rtfSlotConfigs, shouldSetupDFP, event) {
+  setRtfInstrumentationKV(rtfSlotConfigs, event.type);
+
+  if (shouldSetupDFP) {
+    setupDFP();
+  }
+};
+    function injectRtfValues(rtfSlotConfigs) {
+  if (rtfValues) {
+    rtfSlotConfigs.forEach(function (slotConfig) {
+      if (!rtfValues[slotConfig.ad_uuid]) {
+        slotConfig.targeting.adler_status = 'nofloor';
+      } else {
+        slotConfig.targeting.adler = rtfValues[slotConfig.ad_uuid].adler;
+        slotConfig.targeting.adler_a = rtfValues[slotConfig.ad_uuid].adler_a;
+        slotConfig.targeting.adler_b = rtfValues[slotConfig.ad_uuid].adler_b;
+        slotConfig.targeting.adler_status = 'ok';
+      }
+    });
+  }
+};
+    function setRtfValues(rtfAjaxCall, rtfSlotConfigs) {
+  try {
+    rtfValues = JSON.parse(rtfAjaxCall.responseText);
+  } catch (err) {
+    setRtfInstrumentationKV(rtfSlotConfigs, 'parse', err.message);
+  }
+
+  injectRtfValues(rtfSlotConfigs);
+};
+    function rtfCallback(rtfAjaxCall, rtfSlotConfigs, shouldSetupDFP) {
+  setRtfValues(rtfAjaxCall, rtfSlotConfigs);
+
+  if (shouldSetupDFP) {
+    setupDFP();
+  }
+};
+    function callRTF(allSlotConfigs, shouldSetupDFP) {
+  var rtfReq = new XMLHttpRequest();
+  var rtfSlotConfigs = [];
+  allSlotConfigs.forEach(function (slotConfig) {
+    if (slotConfig.rtf) {
+      rtfSlotConfigs.push(slotConfig);
+    }
+  });
+  rtfReq.addEventListener('load', rtfCallback.bind(null, rtfReq, rtfSlotConfigs, shouldSetupDFP));
+  rtfReq.addEventListener('timeout', rtfFallback.bind(null, rtfSlotConfigs, shouldSetupDFP));
+  rtfReq.addEventListener('error', rtfFallback.bind(null, rtfSlotConfigs, shouldSetupDFP));
+  rtfReq.open('POST', rtfConfig.rtfApiEndpoint, true);
+  rtfReq.timeout = 1000;
+  rtfReq.send(JSON.stringify(getRtfParams(rtfSlotConfigs)));
+};
+    callRTF(allSlotConfigs, true);
+    /**---------- End of Rtf integration ----------*/
+            /**---- A9 ----*/
+            (function getA9(a9, a, p, s, t, A, g) {
+  if (a[a9]) return;
+
+  function q(c, r) {
+    a[a9]._Q.push([c, r]);
+  }
+
+  a[a9] = {
+    init: function init() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      q('i', args);
+    },
+    fetchBids: function fetchBids() {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      q('f', args);
+    },
+    setDisplayBids: function setDisplayBids() {},
+    _Q: []
+  };
+  A = p.createElement(s);
+  A.async = !0;
+  A.src = t;
+  g = p.getElementsByTagName(s)[0];
+  g.parentNode.insertBefore(A, g);
+})("apstag", window, document, "script", "https://c.amazon-adsystem.com/aax2/apstag.js");
+            /**----- Initialize apstag (A9) -----*/
+            apstag.init({
+              pubID: '3067',
+              adServer: 'googletag',
+              bidTimeout: 1000
+            });
+            var setGPTPersonalization = function setGPTPersonalization(personalized, slotsToRefresh, googletag) {
+  googletag = googletag || window.googletag;
+  googletag.cmd.push(function () {
+    if (!window.dfpReady) {
+      console.log('Awaiting DFP setup.');
+      setTimeout(setGPTPersonalization, 100, personalized);
+    } else {
+      console.log('Doing personalization/refresh');
+
+      if (personalized) {
+        googletag.pubads().setRequestNonPersonalizedAds(0);
+      } else {
+        googletag.pubads().setRequestNonPersonalizedAds(1);
+      }
+
+      googletag.pubads().refresh();
+      window.performance.mark('adStackEnd');
+      window.performance.measure('adStack', 'adStackStart', 'adStackEnd');
+      window.performance.clearMarks();
+      window.performance.clearMeasures();
+    }
+  });
+};
+            var apstagFetchBidsCallback = function apstagFetchBidsCallback() {
+  /*
+  Callback method that triggers the first DFP request for googletag's
+  disableInitialLoad integration after bids have been set
+  */
+  googletag = googletag || window.googletag;
+  googletag.cmd.push(function () {
+    apstag.setDisplayBids();
+    window.OWT.notifyExternalBiddingComplete(notifyId);
+    var slotsToRefresh = Object.keys(adSlots.slots).map(function (key) {
+      return adSlots.slots[key];
+    });
+    /*
+      Determine IAB consent if necessary, and trigger GPT ad refresh
+      if consent is provided.
+    */
+
+    if (isEU) {
+      try {
+        if (typeof __cmp === 'function') {
+          __cmp('getVendorConsents', {}, function (c) {
+            var consent = false;
+
+            if (Array.isArray(c.purposeConsents)) {
+              consent = c.purposeConsents.includes('3:true');
+            } else if (typeof c.purposeConsents === 'object') {
+              consent = c.purposeConsents[3];
+            }
+
+            if (consent !== false && consent !== true) consent = false; // request personalized ads
+
+            setGPTPersonalization(consent, slotsToRefresh);
+          });
+        } else {
+          setGPTPersonalization(false, slotsToRefresh);
+        }
+      } catch (error) {
+        console.error('personalization: ', error);
+        setGPTPersonalization(false, slotsToRefresh);
+      }
+    } else {
+      setGPTPersonalization(true, slotsToRefresh);
+    }
+  });
+};
+            try {
+              apstag.fetchBids({
+                slots: apstagSlots
+              }, apstagFetchBidsCallback);
+            } catch (e) {
+              apstagFetchBidsCallback();
+            }
+          }
+      </script>
+        <!-- Pubmatic wrapper and GPT Tag ends here -->
+        <!-- Google Analytics GTM dataLayer starts here -->
+        
+      <script type='text/javascript'>
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({
+          event: 'pageview',
+          device: 'Desktop',
+          pageName: 'dic-spell',
+          LDid: '0',
+          sessionId: null,
+          browserId: null,
+        });
+      </script>
+      <script>
+      (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-TXC5GP');
+      </script>
+
+        <!-- Google Analytics GTM dataLayer ends here -->
+        <style>html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}body{margin:0;}article,aside,footer,header,nav,section{display:block;}h1{font-size:2em;margin:0.67em 0;}figcaption,figure,main{display:block;}figure{margin:1em 40px;}hr{box-sizing:content-box;height:0;overflow:visible;}pre{font-family:monospace,monospace;font-size:1em;}a{background-color:transparent;-webkit-text-decoration-skip:objects;}abbr[title]{border-bottom:none;-webkit-text-decoration:underline;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted;}b,strong{font-weight:inherit;}b,strong{font-weight:bolder;}code,kbd,samp{font-family:monospace,monospace;font-size:1em;}dfn{font-style:italic;}mark{background-color:#ff0;color:#000;}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sub{bottom:-0.25em;}sup{top:-0.5em;}audio,video{display:inline-block;}audio:not([controls]){display:none;height:0;}img{border-style:none;}svg:not(:root){overflow:hidden;}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0;}button,input{overflow:visible;}button,select{text-transform:none;}button,html [type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0;}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText;}fieldset{padding:0.35em 0.75em 0.625em;}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal;}progress{display:inline-block;vertical-align:baseline;}textarea{overflow:auto;}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0;}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto;}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px;}[type="search"]::-webkit-search-cancel-button,[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit;}details,menu{display:block;}summary{display:list-item;}canvas{display:inline-block;}template{display:none;}[hidden]{display:none;}@font-face{font-family:'dictionary-fonticon';src:url(https://www.dictionary.com/assets/dictionary-font-937b6b276cd0824ba3e4ba1d961f4f8b.eot) format('embedded-opentype'),url(https://www.dictionary.com/assets/dictionary-font-197ce9c0670c69363ae3d5c9aa6fa398.woff) format('woff'),url(https://www.dictionary.com/assets/dictionary-font-5b5489f62c85a3eec009cc0015c7e3b7.ttf) format('truetype'),url(https://www.dictionary.com/assets/dictionary-font-e7c9e2ec6b5218214f642995de61ad97.svg#dictionary-font) format('svg');}ul,ol,dl{margin:0 auto;padding:0;}button,input,optgroup,select,textarea{font-family:inherit;}html,body{overflow-x:hidden;}body{margin:0;font:14px Arial;line-height:1.47;background-color:#f3f3f3;color:#4a4a4a;}body.show-spell .pron-spell{display:inline-block;}body.show-spell .pron-ipa{display:none;}body.show-ipa .pron-spell{display:none;}body.show-ipa .pron-ipa{display:inline-block;}body.show-spell .pron-spell{display:inline-block;}body.show-spell .pron-ipa{display:none;}body.show-ipa .pron-spell{display:none;}body.show-ipa .pron-ipa{display:inline-block;}body .hamburgerMenu-opened.app-isMobile #hamburgerButton-click{margin-left:0;}body .hamburgerMenu-opened #hamburgerButton-click{background-color:#3a76c3;color:#ffffff;}body .hamburgerMenu-opened #hamburgerButton-click::before{content:'';}body .hamburgerMenu-opened .hamburger-overlay{display:block;}a{-webkit-text-decoration:none;text-decoration:none;color:#3a76c3;}a:hover{-webkit-text-decoration:underline;text-decoration:underline;}.one-click:hover{color:#3a76c3;cursor:pointer;}.luna-pronset .audio-player{font-family:dictionary-fonticon;font-size:12px;color:#979797;cursor:pointer;padding:1px;}.luna-pronset .audio-player::before{content:'\e803';}.bold{font-weight:bold;}.italic{font-style:italic;}.css-yshiao.hamburgerMenu-opened{height:100vh;overflow-y:hidden;}.css-1qktsnw{min-height:calc(100vh - 40px);-webkit-transition:-webkit-transform 0.4s ease;-webkit-transition:transform 0.4s ease;transition:transform 0.4s ease;}@media only screen and (max-width:768px){.css-1qktsnw{min-height:calc(100vh - 81px);}}.hamburgerMenu-opened .css-1qktsnw{-webkit-transform:translate3d(300px,0,0);-ms-transform:translate3d(300px,0,0);transform:translate3d(300px,0,0);}.app-isMobile.hamburgerMenu-opened .css-1qktsnw{-webkit-transform:translate3d(calc(100% - 65px),0,0);-ms-transform:translate3d(calc(100% - 65px),0,0);transform:translate3d(calc(100% - 65px),0,0);}.css-ywz12x{z-index:10001;}.css-18hgwr5-Container{background:#3a76c3;display:inline-block;float:left;}.css-p5rnoq-Overlay{position:absolute;display:none;top:0;left:0;height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:4;}.css-17g2mt7-List{list-style-type:none;padding:15px 15px 7px;margin:0;}.css-12jbd0i-Item{font-size:16px;font-style:italic;font-weight:bold;line-height:normal;font-family:Arial;border-top:1px solid #66cef6;font-stretch:normal;-webkit-letter-spacing:normal;-moz-letter-spacing:normal;-ms-letter-spacing:normal;letter-spacing:normal;color:#ffffff;-webkit-font-smoothing:antialiased;}.css-12jbd0i-Item:first-of-type{border-top:0;}.css-12jbd0i-Item:first-of-type > a{padding-top:0;}.css-1j22r93-Link{display:block;color:#f5f5f5;padding:18px 0;-webkit-text-decoration:none;text-decoration:none;}.css-1j22r93-Link:hover{color:#66cef6;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}.css-ioerk6-NestedList{font-family:Arial;font-size:16px;font-weight:normal;line-height:normal;font-style:normal;font-stretch:normal;-webkit-letter-spacing:normal;-moz-letter-spacing:normal;-ms-letter-spacing:normal;letter-spacing:normal;color:#ffffff;list-style-type:none;padding:0 15px 7px;-webkit-font-smoothing:antialiased;}.css-ioerk6-NestedList > li > a{padding:8px 0 14px;font-style:normal;-webkit-text-decoration:none;text-decoration:none;}.css-rkkaj0-SearchContainer{background:#3a76c3;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:left;-webkit-justify-content:left;-ms-flex-pack:left;justify-content:left;left:100px;}.css-1hsp8l3-HiddenLabel{border:0;-webkit-clip:rect(0 0 0 0);clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;}.css-1jzsm78{margin:38px 0 0 -2px;width:100%;padding:0;background:#fff;z-index:2;cursor:pointer;list-style-type:none;box-shadow:0 2px 3px rgba(50,50,50,0.4);position:absolute;max-height:0px;-webkit-transition:max-height 100ms ease;transition:max-height 100ms ease;overflow:hidden;}.css-sew1z2-ListWrapper{border-top:1px solid #e2e2e2;padding:10px 8px;}.css-sew1z2-ListWrapper:hover{background:#f5f5f5;}.css-iry8e{display:block;-webkit-text-decoration:none;text-decoration:none;color:#555;font:14px Verdana,sans-serif;}.css-13o7eu2{display:block;}.css-d5e8ah{display:block;margin:0 auto;padding:0;}@media (max-width:768px){.css-d5e8ah{display:block;}}@media (min-width:1225px){.css-d5e8ah{width:1200px;}}.css-13kgji1{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:relative;min-height:1px;padding:0 10px 15px 10px;width:100%;}@media (max-width:1200px){.css-13kgji1{width:auto;}}@media (max-width:768px){.css-13kgji1{display:block;}}.css-7ac8yh{margin:20px 0;padding:35px 40px;background-color:#ffffff;}@media only screen and (max-width:768px){.css-7ac8yh{padding:30px;}}@media only screen and (max-width:480px){.css-7ac8yh{padding:20px;}}.css-15s1xar ul:first-of-type{border-top:0.5px solid #979797;}.css-133p8ch{font-weight:bold;font-size:24px;color:#4a4a4a;float:left;padding-bottom:5px;}.css-ga08z6{-webkit-column-count:2;column-count:2;margin:0 auto;width:100%;list-style-type:none;display:inline-block;padding-top:10px;padding-bottom:10px;}@media (max-width:900px){.css-ga08z6{-webkit-column-count:1;column-count:1;}}@media (min-width:900px){.css-ga08z6{border-bottom:0.5px solid #979797;}}@media (max-width:900px){.css-9hjnd2{padding-top:10px;padding-bottom:10px;border-bottom:1px solid #979797;}}.css-ovaizi{-webkit-text-decoration:none;text-decoration:none;color:#4a4a4a;width:100%;height:100%;}.css-ovaizi:hover{-webkit-text-decoration:none;text-decoration:none;}.css-70qvj9{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}.css-1t0fiqq{-webkit-box-flex:0;-webkit-flex-grow:0;-ms-flex-positive:0;flex-grow:0;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;width:115px;height:115px;float:left;padding-right:15px;}.css-1kndpeg{word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}.css-1yhjght{color:#4a4a4a;margin:0;font-size:10px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;}.css-rmmo3z{line-height:normal;margin:0;font-size:20px;color:#4a4a4a;padding:4px,0;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;}.css-rmmo3z:hover{color:#3a76c3;}.css-1dwnwxz{font-family:dictionary-fonticon;font-size:12px;}.css-1dwnwxz:after{content:' \e907';color:#09BDFF;}.css-qsoukz{line-height:normal;margin:0;font-size:12px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;color:#4a4a4a;-webkit-text-decoration:none;text-decoration:none;}.css-wms8ca{font-weight:bold;font-size:24px;color:#4a4a4a;padding:0px 50px 6px 0;float:left;padding-right:8px;margin-top:20px;}.css-1rtpjv0{-webkit-column-count:4;column-count:4;width:100%;list-style-type:none;display:inline-block;word-break:break-all;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;margin-bottom:20px;}@media (max-width:768px){.css-1rtpjv0{-webkit-column-count:2;column-count:2;}}.css-ohz4fb{line-height:22px;margin:0 auto;padding-bottom:8px;}.css-15ggazq{-webkit-text-decoration:none;text-decoration:none;color:#3a76c3;display:inline-block;}.css-829tqn-EditorialComponent{background-color:transparent;}@media only screen and (min-width:769px){.css-829tqn-EditorialComponent{padding:px;}}.css-m78s4-EditorialTitle{margin:0 auto 8px;display:inline-block;font-weight:normal;-webkit-text-decoration:none;text-decoration:none;text-transform:uppercase;}.css-fdr832-EditorialTitleLink{color:#4a4a4a;font-size:16px;margin-bottom:0px;}.css-fdr832-EditorialTitleLink:hover{-webkit-text-decoration:underline;text-decoration:underline;color:#3a76c3;}.css-uvmnxq-EditorialCardContainer{list-style:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;}.css-uvmnxq-EditorialCardContainer > li{-webkit-flex-basis:49%;-ms-flex-preferred-size:49%;flex-basis:49%;}@media only screen and (max-width:768px){.css-uvmnxq-EditorialCardContainer > li{-webkit-flex-basis:100%;-ms-flex-preferred-size:100%;flex-basis:100%;}}.css-2lj3gn-Card{margin-bottom:8px;max-width:360px;}.css-2lj3gn-Card:last-child{margin-right:0;}.css-10pymq-CardItemLink{-webkit-text-decoration:none;text-decoration:none;color:#4a4a4a;}.css-11ffqd7-CardItem{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}.css-1s10bac-CardItemImage{-webkit-box-flex:0;-webkit-flex-grow:0;-ms-flex-positive:0;flex-grow:0;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;height:64px;width:64px;float:left;}.css-1ltgjie-CardItemTitle{font-size:14px;color:#4a4a4a;-webkit-letter-spacing:0;-moz-letter-spacing:0;-ms-letter-spacing:0;letter-spacing:0;line-height:18px;margin-left:8px;word-wrap:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;}@media only screen and (max-width:769px){.css-1ltgjie-CardItemTitle{font-size:16px;}}.css-1ltgjie-CardItemTitle:hover{-webkit-text-decoration:underline;text-decoration:underline;color:#3a76c3;}.css-1ymasor{margin-left:20px;min-width:300px;display:inline-block;position:relative;min-height:1px;}@media (max-width:768px){.css-1ymasor{max-width:300px;margin:20px auto auto auto;display:block;}}.css-vtn2l4{padding-bottom:20px;}.css-oy35gi{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;min-height:250px;padding:20px 0;text-align:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}.css-5fvmx8-StyledFooter{background-color:#444;height:185px;}@media only screen and (max-width:769px){.css-5fvmx8-StyledFooter{height:300px;}}.css-1xeb4yw-FooterContainer{width:70%;margin:0 auto;color:#bbb;font-weight:100;font-family:'Helvetica';font-size:14px;line-height:40px;}@media only screen and (max-width:769px){.css-1xeb4yw-FooterContainer{width:100%;line-height:30px;text-align:center;}}.css-19grk89-AZFooterContainer{line-height:normal;padding-bottom:22px;}.css-1owogex-ListContainter{margin:0;list-style:none;padding-top:20px;padding-left:0px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-text-decoration:none;text-decoration:none;position:relative;text-align:left;}@media only screen and (max-width:769px){.css-1owogex-ListContainter{padding-left:18px;}}.css-cxsskz-ListTitle{padding-right:16px;color:#999999;}@media only screen and (min-width:769px){.css-cxsskz-ListTitle{float:left;}}.css-n1j42s-ListItem{float:left;padding-right:6px;}@media only screen and (max-width:769px){.css-n1j42s-ListItem{float:right;padding-right:18px;margin-bottom:8px;-webkit-column-fill:balance;column-fill:balance;}}.css-fpt4lm-ListItemLink{color:#cccccc;-webkit-text-decoration:none;text-decoration:none;}.css-f063v9-ListItem{float:left;padding-right:16px;}@media only screen and (max-width:769px){.css-f063v9-ListItem{float:right;padding-right:18px;margin-bottom:8px;-webkit-column-fill:balance;column-fill:balance;}}.css-197if4n-FooterNavigation{display:inline;margin:0;padding:0px;}@media only screen and (min-width:769px){.css-197if4n-FooterNavigation{float:right;}}.css-184f2y4-FooterNavigationElement{display:inline;position:relative;}.css-ehlzpo-FooterLink{color:#bbb;-webkit-text-decoration:none;text-decoration:none;padding-left:35px;}.css-ehlzpo-FooterLink:hover{color:#fff;-webkit-text-decoration:underline;text-decoration:underline;}@media only screen and (max-width:769px){.css-ehlzpo-FooterLink{padding:5px;display:inline-block;text-align:center;}}.css-1atz4kp-Navigation{height:40px;overflow:hidden;}.css-jjfbi4-Nav{position:absolute;top:0;left:-300px;width:300px;height:100%;background-color:#3a76c3;}.css-drw9r6-HamburgerButton{margin-left:0;font-family:dictionary-fonticon;color:inherit;width:40px;height:40px;cursor:pointer;padding:0;border:none;outline:none;position:relative;display:inline-block;-webkit-font-smoothing:antialiased;background-color:#fff;font-size:24px;line-height:1;z-index:5;}.css-drw9r6-HamburgerButton::before{content:'';}.css-1hyo8qo-TabContainer{height:40px;margin:0;padding:0;}.css-3lq8qd-TabActive{z-index:3;border-right:none;float:left;list-style-type:none;background-color:#f5f5f5;text-align:center;background-color:#3a76c3;}.css-3lq8qd-TabActive:last-child{border-right:1px solid #aaa;}.css-8x77lp-Link{cursor:pointer;display:inline-block;padding:12px 26px;font:16px Helvetica,sans-serif;line-height:18px;font-style:italic;font-weight:bold;-webkit-text-decoration:none;text-decoration:none;color:#666;color:#fff;}@media (max-width:400px){.css-8x77lp-Link{padding:11px 13px;font-size:14px;}}@media (max-width:318px){.css-8x77lp-Link{font-size:12px;}}.css-upgnes-TabInactive{z-index:3;border-right:none;float:left;list-style-type:none;background-color:#f5f5f5;text-align:center;}.css-upgnes-TabInactive:hover{background-color:#e2e2e2;}.css-12pg1no-Link{cursor:pointer;display:inline-block;padding:12px 26px;font:16px Helvetica,sans-serif;line-height:18px;font-style:italic;font-weight:bold;-webkit-text-decoration:none;text-decoration:none;color:#666;}@media (max-width:400px){.css-12pg1no-Link{padding:11px 13px;font-size:14px;}}@media (max-width:318px){.css-12pg1no-Link{font-size:12px;}}.css-1o19q92-StyledApps{float:right;padding:1px 14px 1px 22px;margin:8px 0;border-right:1px solid #e2e2e2;line-height:22px;color:#555;font-size:11px;-webkit-text-decoration:none;text-decoration:none;font-weight:400;font-family:Open Sans,sans-serif;-webkit-transition:all 0.15s ease-in-out;transition:all 0.15s ease-in-out;}.css-1o19q92-StyledApps > span{float:left;width:22px;height:22px;margin-right:8px;font-size:22px;-webkit-text-decoration:none;text-decoration:none;font-family:dictionary-fonticon;}.css-1o19q92-StyledApps:hover{color:#6cb746;}.css-1y1om3k-Android::before{content:'';}.css-5yyf7-Apple::before{content:'';}.css-nc8m4u-SearchRow{padding:15px 15px 18px;height:auto;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;}@media (min-width:1200px){.css-nc8m4u-SearchRow{width:1170px;margin-right:auto;margin-left:auto;}}@media (min-width:992px){.css-nc8m4u-SearchRow{width:970px;margin-right:auto;margin-left:auto;}}.css-8en0us-Logo{margin:0 20px 0 0;width:176px;height:40px;}.css-18hd8o5-SearchWrapper{padding:8px 2px;background-color:#f8f8f8;display:inline-block;float:left;box-sizing:border-box;position:relative;}.css-1nodpsb-StyledForm{display:inline-block;}.css-6houri-FilterNavContainer{float:left;cursor:pointer;}.css-1qsgpoi{font-family:'dictionary-fonticon';speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;float:right;padding:1px 3px;color:#555;font-size:25px;line-height:28px;}.css-1qsgpoi:after{content:'\e613';}.css-pvpj9z-FilterItem{float:right;min-width:92px;display:block;padding-left:8px;color:#555;font:14px Verdana;line-height:30px;}.css-1i91y96-SearchInputColored{float:left;display:block;width:292px;height:30px;padding:0 8px;margin-right:1px;border:1px solid #e2e2e2;min-height:1px;line-height:18px;font-size:18px;color:#666;-webkit-transition:border-color,box-shadow 0.2s,0.2s ease-in-out,ease-in-out;transition:border-color,box-shadow 0.2s,0.2s ease-in-out,ease-in-out;}.css-1i91y96-SearchInputColored:hover,.css-1i91y96-SearchInputColored:focus{border-color:#55acee;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);}@media (min-width:1200px){.css-1i91y96-SearchInputColored{width:422px;}}.css-k3x3u4-SearchButtonColored{font-family:'dictionary-fonticon';speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;width:50px;height:30px;cursor:pointer;padding:0;border:0;outline:0;background-color:transparent;float:left;display:inline-block;padding:2px 8px;background:#f8f8f8;color:#3f729b;font-size:24px;color:#55acee;}.css-k3x3u4-SearchButtonColored:before{content:'\e614';}.css-1j1ozwe{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;min-height:90px;padding:20px 0;text-align:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}@-webkit-keyframes animation-ivawdv{0%,50%,100%{-webkit-transform:translateY(0px);-ms-transform:translateY(0px);transform:translateY(0px);}25%,75%{-webkit-transform:translateY(5px);-ms-transform:translateY(5px);transform:translateY(5px);}}@keyframes animation-ivawdv{0%,50%,100%{-webkit-transform:translateY(0px);-ms-transform:translateY(0px);transform:translateY(0px);}25%,75%{-webkit-transform:translateY(5px);-ms-transform:translateY(5px);transform:translateY(5px);}}</style>
+      </head>
+      <body class="show-spell">
+        <!-- Google Analytics GTM iframe starts here -->
+        
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-TXC5GP"
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    
+        <!-- Google Analytics GTM iframe ends here -->
+        <div id="root"><div data-reactroot=""><div class="app-base css-yshiao e1fub8bm0"><div id="base-pw" class="base-pwrap css-1qktsnw e1fub8bm1"><div class="css-ywz12x e11ozc52"><header><nav aria-label="Site Navigation"><div class="css-1atz4kp-Navigation e1nknobk0"><div class="css-18hgwr5-Container e1mpvuks0"><div class="hamburger-overlay css-p5rnoq-Overlay e1mpvuks1"></div><nav aria-label="Hamburger Menu" class="css-jjfbi4-Nav e1mpvuks3"><ul class="css-17g2mt7-List e1mpvuks5"><li class="css-12jbd0i-Item e1mpvuks4"><a id="hamburgerMenuDictionarycom" href="https://www.dictionary.com/" data-linkid="lxabec" class="css-1j22r93-Link e1mpvuks2">Dictionary.com</a></li><li class="css-12jbd0i-Item e1mpvuks4"><a id="hamburgerMenuThesauruscom" href="https://www.thesaurus.com/" data-linkid="c1drjk" class="css-1j22r93-Link e1mpvuks2">Thesaurus.com</a></li><li class="css-12jbd0i-Item e1mpvuks4"><a id="hamburgerMenuEAZ" href="https://www.dictionary.com/e/" data-linkid="t6ehki" class="css-1j22r93-Link e1mpvuks2">Everything After Z</a><ul class="css-ioerk6-NestedList e1mpvuks6"><li><a id="hamburgerMenuWOTD" href="https://www.dictionary.com/wordoftheday/" data-linkid="1498ik" class="css-1j22r93-Link e1mpvuks2">Word of the Day</a></li><li><a id="hamburgerMenuVideo" href="https://www.dictionary.com/e/video/" data-linkid="t6ehki" class="css-1j22r93-Link e1mpvuks2">Video</a></li><li><a id="hamburgerMenuWordFacts" href="https://www.dictionary.com/e/c/word-facts/" data-linkid="t6ehki" class="css-1j22r93-Link e1mpvuks2">Word Facts</a></li><li><a id="hamburgerMenuGrammar" href="https://www.dictionary.com/e/grammar/" data-linkid="t6ehki" class="css-1j22r93-Link e1mpvuks2">Grammar</a></li><li><a id="hamburgerMenuCrosswordSolver" href="https://www.dictionary.com/e/crosswordsolver/" data-linkid="636f6c" class="css-1j22r93-Link e1mpvuks2">Crossword Solver</a></li><li><a id="hamburgerMenuDailyCrossword" href="https://www.dictionary.com/e/crossword/" data-linkid="636f6c" class="css-1j22r93-Link e1mpvuks2">Daily Crossword</a></li></ul></li><li class="css-12jbd0i-Item e1mpvuks4"><a id="hamburgerMenuATW" href="https://www.dictionary.com/e/all-the-words/" data-linkid="qnez9u" class="css-1j22r93-Link e1mpvuks2">All The Words</a><ul class="css-ioerk6-NestedList e1mpvuks6"><li><a id="hamburgerMenuSlang" href="https://www.dictionary.com/e/slang/" data-linkid="qnez9u" class="css-1j22r93-Link e1mpvuks2">Slang</a></li><li><a id="hamburgerMenuEmoji" href="https://www.dictionary.com/e/emoji/" data-linkid="bhng9k" class="css-1j22r93-Link e1mpvuks2">Emoji</a></li><li><a id="hamburgerMenuGenderSexuality" href="https://www.dictionary.com/e/gender-sexuality/" data-linkid="1l40im" class="css-1j22r93-Link e1mpvuks2">Gender &amp; Sexuality</a></li><li><a id="hamburgerMenuAcronym" href="https://www.dictionary.com/e/acronyms/" data-linkid="8quzrn" class="css-1j22r93-Link e1mpvuks2">Acronyms</a></li></ul></li></ul></nav><button aria-label="Toggle Menu" id="hamburgerButton-click" class="css-drw9r6-HamburgerButton e1mpvuks7"></button></div><ul class="css-1hyo8qo-TabContainer e1nknobk1"><li class="css-3lq8qd-TabActive ejn7swr1"><a href="https://www.Dictionary.com" id="dictionary-nav-tab" class="header-tab-active css-8x77lp-Link ejn7swr0" data-linkid="tqks0v" role="link">Dictionary.com</a></li><li class="css-upgnes-TabInactive ejn7swr2"><a href="https://www.Thesaurus.com" id="thesaurus-nav-tab" data-linkid="qxnxzj" class="css-12pg1no-Link ejn7swr0">Thesaurus.com</a></li></ul><a href="https://www.dictionary.com/e/apps/" font-family="dictionary-fonticon" data-linkid="dbvvdc" class="css-1o19q92-StyledApps ebzzift0"><span class="css-1y1om3k-Android ebzzift1"></span><span class="css-5yyf7-Apple ebzzift2"></span>Try Our Apps</a></div></nav><div class="css-rkkaj0-SearchContainer e1nfx3j01"><div class="css-nc8m4u-SearchRow e1nfx3j02"><a href="https://www.dictionary.com" data-linkid="yg487x"><img src="https://www.dictionary.com/assets/dictionary_logo_white-90c1e2eaf84c6abcb80d08d6eb0b6c60.svg" alt="Dictionary.com" class="css-8en0us-Logo e1nfx3j00"/></a><div class="css-18hd8o5-SearchWrapper e18h4a051"><form action="#" class="css-1nodpsb-StyledForm e18h4a053"><div class="css-6houri-FilterNavContainer ev3lshj0"><span id="search-dropdown-icon" class="css-1qsgpoi e2cjyp00"></span><span id="active-definitions" class="css-pvpj9z-FilterItem ev3lshj1">definitions</span></div><label for="q" class="css-1hsp8l3-HiddenLabel e1t7bu8t0">Search</label><input type="search" title="Search" autoComplete="off" autoCapitalize="off" autoCorrect="off" name="override_query" class="search-input css-1i91y96-SearchInputColored e18h4a054" id="searchbar_input" value="bardings"/><button aria-label="Search" type="submit" id="search-submit" class="css-k3x3u4-SearchButtonColored e18h4a052"></button><ul style="max-height:0" class="css-1jzsm78 ep2tsc50"><li id="synonyms-filter" class="css-sew1z2-ListWrapper e18h4a050"><a data-linkid="205vpa" class="css-iry8e ebjrtl60">synonyms</a></li></ul></form></div></div></div></header></div><div class="css-13o7eu2 e11ozc50"><main class="css-d5e8ah e1fub8bm2"><aside class="no-collapse css-1j1ozwe eanayw60" id="dcom-misspell-lb-728x90"><script>if (window.googletag) {googletag.cmd.push(function() { googletag.display('dcom-misspell-lb-728x90'); });} else {console.error('googletag not defined, dcom-misspell-lb-728x90');}</script></aside><section class="css-13kgji1 e8xvxkb0"><section><div class="css-7ac8yh e16867sm0"><section class="parsely-suggestions css-15s1xar e1iznl5f0"><span class="css-133p8ch e1iznl5f1">Results for <!-- -->bardings<!-- -->:</span><ul class="css-ga08z6 evzomdn0"><li class="css-9hjnd2 e19a1e250"><a href="https://www.dictionary.com/e/pop-culture/what-does-the-fox-say/" class="css-ovaizi e19a1e253"><div class="css-70qvj9 e19a1e251"><img src="https://images.parsely.com/tSM7ineCZxyAWmWtS-BqnLTxER0=/85x85/smart/https%3A//www.dictionary.com/e/wp-content/uploads/2018/05/what-does-the-fox-say-150x150.jpg" alt="What Does the Fox Say?" data-linkid="m78mix" class="css-1t0fiqq e19a1e252"/><span class="css-1kndpeg e19a1e254"><p data-linkid="m78mix" class="css-1yhjght e19a1e255">POP CULTURE</p><p data-linkid="m78mix" class="css-rmmo3z e19a1e256">What Does the Fox Say?<span class="css-1dwnwxz e19a1e259"></span></p></span></div></a></li><li class="css-9hjnd2 e19a1e250"><a href="https://www.dictionary.com/e/insults-shakespearean/" class="css-ovaizi e19a1e253"><div class="css-70qvj9 e19a1e251"><img src="https://images.parsely.com/Z7XXMXRLoQAUnPSCYYuLPr2bgoE=/85x85/smart/https%3A//www.dictionary.com/e/wp-content/uploads/2014/04/caterpillar-150x150.jpg" alt="Cankers, Caterpillars, and Malt-worms: 3 Shakespearean Insults" data-linkid="m78mix" class="css-1t0fiqq e19a1e252"/><span class="css-1kndpeg e19a1e254"><p data-linkid="m78mix" class="css-1yhjght e19a1e255">HISTORY</p><p data-linkid="m78mix" class="css-rmmo3z e19a1e256">Cankers, Caterpillars, and Malt-worms:...</p><span class="css-qsoukz e19a1e258"><span class="css-0 e19a1e257">Great insults pepper the comedies and tragedies of...</span><span class="css-1dwnwxz e19a1e259"></span></span></span></div></a></li></ul><ul class="css-ga08z6 evzomdn0"><li class="css-9hjnd2 e19a1e250"><a href="https://www.dictionary.com/e/occupy/" class="css-ovaizi e19a1e253"><div class="css-70qvj9 e19a1e251"><img src="https://images.parsely.com/xlMIlkXC8YnnZ1TBycjuBXoWJXU=/85x85/smart/http%3A//static.dictionary.com/homepage/carousel/November-2011/occupy.jpg" alt="What “Occupy” Used To Mean May Make You Blush" data-linkid="m78mix" class="css-1t0fiqq e19a1e252"/><span class="css-1kndpeg e19a1e254"><p data-linkid="m78mix" class="css-1yhjght e19a1e255">IN THE NEWS</p><p data-linkid="m78mix" class="css-rmmo3z e19a1e256">What “Occupy” Used To Mean May...</p><span class="css-qsoukz e19a1e258"><span class="css-0 e19a1e257">From Portland to St. Louis, the Occupy protests have...</span><span class="css-1dwnwxz e19a1e259"></span></span></span></div></a></li><li class="css-9hjnd2 e19a1e250"><a href="https://www.dictionary.com/e/shakespeare/" class="css-ovaizi e19a1e253"><div class="css-70qvj9 e19a1e251"><img src="https://images.parsely.com/5wvoFdTYlA98HBhkyie-3N9kkBk=/85x85/smart/https%3A//www.dictionary.com/e/wp-content/uploads/2019/04/1000x700-shakespeare-150x150.jpg" alt="Words Popularized By Shakespeare That We Still Use" data-linkid="m78mix" class="css-1t0fiqq e19a1e252"/><span class="css-1kndpeg e19a1e254"><p data-linkid="m78mix" class="css-1yhjght e19a1e255">ARTS &amp; ENTERTAINMENT</p><p data-linkid="m78mix" class="css-rmmo3z e19a1e256">Words Popularized By Shakespeare...</p><span class="css-qsoukz e19a1e258"><span class="css-0 e19a1e257">William Shakespeare died on April 23, 1616 and was...</span><span class="css-1dwnwxz e19a1e259"></span></span></span></div></a></li></ul></section><section class="spell-suggestions"><section class="css-wms8ca e19m0k9k3">More suggestions:</section><ul class="css-1rtpjv0 e19m0k9k4"><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/boardings" class="css-15ggazq e19m0k9k2">boardings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/baodings" class="css-15ggazq e19m0k9k2">baodings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/birdings" class="css-15ggazq e19m0k9k2">birdings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/beadings" class="css-15ggazq e19m0k9k2">beadings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/boarding&#x27;s" class="css-15ggazq e19m0k9k2">boarding&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/boardings&#x27;" class="css-15ggazq e19m0k9k2">boardings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/baoding&#x27;s" class="css-15ggazq e19m0k9k2">baoding&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/baodings&#x27;" class="css-15ggazq e19m0k9k2">baodings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/bardiness" class="css-15ggazq e19m0k9k2">bardiness</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/barding" class="css-15ggazq e19m0k9k2">barding</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/battings" class="css-15ggazq e19m0k9k2">battings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/birding&#x27;s" class="css-15ggazq e19m0k9k2">birding&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/birdings&#x27;" class="css-15ggazq e19m0k9k2">birdings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/bodings" class="css-15ggazq e19m0k9k2">bodings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/beading&#x27;s" class="css-15ggazq e19m0k9k2">beading&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/beadings&#x27;" class="css-15ggazq e19m0k9k2">beadings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/bandings" class="css-15ggazq e19m0k9k2">bandings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/barkings" class="css-15ggazq e19m0k9k2">barkings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/cardings" class="css-15ggazq e19m0k9k2">cardings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/hardings" class="css-15ggazq e19m0k9k2">hardings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/beddings" class="css-15ggazq e19m0k9k2">beddings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/biddings" class="css-15ggazq e19m0k9k2">biddings</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/bardiness&#x27;" class="css-15ggazq e19m0k9k2">bardiness&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/batting&#x27;s" class="css-15ggazq e19m0k9k2">batting&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/battings&#x27;" class="css-15ggazq e19m0k9k2">battings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/baring&#x27;s" class="css-15ggazq e19m0k9k2">baring&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/boding&#x27;s" class="css-15ggazq e19m0k9k2">boding&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/bodings&#x27;" class="css-15ggazq e19m0k9k2">bodings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/banding&#x27;s" class="css-15ggazq e19m0k9k2">banding&#x27;s</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/bandings&#x27;" class="css-15ggazq e19m0k9k2">bandings&#x27;</a></li><li class="css-ohz4fb e19m0k9k5"><a data-linkid="1s2vwf" href="/browse/barking&#x27;s" class="css-15ggazq e19m0k9k2">barking&#x27;s</a></li></ul></section></div><div class="css-7ac8yh e16867sm0"><aside class="css-829tqn-EditorialComponent e1bbcgok0"><div class="css-m78s4-EditorialTitle e1bbcgok2"><a href="https://www.dictionary.com/e/" data-linkid="2azoy5" class="css-fdr832-EditorialTitleLink e1bbcgok3">Explore Dictionary.com</a></div><ul class="css-uvmnxq-EditorialCardContainer e1bbcgok1"><li class="css-2lj3gn-Card e1ifcv6o0"><a href="https://www.dictionary.com/e/hamilton-words/" id="editorialContent0" data-linkid="b00rn2" class="css-10pymq-CardItemLink e1ifcv6o2"><div class="css-11ffqd7-CardItem e1ifcv6o1"><img data-linkid="b00rn2" src="https://www.dictionary.com/e/wp-content/uploads/2018/07/Alexander-Hamilton-150x150.jpg" alt="We Can Thank Alexander Hamilton For Giving Us These Words" class="css-1s10bac-CardItemImage e1ifcv6o4"/><p data-linkid="b00rn2" class="css-1ltgjie-CardItemTitle e1ifcv6o3">We Can Thank Alexander Hamilton For Giving Us These Words</p></div></a></li><li class="css-2lj3gn-Card e1ifcv6o0"><a href="https://www.dictionary.com/e/empathy-vs-sympathy/" id="editorialContent1" data-linkid="ytn3fh" class="css-10pymq-CardItemLink e1ifcv6o2"><div class="css-11ffqd7-CardItem e1ifcv6o1"><img data-linkid="ytn3fh" src="https://www.dictionary.com/e/wp-content/uploads/2016/02/1000x700-empathy-vs-sympathy-150x150.jpg" alt="Empathy vs. Sympathy: Which Word To Use And When" class="css-1s10bac-CardItemImage e1ifcv6o4"/><p data-linkid="ytn3fh" class="css-1ltgjie-CardItemTitle e1ifcv6o3">Empathy vs. Sympathy: Which Word To Use And When</p></div></a></li><li class="css-2lj3gn-Card e1ifcv6o0"><a href="https://www.dictionary.com/e/s/dictionary-coms-top-10-emoji-hidden-meanings/" id="editorialContent2" data-linkid="gdjn7o" class="css-10pymq-CardItemLink e1ifcv6o2"><div class="css-11ffqd7-CardItem e1ifcv6o1"><img data-linkid="gdjn7o" src="https://www.dictionary.com/e/wp-content/uploads/2017/08/tittle_titivation_eggplant_1000x700-150x150.jpg" alt="Do You Know The Hidden Meanings Of These Popular Emoji?" class="css-1s10bac-CardItemImage e1ifcv6o4"/><p data-linkid="gdjn7o" class="css-1ltgjie-CardItemTitle e1ifcv6o3">Do You Know The Hidden Meanings Of These Popular Emoji?</p></div></a></li><li class="css-2lj3gn-Card e1ifcv6o0"><a href="https://www.dictionary.com/e/advice-vs-advise/" id="editorialContent3" data-linkid="mxi818" class="css-10pymq-CardItemLink e1ifcv6o2"><div class="css-11ffqd7-CardItem e1ifcv6o1"><img data-linkid="mxi818" src="https://www.dictionary.com/e/wp-content/uploads/2017/11/Advice_vs_Advise_1000x700-150x150.jpg" alt="Advice vs. Advise" class="css-1s10bac-CardItemImage e1ifcv6o4"/><p data-linkid="mxi818" class="css-1ltgjie-CardItemTitle e1ifcv6o3">Advice vs. Advise</p></div></a></li><li class="css-2lj3gn-Card e1ifcv6o0"><a href="http://www.dictionary.com/e/s/english-could-really-use-these-9-wunderbar-german-words/" id="editorialContent4" data-linkid="3og0dl" class="css-10pymq-CardItemLink e1ifcv6o2"><div class="css-11ffqd7-CardItem e1ifcv6o1"><img data-linkid="3og0dl" src="https://www.dictionary.com/e/wp-content/uploads/2019/07/1000x700-german-1-150x150.jpg" alt="English Could Really Use These 9 Wunderbar German Words" class="css-1s10bac-CardItemImage e1ifcv6o4"/><p data-linkid="3og0dl" class="css-1ltgjie-CardItemTitle e1ifcv6o3">English Could Really Use These 9 Wunderbar German Words</p></div></a></li><li class="css-2lj3gn-Card e1ifcv6o0"><a href="https://www.dictionary.com/e/s/13-quotes-writers-will-relate/" id="editorialContent5" data-linkid="7pjs9o" class="css-10pymq-CardItemLink e1ifcv6o2"><div class="css-11ffqd7-CardItem e1ifcv6o1"><img data-linkid="7pjs9o" src="https://www.dictionary.com/e/wp-content/uploads/2017/09/9_3_17_haruki_murakami-150x150.jpg" alt="13 Quotes All Writers Will Relate To" class="css-1s10bac-CardItemImage e1ifcv6o4"/><p data-linkid="7pjs9o" class="css-1ltgjie-CardItemTitle e1ifcv6o3">13 Quotes All Writers Will Relate To</p></div></a></li></ul></aside></div></section><aside class="css-1ymasor e1su27ci0"><aside class="no-collapse css-oy35gi eanayw60" id="dcom-misspell-top-300x250"><script>if (window.googletag) {googletag.cmd.push(function() { googletag.display('dcom-misspell-top-300x250'); });} else {console.error('googletag not defined, dcom-misspell-top-300x250');}</script></aside><div class="css-vtn2l4 e1su27ci1"></div></aside></section><aside class="no-collapse css-1j1ozwe eanayw60" id="dcom-misspell-bottom-lb-728x90"><script>if (window.googletag) {googletag.cmd.push(function() { googletag.display('dcom-misspell-bottom-lb-728x90'); });} else {console.error('googletag not defined, dcom-misspell-bottom-lb-728x90');}</script></aside></main></div></div><footer class="page-footer css-5fvmx8-StyledFooter esk3ouk0"><div class="css-1xeb4yw-FooterContainer esk3ouk1"><div class="css-19grk89-AZFooterContainer esk3ouk5"><ul class="footer-az-list css-1owogex-ListContainter emmj7sa0"><li class="css-cxsskz-ListTitle emmj7sa1">Browse the <!-- -->Dictionary<!-- -->:</li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/0/1" id="azFooter0" class="css-fpt4lm-ListItemLink emmj7sa3">#</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/a" id="azFooterA" class="css-fpt4lm-ListItemLink emmj7sa3">A</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/b" id="azFooterB" class="css-fpt4lm-ListItemLink emmj7sa3">B</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/c" id="azFooterC" class="css-fpt4lm-ListItemLink emmj7sa3">C</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/d" id="azFooterD" class="css-fpt4lm-ListItemLink emmj7sa3">D</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/e" id="azFooterE" class="css-fpt4lm-ListItemLink emmj7sa3">E</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/f" id="azFooterF" class="css-fpt4lm-ListItemLink emmj7sa3">F</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/g" id="azFooterG" class="css-fpt4lm-ListItemLink emmj7sa3">G</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/h" id="azFooterH" class="css-fpt4lm-ListItemLink emmj7sa3">H</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/i" id="azFooterI" class="css-fpt4lm-ListItemLink emmj7sa3">I</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/j" id="azFooterJ" class="css-fpt4lm-ListItemLink emmj7sa3">J</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/k" id="azFooterK" class="css-fpt4lm-ListItemLink emmj7sa3">K</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/l" id="azFooterL" class="css-fpt4lm-ListItemLink emmj7sa3">L</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/m" id="azFooterM" class="css-fpt4lm-ListItemLink emmj7sa3">M</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/n" id="azFooterN" class="css-fpt4lm-ListItemLink emmj7sa3">N</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/o" id="azFooterO" class="css-fpt4lm-ListItemLink emmj7sa3">O</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/p" id="azFooterP" class="css-fpt4lm-ListItemLink emmj7sa3">P</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/q" id="azFooterQ" class="css-fpt4lm-ListItemLink emmj7sa3">Q</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/r" id="azFooterR" class="css-fpt4lm-ListItemLink emmj7sa3">R</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/s" id="azFooterS" class="css-fpt4lm-ListItemLink emmj7sa3">S</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/t" id="azFooterT" class="css-fpt4lm-ListItemLink emmj7sa3">T</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/u" id="azFooterU" class="css-fpt4lm-ListItemLink emmj7sa3">U</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/v" id="azFooterV" class="css-fpt4lm-ListItemLink emmj7sa3">V</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/w" id="azFooterW" class="css-fpt4lm-ListItemLink emmj7sa3">W</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/x" id="azFooterX" class="css-fpt4lm-ListItemLink emmj7sa3">X</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/y" id="azFooterY" class="css-fpt4lm-ListItemLink emmj7sa3">Y</a></li><li class="css-n1j42s-ListItem emmj7sa2"><a href="/list/z" id="azFooterZ" class="css-fpt4lm-ListItemLink emmj7sa3">Z</a></li></ul><ul class="footer-category-list css-1owogex-ListContainter emmj7sa0"><li class="css-cxsskz-ListTitle emmj7sa1">Browse by Category:</li><li class="css-f063v9-ListItem emmj7sa2"><a href="https://www.dictionary.com/e/list/slang/" id="atwFooterSlang" class="css-fpt4lm-ListItemLink emmj7sa3">Slang</a></li><li class="css-f063v9-ListItem emmj7sa2"><a href="https://www.dictionary.com/e/list/emoji/" id="atwFooterEmoji" class="css-fpt4lm-ListItemLink emmj7sa3">Emoji</a></li><li class="css-f063v9-ListItem emmj7sa2"><a href="https://www.dictionary.com/e/list/acronyms/" id="atwFooterAcronyms" class="css-fpt4lm-ListItemLink emmj7sa3">Acronyms</a></li><li class="css-f063v9-ListItem emmj7sa2"><a href="https://www.dictionary.com/e/list/pop-culture/" id="atwFooterPopCulture" class="css-fpt4lm-ListItemLink emmj7sa3">Pop Culture</a></li><li class="css-f063v9-ListItem emmj7sa2"><a href="https://www.dictionary.com/e/list/word-facts/" id="atwFooterMore" class="css-fpt4lm-ListItemLink emmj7sa3">More</a></li></ul></div><ul class="footer-about-list css-197if4n-FooterNavigation esk3ouk2"><li class="css-184f2y4-FooterNavigationElement esk3ouk3"><a href="https://www.dictionary.com/e/about/" data-linkid="gy27eg" id="about-click" class="css-ehlzpo-FooterLink esk3ouk4">About</a></li><li class="css-184f2y4-FooterNavigationElement esk3ouk3"><a href="https://www.dictionary.com/e/careers/" data-linkid="gy27eg" id="careers-click" class="css-ehlzpo-FooterLink esk3ouk4">Careers</a></li><li class="css-184f2y4-FooterNavigationElement esk3ouk3"><a href="https://www.dictionary.com/e/contact/" data-linkid="gy27eg" id="contactUs-click" class="css-ehlzpo-FooterLink esk3ouk4">Contact Us</a></li><li class="css-184f2y4-FooterNavigationElement esk3ouk3"><a href="https://www.dictionary.com/e/terms/" data-linkid="gy27eg" id="termAndPrivacy-click" class="css-ehlzpo-FooterLink esk3ouk4">Cookies, Terms, &amp; Privacy</a></li></ul><div>© 2019 Dictionary.com, LLC</div></div></footer></div></div></div>
+        <script>window.ANALYTICS = {"siteName":"dict","trackURL":"https:\u002F\u002Ftrack.dictionary.com\u002Fmain.gif","thesaurusSpanIdUrl":"https:\u002F\u002Fspanids.thesaurus.com\u002F","pageName":"dic-spell","ab":0,"platform":"Desktop"};</script>
+        <script>window.ENV_VARS = {"dev":false,"test":false,"prod":true,"SERVER_CONTENT_TIMEOUT_DESKTOP":0,"CLIENT_CONTENT_TIMEOUT_DESKTOP":0,"SERVER_CONTENT_TIMEOUT_MOBILE":1000,"CLIENT_CONTENT_TIMEOUT_MOBILE":1000,"CLIENT_TRANSITION_MASK_DESKTOP":false,"CLIENT_TRANSITION_MASK_MOBILE":true,"PROTOCOL":"https","TRACKING_URL":"https:\u002F\u002Ftrack.dictionary.com\u002Fmain.gif","UPGRADE_INSECURE_REQUESTS":true,"THESAURUS_SPANID_URL":"https:\u002F\u002Fspanids.thesaurus.com\u002F","TEST_AD_TYPE_TOGGLE":false,"DCOM_URL":"www.dictionary.com","TCOM_URL":"www.thesaurus.com","ALLOW_DISABLED_ADS":"false","DCOM_CONTENT_API_ENDPOINT":"https:\u002F\u002Fapi-portal.dictionary.com\u002Fdcom\u002FpageData","SPELL_SUGGESTIONS_API_ENDPOINT":"https:\u002F\u002Fapi-portal.dictionary.com\u002FspellSuggestions","PARSELY_EXPLORE_API_ENDPOINT":"https:\u002F\u002Fwww.dictionary.com\u002Feditorial-feed\u002Fv1\u002Fparsely\u002Fexplore","WOTD_API_ENDPOINT":"https:\u002F\u002Frestcdn.dictionary.com\u002Fv2\u002Fwordoftheday.json","EXAMPLE_SENTENCES_API_ENDPOINT":"https:\u002F\u002Fapi-portal.dictionary.com\u002FexampleSentencesBySource","NEARBY_WORDS_API_ENDPOINT":"https:\u002F\u002Fapi-portal.dictionary.com\u002Fdcom\u002FnearbyWords","RELATED_WORDS_API_ENDPOINT":"https:\u002F\u002Fapi-portal.dictionary.com\u002Fdcom\u002Fsynonyms","PARSELY_SUGGESTIONS_API_ENDPOINT":"https:\u002F\u002Fwww.dictionary.com\u002Feditorial-feed\u002Fv1\u002Fparsely\u002Fsuggestions","DEFINITION_VIDEO_METADATA_URL":"https:\u002F\u002Fwww.dictionary.com\u002Fassets\u002Fdcom_serp_video_metadata.json","BRIGHTCOVE_PLAYER_ID":"phXoaZJfk","PUBLIC_ASSETS_URL":"https:\u002F\u002Fwww.dictionary.com\u002Fassets","ONETRUST_URL":"https:\u002F\u002Fcdn.cookielaw.org\u002Fconsent\u002F165aec66-c4e9-4f8c-8ac2-f16e4f293f24.js","FIRST_PRICE_BIDDING":"false","SERVER_LOGGING_LEVEL":"error","CLIENT_LOGGING_LEVEL":"error","API_REQUEST_LOGGING_LEVEL":"info","RTF_FEATURE_ENABLED":"true","MUP_FEATURE_ENABLED":"true","ONETRUST_FEATURE_ENABLED":true,"MUP_FPB_API_ENDPOINT":"https:\u002F\u002Firene.dictionary.com\u002Fmup-fpb\u002Fv1","LDID":0};</script>
+        <script>window.INITIAL_STATE = {"searchData":{"searchTerm":"bardings","pageName":"misspelling"},"detectedDevice":{"isMobile":false}};</script>
+      </body>
+    </html>

@@ -15,6 +15,11 @@ from Parser import TextParser
 
 class Test_test1(unittest.TestCase):
 
+
+    def test_recognizeNumberAsNotAWord(self):
+        testNumber = "42"
+        self.assertFalse(Parser.isActualWord({}, None, testNumber))
+
     def test_SimpleNameIsNotRecognizedAsWord(self):
         rawSentence = "My name is Harry Potter." 
         sentence = Sentence("Test", rawSentence)

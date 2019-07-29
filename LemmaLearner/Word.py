@@ -1,10 +1,14 @@
 
 class Word:
+
     def __init__(self, rawWord, originSentence):
         self.rawWord = rawWord
         self.sentences = {originSentence.rawSentence: originSentence}
         self.frequency = 1
         self.lemma = None
+        self.MAX_TIMES_LEARNED = 1
+        self.timesLearned = 0
+        self.hasBeenLearned = False
 
     #Marks the word as covered in the sentences it is found in.
     def coverSentences(self):
