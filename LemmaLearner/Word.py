@@ -1,11 +1,12 @@
 
+
 class Word:
 
     def __init__(self, rawWord, originSentence):
         self.rawWord = rawWord
         self.sentences = {originSentence.rawSentence: originSentence}
         self.frequency = 1
-        self.lemma = None
+        self.lemmas = None
         self.MAX_TIMES_LEARNED = 1
         self.timesLearned = 0
         self.hasBeenLearned = False
@@ -18,8 +19,8 @@ class Word:
     def recoverLemma(self, allLemmas):
         #Ensuring that this words lemma points to the one that is in the complete list of lemmas.
         #self.lemma = allLemmas[self.lemma.rawLemma]
-
-        self.lemma.addNewWord(self)
+        for lemma in self.lemmas:
+            lemma.addNewWord(self)
 
     def __getstate__(self):
         self.sentences = {}

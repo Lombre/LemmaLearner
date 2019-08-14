@@ -87,12 +87,13 @@ class Test_test1(unittest.TestCase):
             learnedLemmas.add(currentLemma)
             if currentSentence != None and currentSentence != initialSentence: #Meaning< the word isn't forced           
                 for word in currentSentence.words:
-                    self.assertIn(word.lemma, learnedLemmas, "Error at lemma: " + word.lemma.rawLemma)
+                    for lemma in word.lemmas:
+                        self.assertIn(lemma, learnedLemmas, "Error at lemma: " + lemma.rawLemma)
 
     def test_AllLemmasInTextAreLearned(self):
         textDatabase = TextParser()
         test = textDatabase.loadProcessedData("test")
-        learningList = SimpleLearnerScheme.learnLemmasByOrderOfScore(textDatabase, SimpleLearnerScheme.getSentenceScoreByNextUnlockableLemma, False)
+        learningList = SimpleLearnerScheme.learnLemmasByOrderOfScore(textDatabase, SimpleLearnerScheme.getSentenceScoreByConjugationFrequency, False)
         self.assertEquals(len(learningList), len(textDatabase.allLemmas)-1) #NotAWordLemma is not included in learningList       
         for lemmaSentencePair in learningList:
             #All lemmas learned must be the same as those read from the files/those in the database

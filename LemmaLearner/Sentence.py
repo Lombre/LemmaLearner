@@ -63,7 +63,8 @@ class Sentence:
         #Initializing
         for word in self.words:
             self.uncoveredWords.add(word)
-            self.uncoveredLemmas.add(word.lemma)
+            for lemma in word.lemmas:
+                self.uncoveredLemmas.add(lemma)
 
     def rescoreScoreDependentSentences(getSentenceScore):
         return None

@@ -22,12 +22,14 @@ import string
 import sys
 #import codecs
 import collections
+import simpleLemmatizer
 #sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 missingWordFrequency = -100000000
 minSentenceLength = 5
 maxSentenceLength = 15
-MAX_TIMES_LEARNED_WORD = 0
+MAX_TIMES_LEARNED_WORD = 1
+WORD_SCORING_MULTIPLIER = 2
 
 class SentenceAndLemmaScores:
     """
@@ -122,10 +124,11 @@ def getSentenceScoreByLemmaFrequency(learnedSentence: Sentence) -> LemmaScore:
 def getSentenceScoreByConjugationFrequency(learnedSentence: Sentence) -> LemmaScore:
     unlockedLemma = learnedSentence.getOnlyUncoveredLemma()
     totalConjugationFrequency = 0
-    for word in set(learnedSentence.words):
-        if word.timesLearned < MAX_TIMES_LEARNED_WORD:
-            learningModefier = 0.5**(word.timesLearned+1)
-            totalConjugationFrequency += word.frequency * learningModefier
+    for word in set(learnedSentence.words):  
+        if word.timesLearned < MAX_TIMES_LEARNED_WORD and word.lemmas[0].rawLemma != "NotALemma":
+            learningModefier = (1/WORD_SCORING_MULTIPLIER)**(word.timesLearned+1)
+            learningConstant = 1
+            totalConjugationFrequency += learningConstant * learningModefier
 
     
     return LemmaScore(-unlockedLemma.getFrequency() - totalConjugationFrequency, None)
@@ -137,6 +140,9 @@ def getSentenceScoreAsLemmaFrequency(sentence):
 def learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma: Lemma, learningList, lemmaQueue, sentenceAndLemmaScores: SentenceAndLemmaScores, getSentenceScore):
     learningList.append(newLemma)
 
+    if newLemma in sentenceAndLemmaScores.directlyUnlockableLemmas:
+        sentenceAndLemmaScores.directlyUnlockableLemmas.remove(newLemma)
+
     #It is learned - new sentences become available and ready for learning:
     newLemma.coverSentences()
     lemmaQueue.pop(newLemma)
@@ -146,6 +152,7 @@ def learnLemmaAndHandleSentencesWithLemmaFrequency(newLemma: Lemma, learningList
     for sentence in lemmaSentences:
         if isSentenceDirectlyUnlockable(sentence):
             sentenceAndLemmaScores.sentenceScores[sentence] = getSentenceScore(sentence).score
+            sentenceAndLemmaScores.directlyUnlockableLemmas.add(sentence.getOnlyUncoveredLemma())
 
 def printLearnedLemma(i, newLemma, rawSentence, shouldPrintToConsole):
     if (i < 2000 or i % 100 == 0) and shouldPrintToConsole:
@@ -191,12 +198,47 @@ def learnMostFrequentLemma(i, lemmasByFrequency, forcedWordLearningList, ordered
     return i
 
 
-def learnLemmasByOrderOfScore(textDatabase, getSentenceScore, shouldPrintToConsole):
+def printNumberOfCoveredSentences(shouldPrintToConsole, textDatabase):
+    totalNumberOfSentences = len(textDatabase.allSentences)
+    numberOfCoveredSentences = 0
+    for sentence in textDatabase.allSentences.values():
+        if sentence.getNumberOfUncoveredLemmas() == 0:
+            numberOfCoveredSentences += 1
+    if shouldPrintToConsole:
+        print("Number of covered sentences: " + str(numberOfCoveredSentences) + " of " + str(totalNumberOfSentences) + " -> " + str(numberOfCoveredSentences/totalNumberOfSentences))
+    k=1
+
+def printAlternativeSentences(count, currentSentence, getSentenceScore, i, sentenceAndLemmaScores, shouldPrintToConsole):
+    if ((i < 2000 or i % 100 == 0) and False) and shouldPrintToConsole:
+        # An elaborate way to gain the 5 highest scoring sentences
+        # One could get it down to log n time by having a search tree for each word,
+        # according to each sentence the word is in.
+        lemmaToLearn = currentSentence[0].getOnlyUncoveredLemma()
+        lemmaSentencesWithScore = heapdict()
+        lemmaSentencesWithScore[currentSentence[0]] = getSentenceScore(currentSentence[0]).score
+        for sentence in lemmaToLearn.sentences:
+            if sentence in sentenceAndLemmaScores.sentenceScores:
+                score = sentenceAndLemmaScores.sentenceScores[sentence]
+                lemmaSentencesWithScore[sentence] = score
+    
+        #Now we can quickly sort the sentences:
+        sortedSentencesWithScore = []
+        while 0 < len(lemmaSentencesWithScore):
+            sentenceWithScore = lemmaSentencesWithScore.popitem()
+            sortedSentencesWithScore.append(sentenceWithScore)
+    
+        #And print the best sentences:
+        for k in range(0, min(count, len(sortedSentencesWithScore))):
+            #print(str(sortedSentencesWithScore[k][1]))
+            print("      | " + str(sortedSentencesWithScore[k][1]) + " | " + sortedSentencesWithScore[k][0].rawSentence)
+
+def learnLemmasByOrderOfScore(maxNumberOfLemmasToLearn, textDatabase, getSentenceScore, shouldPrintToConsole):
     # Scheme: Learn words as they become possible to learn, in terms of sentences, in order of score
 
     # Initialize everything, including the sentences
     textDatabase.initialize()
-    
+
+
     # Will only contain sentences with fewer than or equal to one missing word, marked in order of the missing words frequency
     sentenceAndLemmaScores = getPriorityQueueOfDirectlyLearnableSentencesByLemmaScore(textDatabase, getSentenceScore)
     lemmasByFrequency = getPriorityQueueOfLemmasByFrequency(textDatabase)
@@ -214,15 +256,18 @@ def learnLemmasByOrderOfScore(textDatabase, getSentenceScore, shouldPrintToConso
     numberOfLemmas = len(lemmasByFrequency)
     if shouldPrintToConsole:
         print("Start learning lemmas: " + str(len(lemmasByFrequency)))
+        print("Number of directly learnable lemmas: " + str(len(sentenceAndLemmaScores.directlyUnlockableLemmas)))
     
     i = learnInitialSentence(textDatabase, i, lemmasByFrequency, unforcedWordLearningList, orderedLearningList, sentenceAndLemmaScores, getSentenceScore, shouldPrintToConsole)
-
+    
     # The optimal pair of lemmas to learn is EITHER learning a directly unlockable lemma,
     # and then a lemma that becomes unlockable because of this, OR learning the two highest scoring directly learnable lemmas.
     # The latter case is handled below.
     #(highestScoringDirectlyLearnableSentencePair, highestScoringDirectlyLearnableSentencePairScore) = getHighestScoringDirectlyLearnablePair(sentenceAndLemmaScores.directlyUnlockableLemmasScore)
     
-    while not hasLearnedAllLemmas(lemmasByFrequency):
+    #Obs. fejl i pointgivningen af sætninger, det ser ud til at den runder ned når den skal vælge imellem dem. Kommatal er derfor ligegyldigt?
+
+    while (not hasLearnedAllLemmas(lemmasByFrequency)) and (i <= maxNumberOfLemmasToLearn or maxNumberOfLemmasToLearn == -1):
         if hasDirectlyLearnableSentence(sentenceAndLemmaScores.sentenceScores):
             #Chosing between to directly learnable lemmas, or one direcytly learnable lemma and a lemma it unlocks, based on the score:
             #currentSentencePair = getHighestScoringUnforcedSentencePair(sentenceAndLemmaScores.sentencePairsBySentenceScore, highestScoringDirectlyLearnableSentencePair, highestScoringDirectlyLearnableSentencePairScore)
@@ -233,15 +278,36 @@ def learnLemmasByOrderOfScore(textDatabase, getSentenceScore, shouldPrintToConso
             if hasNoNewLemmas(currentSentence):
                 continue
             else:
+
+                printAlternativeSentences(5, currentSentence, getSentenceScore, i, sentenceAndLemmaScores, shouldPrintToConsole)
+
                 # A new pair of words to learn: lets do it!
                 i = learnSentenceList(currentSentence, i, lemmasByFrequency, unforcedWordLearningList, orderedLearningList, sentenceAndLemmaScores, getSentenceScore, shouldPrintToConsole) 
         else: 
             # There are no more "free" words - time to learn a frequent word, without an associated sentence:
             i = learnMostFrequentLemma(i, lemmasByFrequency, forcedWordLearningList, orderedLearningList, sentenceAndLemmaScores, getSentenceScore, shouldPrintToConsole)
-        #(highestScoringDirectlyLearnableSentencePair, highestScoringDirectlyLearnableSentencePairScore) = getHighestScoringDirectlyLearnablePair(sentenceAndLemmaScores.directlyUnlockableLemmasScore)
-    
+                
+        if ((i < 2000 or i % 100 == 0) and False) and shouldPrintToConsole:
+            print("Number of directly learnable lemmas: " + str(len(sentenceAndLemmaScores.directlyUnlockableLemmas)))
+        if (i % 100 == 0 and False):
+            printNumberOfCoveredSentences(shouldPrintToConsole, textDatabase)
+
     if shouldPrintToConsole:
         print("Learned directly " + str(len(unforcedWordLearningList)) + " of " + str(numberOfLemmas) + " lemmas.")
+    
+
+    lemmasLearned = set([lemmaSentencePair[0] for lemmaSentencePair in orderedLearningList])
+    wordsWithLearnedLemmas = [word for word in  textDatabase.allWords.values() if (word.lemmas[0] in lemmasLearned) and word.lemmas[0] != textDatabase.NotAWordLemma]
+    print("Number of conjugations of learned lemmas: " + str(len(wordsWithLearnedLemmas)))
+    for i in range(0, 11):
+        wordLearnedITimes = set()
+        for word in wordsWithLearnedLemmas:
+            if word.timesLearned == i:
+                wordLearnedITimes.add(word)
+        if shouldPrintToConsole:
+            print("Number of words learned " + str(i) + " times: " + str(len(wordLearnedITimes)))
+
+
     return orderedLearningList
 
 def learnInitialSentence(textDatabase: TextParser, i,  lemmasByFrequency, notForcedToLearn, orderedLearningList, sentenceAndLemmaScores: SentenceAndLemmaScores, getSentenceScore, shouldPrintToConsole):
@@ -274,38 +340,10 @@ def learnInitialSentence(textDatabase: TextParser, i,  lemmasByFrequency, notFor
     return i
 
 
-def addSentencePairWithScore(sentence: Sentence, sentenceAndLemmaScores: SentenceAndLemmaScores, getSentenceScore):
-    if isSentenceEmpty(sentence):
-        #We do not care much for empty sentences
-        sentence.associatedLearnableSentence = None
-        sentenceAndLemmaScores.sentencePairsBySentenceScore[sentence] = missingWordFrequency
-    elif isSentenceDirectlyUnlockable(sentence):
-        #If the sentence is directly unlockable,
-        #learning the sentence might unlock new learnable lemmas.
-        #This is taken into account below.
-        
-        lemmaScore = getSentenceScore(sentence, sentenceAndLemmaScores.directlyUnlockableLemmas)
-        sentenceAndLemmaScores.sentencePairsBySentenceScore[sentence] = lemmaScore.score        
-
-        #Necessary for some cleanup later, when nextSentence becomes learnable, see below
-        sentence.associatedLearnableSentence = lemmaScore.nextSentence
-        if lemmaScore.nextSentence != None:
-            lemmaScore.nextSentence.scoreDependentSentences.add(sentence)
-        
-        #There are some sentences whose score depends on the sentence becoming unlockable when they are learned.
-        #They are rescored.
-        for scoreDependentSentence in sentence.scoreDependentSentences:
-            if scoreDependentSentence not in sentenceAndLemmaScores.sentencePairsBySentenceScore:
-                continue
-            sentenceAndLemmaScores.sentencePairsBySentenceScore.pop(scoreDependentSentence)
-            #No infinite recursion because sentence.scoreDependentSentences is cleared afterwards. This can only go one step deeper.
-            addSentencePairWithScore(scoreDependentSentence, sentenceAndLemmaScores, getSentenceScore)
-        sentence.scoreDependentSentences.clear()
-
 
 def getPriorityQueueOfDirectlyLearnableSentencesByLemmaScore(parser: TextParser, getSentenceScore) -> SentenceAndLemmaScores:
     sentenceScores = heapdict()
-    directlyUnlockableLemmas= None
+    directlyUnlockableLemmas= set()
     directlyUnlockableLemmasScore = None
     sentencePairsBySentenceScore = None #heapdict()
     sentenceAndLemmaScores = SentenceAndLemmaScores(sentenceScores, directlyUnlockableLemmasScore, sentencePairsBySentenceScore, directlyUnlockableLemmas)
@@ -319,13 +357,7 @@ def getPriorityQueueOfDirectlyLearnableSentencesByLemmaScore(parser: TextParser,
         if isSentenceDirectlyUnlockable(sentence):
             unlockableLemma = sentence.getOnlyUncoveredLemma() 
             sentenceScores[sentence] = getSentenceScore(sentence).score 
-            #directlyUnlockableLemmas.add(unlockableLemma)
-            #directlyUnlockableLemmasScore[unlockableLemma] = -unlockableLemma.getFrequency()
-
-    # This is not done above, 
-    # as it requires directlyUnlockableLemmas to be filled with all the directly unlockable lemmas
-    # for sentence in parser.allSentences.values():            
-    #    addSentencePairWithScore(sentence, sentenceAndLemmaScores, getSentenceScore) 
+            directlyUnlockableLemmas.add(unlockableLemma)
 
     return sentenceAndLemmaScores
 
@@ -368,6 +400,7 @@ def isSecondaryUnlockable(sentence):
 #if __name__ == '__main__':
 def start():
     shouldResetSaveData = False
+    shouldComputeLearningList = True
     loadTestText = False
     shouldPrintToConsole = True
     textDatabase = TextParser()
@@ -378,26 +411,35 @@ def start():
         else:
             textDatabase.addAllTextsFromDirectoryToDatabase("Texts", shouldPrintToConsole)
             textDatabase.saveProcessedData(textDatabase.everything, "everything")
-    else: 
+    if shouldComputeLearningList: 
         if loadTestText:
             test = textDatabase.loadProcessedData("test")
         else:            
-            textDatabase.loadProcessedData("everything")        
-        learningList = learnLemmasByOrderOfScore(textDatabase, getSentenceScoreByConjugationFrequency, shouldPrintToConsole)
-        print(len(learningList))
+            textDatabase.loadProcessedData("everything")     
+        #printWordsInDatabase(textDatabase)
+        learningList = learnLemmasByOrderOfScore(10000, textDatabase, getSentenceScoreByConjugationFrequency, shouldPrintToConsole)
+        #print(len(learningList))
+    #testTest()
 
     #Mulige forbedringer:
-        #Bedre lemma classefier. Der er f.eks. mange -ed bøjninger der bliver klassificeret som sit eget ord. Kan nok fjerne 1/10 til 1/20 af alle lemaer.
-        #Fjern navne og lignende.
+        #Bedre lemma classefier. 
+        #Fjern navne og lignende. -> Nope, løsningen vil være for afhængigt af sproget der skal læres.
         #Hastighedsforbedinger. 
-        #Fjern meget korte sætninger, og meget lange sætninger.
-        #Håndtering af "" i sætninger.
         #Scoring af sætninger, så der ses på forskellige bøjninger af et ord.
         #Split ord ved bindestreg
-
-
-
+        #Mere aggresiv frasortering af sætninger.
     print("done")
+
+def testTest():
+    simpleLemmatizer.initialize("lemma.en.txt")
+
+def printWordsInDatabase(textDatabase: TextParser):
+    rawLemmas = [lemma.rawLemma for lemma in textDatabase.allLemmas.values()]
+    rawLemmas.sort()
+    for i in range(0, min(len(rawLemmas),6000)):
+        print(str(i) + ", " + rawLemmas[i])
+
+
 
 #https://www.dictionary.com/browse/walked
 #https://cran.r-project.org/web/packages/corpus/vignettes/stemmer.html
@@ -407,3 +449,5 @@ def start():
 
 #En masse corpuser: http://wortschatz.uni-leipzig.de/en/download/
 #Engelsk corpus https://www.english-corpora.org/glowbe/
+
+#Lemma database for different languages https://github.com/michmech/lemmatization-lists

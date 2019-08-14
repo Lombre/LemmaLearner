@@ -33,6 +33,9 @@
     <Compile Include="onlinedictionary.py" />
     <Compile Include="Sentence.py" />
     <Compile Include="SimpleLearnerScheme.py" />
+    <Compile Include="simpleLemmatizer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_Dictionaries.py" />
     <Compile Include="test_SentenceSplitting.py">
       <SubType>Code</SubType>

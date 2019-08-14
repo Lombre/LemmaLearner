@@ -23,6 +23,7 @@ import pickle as dill
 import sys
 import threading
 import onlinedictionary
+import simpleLemmatizer
 
 
 compoundWordPattern = re.compile(u'.*(-|­|­}).*')
@@ -132,6 +133,7 @@ class TextParser():
 
     def addLemmasToDatabase(self, shouldPrintToConsole):
         lemmatizer = WordNetLemmatizer()
+        simpleLemmatizer.initialize("lemma.en.txt")
 
         # Initializing them here,
         # because we don't want to use all that sweet sweet computing power on repeatedly doing this later
@@ -144,28 +146,32 @@ class TextParser():
         i = 0        
         for word in allWordValues:
 
-            if word.rawWord == "binoculars":
-                 k = 1
-
             i += 1
-            if word.lemma != None: #It already has an associated lemma, and as such can be skiped:
+            if word.lemmas != None: #It already has an associated lemma, and as such can be skiped:
                 continue
 
-            lemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
+            rawLemmas = simpleLemmatizer.lemmatize(word.rawWord)
+            possibleRawLemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
+            #if possibleRawLemma != word.rawWord:
+            #    rawLemmas = [possibleRawLemma]
+            rawLemmas = [possibleRawLemma]
             if (i == 1 or i % 100 == 0 or i == len(allWordValues)) and shouldPrintToConsole:
-                print(str(i) + " of " + str(len(allWordValues)) + ": " + lemma)
-            if isActualWord(wordSet, onlineDictionary, lemma):
-                if lemma in self.allLemmas:
-                    # The lemma is already registered,
-                    # but the word might be a different conjugation than the ones already added to the lemma:
-                    self.allLemmas[lemma].addNewWord(word)
+                print(str(i) + " of " + str(len(allWordValues)) + ": " + word.rawWord + " -> " + str(rawLemmas))
+            for rawLemma in rawLemmas:
+                if isActualWord(wordSet, onlineDictionary, rawLemma):
+                    if rawLemma in self.allLemmas:
+                        # The lemma is already registered,
+                        # but the word might be a different conjugation than the ones already added to the lemma:
+                        self.allLemmas[rawLemma].addNewWord(word)
+                    else:
+                        self.allLemmas[rawLemma] = Lemma(rawLemma, word)
                 else:
-                    self.allLemmas[lemma] = Lemma(lemma, word)
-            else:
-                # It is not a real word, and it is added to the token "NotAWordLemma" Lemma,
-                # to ensure that all words have an associated lemma.
-                self.NotAWordLemma.addNewWord(word)
+                    # It is not a real word, and it is added to the token "NotAWordLemma" Lemma,
+                    # to ensure that all words have an associated lemma.
+                    self.NotAWordLemma.addNewWord(word)
         self.saveProcessedData(onlineDictionary, "onlineDictionary")
+        print("Found " + str(len(self.allWords)) + " words.")
+        print("Found " + str(len(self.allLemmas)) + " lemmas.")
 
     def initializeLemmas(self):
         lemmas = self.allLemmas.values()
@@ -213,5 +219,5 @@ class TextParser():
         self.NotAText = self.allTexts[self.NotATextRawTitle]
         self.NotASentence = self.NotAText.sentences[0]
         self.NotAWord = self.NotASentence.words[0]
-        self.NotAWordLemma = self.NotAWord.lemma
+        self.NotAWordLemma = self.NotAWord.lemmas[0]
 
