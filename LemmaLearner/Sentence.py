@@ -4,7 +4,7 @@ import nltk
 import re
 import string
 
-compoundWordPattern = re.compile(u'.*(-|­|­}).*')
+compoundWordPattern = re.compile(u'.*(-|­—|_­}).*')
 extraPunctuation = u"…"
 REAL_WORD_TAG = "REAL_WORD"
 
@@ -26,6 +26,7 @@ class Sentence:
 
         self.text = originText
         self.rawSentence = rawSentence
+        self.cleanSentence = self.cleanRawSentence(rawSentence)
         rawWords = nltk.word_tokenize(rawSentence)
         rawWords = self.splitCompoundWords(rawWords)
         self.words = self.exstractWords(rawWords)
@@ -50,7 +51,8 @@ class Sentence:
     def splitCompoundWords(self, rawWords):
         splitRawWords = []
         for rawWord in rawWords:
-            splitWords = rawWord.split("-")
+            splitWords = re.split("-|—|_| de", rawWord) #("-|—")
+
             for splitWord in splitWords:
                 if splitWord != "" and splitWord != " ":
                     splitRawWords.append(splitWord)
@@ -114,3 +116,7 @@ class Sentence:
        
     def getRealWordTag():
         return REAL_WORD_TAG
+
+    def cleanRawSentence(self, rawSentence):
+        cleanSentence = (rawSentence.replace('\\', " "))
+        return cleanSentence

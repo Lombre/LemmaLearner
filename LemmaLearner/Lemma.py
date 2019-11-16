@@ -41,6 +41,12 @@ class Lemma:
         for sentence in sentences:
             sentence.uncoveredLemmas.remove(self)
 
+    def getTimesLearned(self):
+        sumTimesLearned = 0
+        for word in self.conjugatedWords:
+            sumTimesLearned += word.timesLearned
+        return sumTimesLearned
+
     def setSentences(self):
         allSentences = set()
         for word in self.conjugatedWords:

@@ -2,7 +2,7 @@
 from Sentence import Sentence
 import nltk
 import re
-
+from timeit import default_timer as timer
 #def splitSentences(rawText):
 #    #There are two types of splitting that
 
@@ -24,17 +24,44 @@ class Text:
         return  rawText.replace(u"\u2018", "'").replace(u"\u2019", "'").replace(u"\xa9", "e").replace(u"\u2014","-").decode("utf8")
 
 
-    def exstractSentences(self, rawText):        
-        splitAtNewlines = [s.strip() for s in rawText.splitlines()]
-        #splitAtQuotes = [splitSentenceAtQuotes(s) for s in splitAtNewlines]
-        splitAtPunctuation = [self.splitAtPunctuation(s) for s in splitAtNewlines]
+    def splitIntoRawSentences(self, paragraphs):
+        mission = "Split at punctuation: "
+        startTime = timer() 
+        print(mission + str(round(0/len(paragraphs)*100, 1)) + "% done.")
+        splitAtPunctuation = []
+        for i in range(0, len(paragraphs)):
+            paragraph = paragraphs[i]
+            splitAtPunctuation.append(self.splitAtPunctuation(paragraph))
+            if startTime + 5 < timer():
+                print(mission + str(round(i/len(paragraphs)*100, 1)) + "% done.")
+                startTime = timer()
+        print(mission + str(round(len(paragraphs)/len(paragraphs)*100, 1)) + "% done.")
+        print()
         rawSentences = self.flatten(splitAtPunctuation)
 
-        cleanSentences = []
+        return rawSentences
 
-        for rawSentence in rawSentences:
+    def convertRawSentencesIntoSentences(self, rawSentences):
+        cleanSentences = []                
+        startTime = timer()        
+        print("Sentence splitting: " + str(round(0/len(rawSentences)*100, 1)) + "% done.")
+        for i in range(0, len(rawSentences)):
+            rawSentence = rawSentences[i]
             sentence = Sentence(self, rawSentence)
             cleanSentences.append(sentence)
+            if startTime + 5 < timer():
+                print("Sentence splitting: " + str(round(i/len(rawSentences)*100, 1)) + "% done.")
+                startTime = timer()
+        print("Sentence splitting: " + str(round(len(rawSentences)/len(rawSentences)*100, 1)) + "% done.")
+        return cleanSentences
+
+    def splitIntoParagraphs(self, rawText):
+        return [s.strip() for s in rawText.splitlines()]
+
+    def exstractSentences(self, rawText):        
+        paragraphs = self.splitIntoParagraphs(rawText)
+        rawSentences = self.splitIntoRawSentences(paragraphs)
+        cleanSentences = self.convertRawSentencesIntoSentences(rawSentences)
 
         return cleanSentences
 

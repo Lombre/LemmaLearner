@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2daf0287-ce81-4b57-9606-54c146bf75e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lemma.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lemma.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sentence.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sentence.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleLearnerScheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleLearnerScheme.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Text.py" beforeDir="false" afterPath="$PROJECT_DIR$/Text.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/TextParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Word.py" beforeDir="false" afterPath="$PROJECT_DIR$/Word.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/LemmaLearner/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/LemmaLearner/v16/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LemmaLearner.pyperf" beforeDir="false" afterPath="$PROJECT_DIR$/LemmaLearner.pyperf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py" beforeDir="false" afterPath="$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,83 +15,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LemmaLearner/simpleLemmatizer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SimpleLearnerScheme.py">
+        <entry file="file://$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="73" column="35" lean-forward="true" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
-              <folding>
-                <element signature="e#24#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13051">
-              <caret line="1751" selection-start-line="1751" selection-end-line="1751" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sentence.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
-              <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
-              <folding>
-                <element signature="e#24#45#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TextParser.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="997">
-              <caret line="207" column="34" selection-start-line="207" selection-start-column="34" selection-end-line="207" selection-end-column="34" />
-              <folding>
-                <element signature="e#24#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/heapdict.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Text.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Lemma.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-62">
-              <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Word.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+            <state relative-caret-position="285">
+              <caret line="95" column="57" selection-start-line="95" selection-start-column="57" selection-end-line="95" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -110,7 +47,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>imm</find>
       <find>is not</find>
       <find>word fr</find>
       <find>neigh­bors</find>
@@ -140,6 +76,7 @@
       <find>Word(</find>
       <find>sort</find>
       <find>list(</find>
+      <find>learnedSent</find>
     </findStrings>
     <replaceStrings>
       <replace>-</replace>
@@ -184,6 +121,7 @@
         <option value="$PROJECT_DIR$/Word.py" />
         <option value="$PROJECT_DIR$/TextParser.py" />
         <option value="$PROJECT_DIR$/Sentence.py" />
+        <option value="$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py" />
       </list>
     </option>
   </component>
@@ -198,6 +136,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -208,13 +147,12 @@
             <path>
               <item name="LemmaLearner" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="C:\Users\jespe\PycharmProjects\LemmaLearner" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="Texts" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="LemmaLearner" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -253,7 +191,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SimpleLearnerScheme.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -347,6 +285,10 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.SimpleLearnerScheme" />
+      <item itemvalue="Python.Test" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Test" />
@@ -399,10 +341,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.47819766" visible="true" weight="0.1716418" />
-      <window_info id="Structure" order="2" sideWeight="0.5218023" side_tool="true" visible="true" weight="0.1716418" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.47562298" visible="true" weight="0.1748401" />
+      <window_info id="Structure" order="2" sideWeight="0.52437705" side_tool="true" visible="true" weight="0.1748401" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="2" weight="0.32936078" />
@@ -414,7 +357,7 @@
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.32936078" />
-      <window_info anchor="right" id="R Graphics" order="0" />
+      <window_info anchor="right" id="R Graphics" order="0" weight="0.32995737" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="R Packages" order="2" weight="0.32995737" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
@@ -431,23 +374,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Test.py</url>
-          <line>8</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Test.py</url>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SimpleLearnerScheme.py</url>
-          <line>296</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SimpleLearnerScheme.py</url>
-          <line>277</line>
-          <option name="timeStamp" value="70" />
+          <url>file://$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py</url>
+          <line>400</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -470,23 +399,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Parser" />
     <entry file="file://$PROJECT_DIR$/Parser.py" />
-    <entry file="file://$PROJECT_DIR$/Moby.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9322">
-          <caret line="9686" column="53" selection-start-line="9686" selection-start-column="53" selection-end-line="9686" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lemmatization-en.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="28907" column="5" selection-start-line="28907" selection-start-column="5" selection-end-line="28907" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Moby.txt" />
+    <entry file="file://$PROJECT_DIR$/Test.py" />
+    <entry file="file://$PROJECT_DIR$/lemmatization-en.txt" />
     <entry file="file://C:/Python27/Lib/urllib2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-14605">
@@ -497,16 +412,8 @@
     <entry file="file://$PROJECT_DIR$/Texts/HarryPotter.txt" />
     <entry file="file://$PROJECT_DIR$/Texts/HarryPotter4.txt" />
     <entry file="file://$PROJECT_DIR$/Texts/HarryPotter3.txt" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/k.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore" />
+    <entry file="file://$PROJECT_DIR$/k.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/nltk/tag/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -528,12 +435,8 @@
     <entry file="file://$PROJECT_DIR$/Texts/book_6.txt" />
     <entry file="file://$PROJECT_DIR$/Texts/book_7.txt" />
     <entry file="file://$PROJECT_DIR$/Texts/book_1.txt" />
-    <entry file="file://$PROJECT_DIR$/Texts/Old texts/HarryPotter3.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Texts/Old texts/HarryPotter.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Texts/Old texts/HarryPotter3.txt" />
+    <entry file="file://$PROJECT_DIR$/Texts/Old texts/HarryPotter.txt" />
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-140292767/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -604,68 +507,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Text.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleLearnerScheme.py" />
+    <entry file="file://$PROJECT_DIR$/Sentence.py" />
+    <entry file="file://$PROJECT_DIR$/TextParser.py" />
+    <entry file="file://$PROJECT_DIR$/Text.py" />
+    <entry file="file://$PROJECT_DIR$/Lemma.py" />
+    <entry file="file://$PROJECT_DIR$/Word.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/heapdict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
+        <state relative-caret-position="-28">
           <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Word.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lemma.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-62">
-          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TextParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="997">
-          <caret line="207" column="34" selection-start-line="207" selection-start-column="34" selection-end-line="207" selection-end-column="34" />
-          <folding>
-            <element signature="e#24#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sentence.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
-          <folding>
-            <element signature="e#24#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13051">
-          <caret line="1751" selection-start-line="1751" selection-end-line="1751" />
+        <state relative-caret-position="17">
+          <caret line="1146" selection-start-line="1146" selection-end-line="1146" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleLearnerScheme.py">
+    <entry file="file://$PROJECT_DIR$/LemmaLearner/simpleLemmatizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="73" column="35" lean-forward="true" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
+        <state relative-caret-position="136">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
-            <element signature="e#24#41#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LemmaLearner/SimpleLearnerScheme.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="95" column="57" selection-start-line="95" selection-start-column="57" selection-end-line="95" selection-end-column="57" />
         </state>
       </provider>
     </entry>

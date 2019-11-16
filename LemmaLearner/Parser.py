@@ -144,6 +144,7 @@ class TextParser():
         allWordValues.remove(self.NotAWord)
         onlineDictionary = onlinedictionary.loadOnlineDictionary()
         i = 0        
+        printEveryNWord = 1
         for word in allWordValues:
 
             i += 1
@@ -155,7 +156,7 @@ class TextParser():
             #if possibleRawLemma != word.rawWord:
             #    rawLemmas = [possibleRawLemma]
             rawLemmas = [possibleRawLemma]
-            if (i == 1 or i % 100 == 0 or i == len(allWordValues)) and shouldPrintToConsole:
+            if (i == 1 or i % printEveryNWord == 0 or i == len(allWordValues)) and shouldPrintToConsole:
                 print(str(i) + " of " + str(len(allWordValues)) + ": " + word.rawWord + " -> " + str(rawLemmas))
             for rawLemma in rawLemmas:
                 if isActualWord(wordSet, onlineDictionary, rawLemma):

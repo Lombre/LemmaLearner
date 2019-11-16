@@ -23,12 +23,13 @@ import sys
 #import codecs
 import collections
 import simpleLemmatizer
+import stanfordnlp
 #sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 missingWordFrequency = -100000000
 minSentenceLength = 5
 maxSentenceLength = 15
-MAX_TIMES_LEARNED_WORD = 1
+MAX_TIMES_LEARNED_WORD = 3
 WORD_SCORING_MULTIPLIER = 2
 
 class SentenceAndLemmaScores:
@@ -253,6 +254,7 @@ def learnLemmasByOrderOfScore(maxNumberOfLemmasToLearn, textDatabase, getSentenc
 
     #For printing to the console. It makes it easier to debug:
     i = 0
+
     numberOfLemmas = len(lemmasByFrequency)
     if shouldPrintToConsole:
         print("Start learning lemmas: " + str(len(lemmasByFrequency)))
@@ -260,12 +262,7 @@ def learnLemmasByOrderOfScore(maxNumberOfLemmasToLearn, textDatabase, getSentenc
     
     i = learnInitialSentence(textDatabase, i, lemmasByFrequency, unforcedWordLearningList, orderedLearningList, sentenceAndLemmaScores, getSentenceScore, shouldPrintToConsole)
     
-    # The optimal pair of lemmas to learn is EITHER learning a directly unlockable lemma,
-    # and then a lemma that becomes unlockable because of this, OR learning the two highest scoring directly learnable lemmas.
-    # The latter case is handled below.
-    #(highestScoringDirectlyLearnableSentencePair, highestScoringDirectlyLearnableSentencePairScore) = getHighestScoringDirectlyLearnablePair(sentenceAndLemmaScores.directlyUnlockableLemmasScore)
-    
-    #Obs. fejl i pointgivningen af sætninger, det ser ud til at den runder ned når den skal vælge imellem dem. Kommatal er derfor ligegyldigt?
+    #TODO Obs. fejl i pointgivningen af sætninger, det ser ud til at den runder ned når den skal vælge imellem dem. Kommatal er derfor ligegyldigt?
 
     while (not hasLearnedAllLemmas(lemmasByFrequency)) and (i <= maxNumberOfLemmasToLearn or maxNumberOfLemmasToLearn == -1):
         if hasDirectlyLearnableSentence(sentenceAndLemmaScores.sentenceScores):
@@ -306,6 +303,17 @@ def learnLemmasByOrderOfScore(maxNumberOfLemmasToLearn, textDatabase, getSentenc
                 wordLearnedITimes.add(word)
         if shouldPrintToConsole:
             print("Number of words learned " + str(i) + " times: " + str(len(wordLearnedITimes)))
+
+    print()
+    
+    for i in range(0, 11):
+        lemmasLearnedITimes = set()
+        for lemma in lemmasLearned:
+            if lemma.getTimesLearned() == i:
+                lemmasLearnedITimes.add(lemma)
+        if shouldPrintToConsole:
+            print("Number of lemmas learned " + str(i) + " times: " + str(len(lemmasLearnedITimes)))
+
 
 
     return orderedLearningList
@@ -403,7 +411,11 @@ def start():
     shouldComputeLearningList = True
     loadTestText = False
     shouldPrintToConsole = True
+    maxNumberOfLemmasToLearn = 12000
     textDatabase = TextParser()
+
+
+
     if shouldResetSaveData:
         if loadTestText:
             textDatabase.addAllTextsFromDirectoryToDatabase("Texts/Test", shouldPrintToConsole)
@@ -417,7 +429,7 @@ def start():
         else:            
             textDatabase.loadProcessedData("everything")     
         #printWordsInDatabase(textDatabase)
-        learningList = learnLemmasByOrderOfScore(10000, textDatabase, getSentenceScoreByConjugationFrequency, shouldPrintToConsole)
+        learningList = learnLemmasByOrderOfScore(maxNumberOfLemmasToLearn, textDatabase, getSentenceScoreByConjugationFrequency, shouldPrintToConsole)
         #print(len(learningList))
     #testTest()
 
@@ -429,6 +441,14 @@ def start():
         #Split ord ved bindestreg
         #Mere aggresiv frasortering af sætninger.
     print("done")
+
+
+def testStanford():    
+    nlp = stanfordnlp.Pipeline() # This sets up a default neural pipeline in English
+    #nlp = stanfordnlp.Pipeline(processors='tokenize,mwt,pos,lemma')
+    doc = nlp("Barack Obama was born in Hawaii.")
+    print(*[f'word: {word.text+" "}\tlemma: {word.lemma}' for sent in doc.sentences for word in sent.words], sep='\n')
+
 
 def testTest():
     simpleLemmatizer.initialize("lemma.en.txt")
@@ -446,6 +466,7 @@ def printWordsInDatabase(textDatabase: TextParser):
 #https://github.com/michmech/lemmatization-lists/
 #https://www.machinelearningplus.com/nlp/lemmatization-examples-python/
 #https://www.nltk.org/book/ch07.html
+#https://towardsdatascience.com/state-of-the-art-multilingual-lemmatization-f303e8ff1a8
 
 #En masse corpuser: http://wortschatz.uni-leipzig.de/en/download/
 #Engelsk corpus https://www.english-corpora.org/glowbe/
