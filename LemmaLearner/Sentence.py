@@ -26,8 +26,8 @@ class Sentence:
 
         self.text = originText
         self.rawSentence = rawSentence
-        self.cleanSentence = self.cleanRawSentence(rawSentence)
-        rawWords = nltk.word_tokenize(rawSentence)
+        cleanSentence = self.cleanRawSentence(rawSentence)
+        rawWords = nltk.word_tokenize(cleanSentence)
         rawWords = self.splitCompoundWords(rawWords)
         self.words = self.exstractWords(rawWords)
         self.uncoveredWords = set() #All the words found in the sentence, that haven't been learned yet. Must be initialized.
@@ -62,11 +62,15 @@ class Sentence:
         #Reseting:
         self.uncoveredWords = set()
         self.uncoveredLemmas = set()
+        if self.rawSentence == 'Every shade of colour they were—straw, lemon, orange, brick, Irish-setter, liver, clay; but, as Spaulding said, there were not many who had the real vivid flame-coloured tint.':
+            k=1
         #Initializing
         for word in self.words:
             self.uncoveredWords.add(word)
             for lemma in word.lemmas:
                 self.uncoveredLemmas.add(lemma)
+        if len(self.uncoveredLemmas) == 0:
+            k = 1
 
     def rescoreScoreDependentSentences(getSentenceScore):
         return None

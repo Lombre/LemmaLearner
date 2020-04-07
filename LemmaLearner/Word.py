@@ -16,6 +16,10 @@ class Word:
         for sentence in self.sentences.values():
             sentence.uncoveredWords.remove(self)
 
+    def incrementTimesLearned(self):
+        self.timesLearned += 1
+        self.lemmas[0].timesLearned += 1
+
     def recoverLemma(self, allLemmas):
         #Ensuring that this words lemma points to the one that is in the complete list of lemmas.
         #self.lemma = allLemmas[self.lemma.rawLemma]

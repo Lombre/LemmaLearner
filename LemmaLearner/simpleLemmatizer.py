@@ -2,10 +2,6 @@ import os.path
 import time
 import io
 
-
-
-
-
 extraLemmasFoundInText = {}
 conjugationToLemmas = {}
 

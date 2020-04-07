@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>cd13300e-4166-40bb-ba05-43296f263e46</ProjectGuid>
+    <ProjectGuid>6651829d-f025-4503-8663-8df6af18343b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>LemmaLearner.py</StartupFile>
     <SearchPath>
@@ -11,8 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>LemmaLearner</Name>
     <RootNamespace>LemmaLearner</RootNamespace>
-    <InterpreterId>MSBuild|env1|$(MSBuildProjectFullPath)</InterpreterId>
-    <IsWindowsApplication>False</IsWindowsApplication>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,42 +23,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BinarySearchTree.py" />
-    <Compile Include="SimpelDynamiskTabel.py" />
+    <Compile Include="DynamiskTabel.py" />
     <Compile Include="k.py" />
     <Compile Include="Lemma.py" />
     <Compile Include="LemmaLearner.py" />
-    <Compile Include="DynamiskTabel.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="onlinedictionary.py" />
+    <Compile Include="Parser.py" />
     <Compile Include="Sentence.py" />
+    <Compile Include="SimpelDynamiskTabel.py" />
     <Compile Include="SimpleLearnerScheme.py" />
-    <Compile Include="simpleLemmatizer.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="simpleLemmatizer.py" />
+    <Compile Include="test1.py" />
     <Compile Include="test_Dictionaries.py" />
-    <Compile Include="test_SentenceSplitting.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="test_NonWordsRecognition.py" />
+    <Compile Include="test_SentenceSplitting.py" />
     <Compile Include="test_SimpleLearnerScheme.py" />
     <Compile Include="Text.py" />
-    <Compile Include="Parser.py" />
     <Compile Include="Word.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <Interpreter Include="env1\">
-      <Id>env1</Id>
-      <Version>3.7</Version>
-      <Description>env1 (Python 3.7 (64-bit))</Description>
-      <InterpreterPath>Scripts\python.exe</InterpreterPath>
-      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
-      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
-      <Architecture>X64</Architecture>
-    </Interpreter>
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|3.7" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

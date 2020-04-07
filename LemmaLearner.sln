@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "LemmaLearner", "LemmaLearner\LemmaLearner.pyproj", "{CD13300E-4166-40BB-BA05-43296F263E46}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "LemmaLearner", "LemmaLearner\LemmaLearner.pyproj", "{6651829D-F025-4503-8663-8DF6AF18343B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +11,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CD13300E-4166-40BB-BA05-43296F263E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD13300E-4166-40BB-BA05-43296F263E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6651829D-F025-4503-8663-8DF6AF18343B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6651829D-F025-4503-8663-8DF6AF18343B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C6F36E69-202D-4226-B28E-634C2179CAB4}
+		SolutionGuid = {3E97FC51-58FF-4143-A8CB-83DF456CFED0}
 	EndGlobalSection
 EndGlobal

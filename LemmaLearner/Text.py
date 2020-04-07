@@ -14,6 +14,7 @@ from timeit import default_timer as timer
 #    return in_quotes
 
 class Text:
+
     #https://stackoverflow.com/questions/31046831/regex-to-capture-sentences-with-quotes
     def __init__(self, rawText, name):
         self.rawText = rawText #self.formatText(rawText)
@@ -58,12 +59,17 @@ class Text:
     def splitIntoParagraphs(self, rawText):
         return [s.strip() for s in rawText.splitlines()]
 
-    def exstractSentences(self, rawText):        
-        paragraphs = self.splitIntoParagraphs(rawText)
+    def exstractSentences(self, rawText):   
+        cleanText = self.cleanTextOfWeirdCharacters(rawText)
+        paragraphs = self.splitIntoParagraphs(cleanText)
         rawSentences = self.splitIntoRawSentences(paragraphs)
         cleanSentences = self.convertRawSentencesIntoSentences(rawSentences)
 
         return cleanSentences
+
+    def cleanTextOfWeirdCharacters(self, rawText):
+        cleanText = rawText.replace("\u2060", "").replace("\xad", "")
+        return cleanText
 
     def flatten(self, input):
         if isinstance(input, list):

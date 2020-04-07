@@ -8,3 +8,4 @@ print("Kage")
 SimpleLearnerScheme.start()
 #DynamiskTabel.test()
 #BinarySearchTree.test()
+

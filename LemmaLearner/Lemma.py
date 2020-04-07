@@ -10,6 +10,8 @@ class Lemma:
         self.conjugatedWords = {conjugatedWord}
         conjugatedWord.lemmas = [self]
         self.sentences = None
+        self.texts = set()
+        self.timesLearned = 0
 
     def addNewWord(self, word):
         self.conjugatedWords.add(word)
@@ -42,11 +44,14 @@ class Lemma:
             sentence.uncoveredLemmas.remove(self)
 
     def getTimesLearned(self):
+        return self.timesLearned
+
+    def setTimesLearned(self):
         sumTimesLearned = 0
         for word in self.conjugatedWords:
             sumTimesLearned += word.timesLearned
-        return sumTimesLearned
-
+        self.timesLearned = sumTimesLearned
+        
     def setSentences(self):
         allSentences = set()
         for word in self.conjugatedWords:
@@ -54,6 +59,16 @@ class Lemma:
             for sentence in wordSentences:
                 allSentences.add(sentence)
         self.sentences = allSentences
+
+        
+    def setTexts(self):
+        allTexts = set()
+        for word in self.conjugatedWords:
+            wordSentences = word.sentences.values()
+            for sentence in wordSentences:
+                allTexts.add(sentence.text)
+        self.texts = allTexts
+
 
     def __getstate__(self):
         self.conjugatedWords = set()

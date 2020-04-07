@@ -3,11 +3,16 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#Random
+venv/
+
 #pickle data:
 *.pkl
 
 #Texts:
 Texts/
+Tests/
+Ebooks/
 
 # C extensions
 *.so

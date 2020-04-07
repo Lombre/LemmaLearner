@@ -25,7 +25,7 @@ class Test_test1(unittest.TestCase):
         parser = TextParser()
         rawText = "He gasped."
         parser.addRawTextToDatabase(rawText, "test")
-        parser.addLemmasToDatabase(False)
+        parser.addAllLemmasToDatabase(False)
         lemmas = parser.allLemmas.values()
         self.assertEqual(3, len(lemmas))
 

@@ -25,7 +25,7 @@ def isInOnlineDictionary(word, onlineDictionary):
             inDictionary = possibleErrorCode != ERROR_CODE
             onlineDictionary[word] = inDictionary
     else:
-        time.sleep(2) # So the website isn't getting spammed
+        time.sleep(1) # So the website isn't getting spammed
         onlineDictionary[word] = checkAndSaveisInOnlineDictionary(fullURL, filePath)
     return onlineDictionary[word]
 
@@ -33,7 +33,6 @@ def getOnlineDictionaryWordURL(word): #getOnlineDictionaryWordAdress(word):
     baseURL = 'https://www.dictionary.com/browse/'
     fullURL = baseURL + word
     return fullURL
-
 
 def getOnlineDictionaryFilePath(word):
     return "Websites/" + word + ".txt"
@@ -51,8 +50,9 @@ def checkAndSaveisInOnlineDictionary(fullURL, filePath):
             return True
         return True
     except:
-        with open(filePath, 'w+') as file:
-            file.write(ERROR_CODE)
+        if filePath != "Websites/aux.txt":
+            with open(filePath, 'w+') as file:
+                file.write(ERROR_CODE)
         return False
 
 

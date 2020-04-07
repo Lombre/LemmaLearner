@@ -27,6 +27,7 @@ import simpleLemmatizer
 
 
 compoundWordPattern = re.compile(u'.*(-|­|­}).*')
+shouldResetSavedText = False
 
 def isCompoundWord(word):
     return compoundWordPattern.match(word)
@@ -64,9 +65,10 @@ def isActualWord(wordSet, onlineDictionary, lemma: str) -> bool:
     return (not isNumber) and (not isCompound) and (isInWordnet or onlinedictionary.isInOnlineDictionary(lemma, onlineDictionary))
     
 def loadText(filename):
-    file = io.open(filename, 'rU', encoding='utf-8')
-    return file.read()
-
+    file = io.open(filename, 'rU', encoding='utf-8')    
+    rawText = file.read()
+    text = Text(rawText, filename)
+    return text
 
 class TextParser():
     
@@ -90,11 +92,16 @@ class TextParser():
 
         
 
-    def initialize(self):    
+    def initialize(self, shouldPrintToConsole):   
+        if shouldPrintToConsole:
+            print("Initializing textdabase")
         self.initializeLemmas()
+        if shouldPrintToConsole:
+            print("Finished initilization")
 
     def addAllTextsFromDirectoryToDatabase(self, directory, shouldPrintToConsole):
         files = [f for f in glob.glob(directory + "/*.txt")]
+        rawTexts = []
         hasNewFile = False
         i = 1
         for file in files:
@@ -104,17 +111,34 @@ class TextParser():
                     print("Text " + str(i) + " of " + str(len(files)) +  ": " + fileName)
                     i += 1
                 hasNewFile = True
-                rawText = loadText(file)
+                if not shouldResetSavedText and self.doSavedFileExist(directory + "/" + fileName):
+                    text = self.loadSavedText(directory + "/" + fileName)
+                else:
+                    text = loadText(file)
+                    self.saveTextWithPreprocessing(directory + "/" + fileName, text)
                 #getBookCharacterset(rawText, shouldPrintToConsole)
-                self.addRawTextToDatabase(rawText, fileName)
-        self.addLemmasToDatabase(shouldPrintToConsole)
-        self.recognizeNamesInSentences()
-        self.initialize()
+                self.addRawTextToDatabase(text, fileName)
+        self.addAllLemmasToDatabase(shouldPrintToConsole)
+        #self.recognizeNamesInSentences()
+        self.initialize(shouldPrintToConsole)
 
-    def addRawTextToDatabase(self, rawText, fileName):
+    def doSavedFileExist(self, fileName):
+        return os.path.isfile(fileName + "_preseperated" + ".pkl") 
+
+    def loadSavedText(self, fileName):        
+        currentRecursionLimit = sys.getrecursionlimit()
+        sys.setrecursionlimit(100000)
+        rawPickleData = io.open(fileName +  "_preseperated" + ".pkl", 'rb').read()
+        sys.setrecursionlimit(currentRecursionLimit)
+        processedData = dill.loads(rawPickleData)
+        return processedData
+
+    def saveTextWithPreprocessing(self, fileName, text):
+        self.saveProcessedData(text, fileName + "_preseperated")
+
+    def addRawTextToDatabase(self, text, fileName):
         #Simply adds the text to the database: it all its sentences to allSentences,
         #and all its words to allWords, so that it can be used later.
-        text = Text(rawText, fileName)
         self.allTexts[text.name] = text
         for sentence in text.sentences:
             self.allSentences[sentence.rawSentence] = sentence
@@ -131,7 +155,33 @@ class TextParser():
         for sentence in self.allSentences:
             kage = 1
 
-    def addLemmasToDatabase(self, shouldPrintToConsole):
+    def getRawLemmas(self, lemmatizer, word):
+        rawLemmas = simpleLemmatizer.lemmatize(word.rawWord)
+        possibleRawLemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
+        #if possibleRawLemma != word.rawWord:
+        #    rawLemmas = [possibleRawLemma]
+        rawLemmas = [possibleRawLemma]
+        return rawLemmas
+
+    def printLemmaAddingProgress(self, allWordValues, i, printEveryNWord, rawLemmas, shouldPrintToConsole, word):
+        if (i == 1 or i % printEveryNWord == 0 or i == len(allWordValues)) and shouldPrintToConsole:
+            print(str(i) + " of " + str(len(allWordValues)) + ": " + word.rawWord + " -> " + str(rawLemmas))
+
+    def addRawLemmasToDatabaseIfActualLemmas(self, onlineDictionary, rawLemmas, word, wordSet):
+        for rawLemma in rawLemmas:
+            if isActualWord(wordSet, onlineDictionary, rawLemma):
+                if rawLemma in self.allLemmas:
+                    # The lemma is already registered,
+                    # but the word might be a different conjugation than the ones already added to the lemma:
+                    self.allLemmas[rawLemma].addNewWord(word)
+                else:
+                    self.allLemmas[rawLemma] = Lemma(rawLemma, word)
+            else:
+                # It is not a real word, and it is added to the token "NotAWordLemma" Lemma,
+                # to ensure that all words have an associated lemma.
+                self.NotAWordLemma.addNewWord(word)
+
+    def addAllLemmasToDatabase(self, shouldPrintToConsole):
         lemmatizer = WordNetLemmatizer()
         simpleLemmatizer.initialize("lemma.en.txt")
 
@@ -143,33 +193,18 @@ class TextParser():
         allWordValues = set(self.allWords.values())
         allWordValues.remove(self.NotAWord)
         onlineDictionary = onlinedictionary.loadOnlineDictionary()
-        i = 0        
-        printEveryNWord = 1
-        for word in allWordValues:
 
+        i = 0        
+        printEveryNWord = 100
+        for word in allWordValues:
             i += 1
             if word.lemmas != None: #It already has an associated lemma, and as such can be skiped:
                 continue
 
-            rawLemmas = simpleLemmatizer.lemmatize(word.rawWord)
-            possibleRawLemma = lemmatizer.lemmatize(word.rawWord, get_wordnet_pos(word.rawWord))
-            #if possibleRawLemma != word.rawWord:
-            #    rawLemmas = [possibleRawLemma]
-            rawLemmas = [possibleRawLemma]
-            if (i == 1 or i % printEveryNWord == 0 or i == len(allWordValues)) and shouldPrintToConsole:
-                print(str(i) + " of " + str(len(allWordValues)) + ": " + word.rawWord + " -> " + str(rawLemmas))
-            for rawLemma in rawLemmas:
-                if isActualWord(wordSet, onlineDictionary, rawLemma):
-                    if rawLemma in self.allLemmas:
-                        # The lemma is already registered,
-                        # but the word might be a different conjugation than the ones already added to the lemma:
-                        self.allLemmas[rawLemma].addNewWord(word)
-                    else:
-                        self.allLemmas[rawLemma] = Lemma(rawLemma, word)
-                else:
-                    # It is not a real word, and it is added to the token "NotAWordLemma" Lemma,
-                    # to ensure that all words have an associated lemma.
-                    self.NotAWordLemma.addNewWord(word)
+            rawLemmas = self.getRawLemmas(lemmatizer, word) 
+            self.printLemmaAddingProgress(allWordValues, i, printEveryNWord, rawLemmas, shouldPrintToConsole, word)
+            self.addRawLemmasToDatabaseIfActualLemmas(onlineDictionary, rawLemmas, word, wordSet)
+
         self.saveProcessedData(onlineDictionary, "onlineDictionary")
         print("Found " + str(len(self.allWords)) + " words.")
         print("Found " + str(len(self.allLemmas)) + " lemmas.")
@@ -178,14 +213,19 @@ class TextParser():
         lemmas = self.allLemmas.values()
         for lemma in lemmas:
             lemma.setSentences()
+            lemma.setTexts()
+            lemma.setTimesLearned()
 
     def saveProcessedData(self, data, fileName):
+        print("Saving " + fileName)
         currentRecursionLimit = sys.getrecursionlimit()
         sys.setrecursionlimit(100000)
         dill.dump(data, open(fileName + '.pkl', 'wb'))
         sys.setrecursionlimit(currentRecursionLimit)
+        print("Finished saving " + fileName)
 
     def loadProcessedData(self, fileName):
+        print("Loading " + fileName)
         currentRecursionLimit = sys.getrecursionlimit()
         sys.setrecursionlimit(100000)
         rawPickleData = io.open(fileName + ".pkl", 'rb').read()
@@ -212,7 +252,8 @@ class TextParser():
         #    lemma.recoverSentences()
 
         self.resetNothingTerms()
-
+        
+        print("Finished loading " + fileName)
         return processedData
     
     def resetNothingTerms(self):

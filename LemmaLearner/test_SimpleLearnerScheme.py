@@ -23,8 +23,8 @@ class Test_test1(unittest.TestCase):
         textDatabase = TextParser()
         
         textDatabase.addRawTextToDatabase(text, "TestText")
-        textDatabase.addLemmasToDatabase(False)
-        textDatabase.initialize()
+        textDatabase.addAllLemmasToDatabase(False)
+        textDatabase.initialize(shouldPrintToConsole)
         lemma1 = textDatabase.allLemmas[rawLemma1]
         lemma2 = textDatabase.allLemmas[rawLemma2]
         lemma3 = textDatabase.allLemmas[rawLemma3]
