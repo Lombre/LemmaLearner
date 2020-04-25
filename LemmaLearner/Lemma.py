@@ -8,14 +8,14 @@ class Lemma:
     def __init__(self, rawLemma, conjugatedWord):
         self.rawLemma = rawLemma
         self.conjugatedWords = {conjugatedWord}
-        conjugatedWord.lemmas = [self]
-        self.sentences = None
+        conjugatedWord.lemmas.add(self)
+        self.sentences = set()
         self.texts = set()
         self.timesLearned = 0
 
     def addNewWord(self, word):
         self.conjugatedWords.add(word)
-        word.lemmas = [self]
+        word.lemmas.add(self)
 
 
     def getFrequency(self):

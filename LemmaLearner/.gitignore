@@ -5,6 +5,7 @@ __pycache__/
 
 #Random
 venv/
+..venv/
 
 #pickle data:
 *.pkl

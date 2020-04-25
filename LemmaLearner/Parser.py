@@ -27,7 +27,7 @@ import simpleLemmatizer
 
 
 compoundWordPattern = re.compile(u'.*(-|­|­}).*')
-shouldResetSavedText = False
+shouldResetSavedText = True
 
 def isCompoundWord(word):
     return compoundWordPattern.match(word)
@@ -64,37 +64,47 @@ def isActualWord(wordSet, onlineDictionary, lemma: str) -> bool:
     isCompound = isCompoundWord(lemma)
     return (not isNumber) and (not isCompound) and (isInWordnet or onlinedictionary.isInOnlineDictionary(lemma, onlineDictionary))
     
-def loadText(filename):
+def loadText(filename, textDatabase):
     file = io.open(filename, 'rU', encoding='utf-8')    
     rawText = file.read()
-    text = Text(rawText, filename)
+    text = Text(rawText, filename, textDatabase, True)
     return text
 
 class TextParser():
     
     def __init__(self):
+        self.lemmatizer = WordNetLemmatizer()
+        self.onlineDictionary = onlinedictionary.loadOnlineDictionary()
+        simpleLemmatizer.initialize("lemma.en.txt")
+        self.wordSet = set(words.words())
+
         self.NotATextRawTitle = "NotAFile"
         self.NotATextRawText = "NotAWord."
         self.NotALemmaRawLemma = "NotALemma"
 
-        self.NotAText = Text(self.NotATextRawText, self.NotATextRawTitle)
+        self.allTexts = {}
+        self.allSentences = {}
+        self.allWords = {}
+        self.allLemmas = {}
+
+        self.NotAText = Text(self.NotATextRawText, self.NotATextRawTitle, self, False)
         self.NotASentence = self.NotAText.sentences[0]
         self.NotAWord = self.NotASentence.words[0]
-        self.NotAWordLemma = Lemma(self.NotALemmaRawLemma, self.NotAWord)
+        self.NotAWordLemma = self.NotAWord.getFirstLemma()
+        
 
-
-        self.allTexts = {self.NotAText.name:self.NotAText}
-        self.allSentences = {self.NotASentence.rawSentence:self.NotASentence}
-        self.allWords = {self.NotAWord.rawWord:self.NotAWord}
-        self.allLemmas = {self.NotAWordLemma.rawLemma:self.NotAWordLemma}
+        #self.allTexts = {self.NotAText.name:self.NotAText}
+        #self.allSentences = {self.NotASentence.rawSentence:self.NotASentence}
+        #self.allWords = {self.NotAWord.rawWord:self.NotAWord}
+        #self.allLemmas = {self.NotAWordLemma.rawLemma:self.NotAWordLemma}
 
         self.everything = {"texts":self.allTexts, "sentences":self.allSentences, "words":self.allWords, "lemmas":self.allLemmas}
-
-        
 
     def initialize(self, shouldPrintToConsole):   
         if shouldPrintToConsole:
             print("Initializing textdabase")
+        self.initializeSentences()
+        self.initializeWords()
         self.initializeLemmas()
         if shouldPrintToConsole:
             print("Finished initilization")
@@ -113,14 +123,47 @@ class TextParser():
                 hasNewFile = True
                 if not shouldResetSavedText and self.doSavedFileExist(directory + "/" + fileName):
                     text = self.loadSavedText(directory + "/" + fileName)
+                    self.addLoadedTextToDatabase(text, True)
                 else:
-                    text = loadText(file)
+                    text = loadText(file, self)
                     self.saveTextWithPreprocessing(directory + "/" + fileName, text)
+
+                self.synchronizeDatabaseWithText(text)
+                #self.synchronizeDatabase() #Makes it n^2, it really should be done on the basis of the text above
+                self.resetNothingTerms()
+
+                totalSentencesBeforeRemoval = len(self.allSentences)
+                print("Before text sentence count: " + str(len(text.sentences)))
+                text.removeUnlearnableSentences(self, True)
+                totalSentencesAfterRemoval = len(self.allSentences)
+                print("After text sentence count: " + str(len(text.sentences) - (totalSentencesBeforeRemoval - totalSentencesAfterRemoval)))
+                print("Total sentence count: " + str(len(self.allSentences)))
                 #getBookCharacterset(rawText, shouldPrintToConsole)
-                self.addRawTextToDatabase(text, fileName)
-        self.addAllLemmasToDatabase(shouldPrintToConsole)
-        #self.recognizeNamesInSentences()
+                #self.addRawTextToDatabase(text, fileName)
+        
+        self.synchronizeDatabase() # Not sure this is neccessary.
+        #Ugly, needs to be rewritten
+        onlinedictionary.saveOnlineDictionary(self.onlineDictionary)
         self.initialize(shouldPrintToConsole)
+
+    def addLoadedTextToDatabase(self, text, shouldRemoveUnlearnableSentences):
+        self.allTexts[text.name] = text
+        for sentence in text.sentences:
+            self.allSentences[sentence.rawSentence] = sentence
+            for word in sentence.words:
+                self.allWords[word.rawWord] = word
+                for lemma in word.lemmas:
+                    self.allLemmas[lemma.rawLemma] = lemma
+        k = 1
+
+    
+    def removeSentenceIfUnlearnable(self, sentence, shouldRemoveUnlearnableSentences):
+        if (shouldRemoveUnlearnableSentences and 
+            self.isUnlearnableSentence(sentence) and 
+            sentence.rawSentence in self.allSentences): #There might be duplicate sentences in texts, with different memory locations, so this is neccessary (trust me)
+
+            #This needs to be here, as creating a sentence is not a pure function.
+            self.removeSentenceFromDatabase(sentence)
 
     def doSavedFileExist(self, fileName):
         return os.path.isfile(fileName + "_preseperated" + ".pkl") 
@@ -150,6 +193,69 @@ class TextParser():
                     sentence.words[i] = self.allWords[word.rawWord]
                 else:
                     self.allWords[word.rawWord] = word
+
+    def addWordToDatabase(self, word):
+        if not word.rawWord in self.allWords:
+            self.allWords[word.rawWord] = word
+            self.addWordLemmaToDatabase(word)
+            return word
+        else:
+            self.allWords[word.rawWord].frequency += 1
+            return self.allWords[word.rawWord]
+       
+    def addWordLemmaToDatabase(self, word):
+        #It already has an associated lemma, and as such can be skiped:
+        if len(word.lemmas) != 0: 
+            return
+
+        rawLemmas = self.getRawLemmas(self.lemmatizer, word) 
+        #self.printLemmaAddingProgress(allWordValues, i, printEveryNWord, rawLemmas, shouldPrintToConsole, word)
+        self.addRawLemmasToDatabaseIfActualLemmas(self.onlineDictionary, rawLemmas, word, self.wordSet)
+
+    def addSentenceToDatabase(self, sentence):
+        #Assumes that the same sentence will not be found multiple times.
+        #This assumption does not hold.
+        self.allSentences[sentence.rawSentence] = sentence        
+        for i in range(0,len(sentence.words)):
+            #Overrides the word of the sentence with a data-base wide occurence of the word,
+            #to eliminate inconsistent/duplicate references to words
+            sentence.words[i] = self.allWords[sentence.words[i].rawWord]
+            sentence.words[i].sentences[sentence.rawSentence] = sentence
+
+            #adds the sentence to word lemmas:
+            for lemma in sentence.words[i].lemmas:
+                lemma.sentences.add(sentence)
+
+    def removeSentenceFromDatabase(self, sentence):
+        self.allSentences.pop(sentence.rawSentence)
+        for word in set(sentence.words):
+            word.sentences.pop(sentence.rawSentence)
+            for lemma in word.lemmas:
+                if lemma.sentences != None and sentence in lemma.sentences:
+                    lemma.sentences.remove(sentence)
+
+
+    def isUnlearnableSentence(self, sentence):
+        if (not self.hasCorrectLength(sentence) or not self.hasLemmaWithLowSentenceCount(sentence)):
+            return True
+        else:
+           return False
+    
+    def hasLemmaWithLowSentenceCount(self, sentence):
+        maxSentenceCount = 100
+        sentenceLemmas = set([word.getFirstLemma() for word in sentence.words])
+        hasLowSentenceCount = False
+        for lemma in sentenceLemmas:
+            if (len(lemma.sentences) < maxSentenceCount):
+                hasLowSentenceCount = True
+                break
+        if (not hasLowSentenceCount):
+            k=1
+        return hasLowSentenceCount
+
+
+    def hasCorrectLength(self, sentence):
+        return (5 <= len(sentence.words) and len(sentence.words) <= 12)
 
     def recognizeNamesInSentences(self):
         for sentence in self.allSentences:
@@ -205,7 +311,7 @@ class TextParser():
             self.printLemmaAddingProgress(allWordValues, i, printEveryNWord, rawLemmas, shouldPrintToConsole, word)
             self.addRawLemmasToDatabaseIfActualLemmas(onlineDictionary, rawLemmas, word, wordSet)
 
-        self.saveProcessedData(onlineDictionary, "onlineDictionary")
+        onlineDictionary.saveOnlineDictionary()
         print("Found " + str(len(self.allWords)) + " words.")
         print("Found " + str(len(self.allLemmas)) + " lemmas.")
 
@@ -216,6 +322,16 @@ class TextParser():
             lemma.setTexts()
             lemma.setTimesLearned()
 
+    def initializeSentences(self):
+        sentences = self.allSentences.values()
+        for sentence in sentences:
+            sentence.setWords()
+
+    def initializeWords(self):
+        words = self.allWords.values()
+        for word in words:
+            word.setLemmas()
+
     def saveProcessedData(self, data, fileName):
         print("Saving " + fileName)
         currentRecursionLimit = sys.getrecursionlimit()
@@ -223,6 +339,60 @@ class TextParser():
         dill.dump(data, open(fileName + '.pkl', 'wb'))
         sys.setrecursionlimit(currentRecursionLimit)
         print("Finished saving " + fileName)
+
+    
+    def synchronizeDatabaseWithText(self, text):
+        sentences = set(text.sentences)
+        self.synchronizeSentencesWithDatabase(sentences)
+        words = set()
+        lemmas = set()
+        for sentence in sentences:
+            for word in sentence.words:
+                words.add(word)
+                lemmas.add(word.getFirstLemma())
+        self.synchronizeWordsAndLemmasWithDatabase(words, lemmas)
+                
+
+
+    def synchronizeDatabase(self):
+        self.synchronizeDatabaseWithGivenInformation(self.allSentences.values(), 
+                                                     self.allWords.values(), 
+                                                     self.allLemmas.values())
+    
+    def synchronizeSentencesWithDatabase(self, sentences):
+        for sentence in sentences:
+            for i in range(0, len(sentence.words)):
+                #Ensuring that the words are the database-wide words:
+                sentence.words[i] = self.allWords[sentence.words[i].rawWord]
+        
+                #Ensuring that the word's associated sentence points to this sentence.
+                sentence.words[i].sentences[sentence.rawSentence] = sentence
+
+    def synchronizeWordsAndLemmasWithDatabase(self, words, lemmas):
+
+        #Synchronize words with lemmas:
+        
+        for lemma in lemmas:
+            lemma.conjugatedWords.clear()
+        
+        for word in words:
+            #Replace lemmas with database-wide lemmas:
+            textDatabaseLemmas = set()
+            for lemma in word.lemmas:
+                textDatabaseLemmas.add(self.allLemmas[lemma.rawLemma])
+                lemma.conjugatedWords.add(word)
+            word.lemmas = textDatabaseLemmas
+            
+        #Synchronize lemmas with words:
+        
+        for lemma in lemmas:            
+            lemma.setSentences()
+
+    def synchronizeDatabaseWithGivenInformation(self, sentences, words, lemmas):
+        
+        self.synchronizeSentencesWithDatabase(sentences)
+        
+        self.synchronizeWordsAndLemmasWithDatabase(words, lemmas)
 
     def loadProcessedData(self, fileName):
         print("Loading " + fileName)
@@ -239,27 +409,29 @@ class TextParser():
         self.allLemmas = processedData["lemmas"]
         self.everything = {"texts": self.allTexts, "sentences": self.allSentences, "words": self.allWords, "lemmas": self.allLemmas}
 
-        #Some data was deleted during pickeling: this is recovered below
-        self.sentences = processedData["sentences"].values()
-        self.words = processedData["words"].values()
         #lemmas = processedData["lemmas"].values()
 
-        for sentence in self.sentences:
-            sentence.recoverWords(self.allWords)
-        for word in self.words:
-            word.recoverLemma(self.allLemmas)
-        #for lemma in lemmas:
-        #    lemma.recoverSentences()
+
+        #Synchronize texts and sentences:
+               
+        #Synchonize sentences and words:
+        self.synchronizeDatabase()
 
         self.resetNothingTerms()
+        self.initialize(True)
         
         print("Finished loading " + fileName)
         return processedData
     
     def resetNothingTerms(self):
         #global NotAText, NotASentence, NotAWord, NotAWordLemma
+
         self.NotAText = self.allTexts[self.NotATextRawTitle]
         self.NotASentence = self.NotAText.sentences[0]
+        self.NotASentence.words[0] = self.allWords["notaword"]
         self.NotAWord = self.NotASentence.words[0]
-        self.NotAWordLemma = self.NotAWord.lemmas[0]
-
+        #Necessary, as the loaded data has a different lemma from the NotAText.
+        #Not sure why it is the case.
+        notawordlemma = self.allLemmas["notaword"]
+        self.NotAWord.lemmas = {notawordlemma}
+        self.NotAWordLemma = self.allLemmas["notaword"]

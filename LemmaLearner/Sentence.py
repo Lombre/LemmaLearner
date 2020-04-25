@@ -22,14 +22,14 @@ def cleanWord(rawWord):
 
 class Sentence:
 
-    def __init__(self, originText, rawSentence):
+    def __init__(self, originText, rawSentence, textDatabase):
 
         self.text = originText
         self.rawSentence = rawSentence
         cleanSentence = self.cleanRawSentence(rawSentence)
         rawWords = nltk.word_tokenize(cleanSentence)
         rawWords = self.splitCompoundWords(rawWords)
-        self.words = self.exstractWords(rawWords)
+        self.words = self.exstractWords(rawWords, textDatabase)
         self.uncoveredWords = set() #All the words found in the sentence, that haven't been learned yet. Must be initialized.
         self.uncoveredLemmas = set() #Same as above, but with lemmas.
 
@@ -38,14 +38,18 @@ class Sentence:
         self.scoreDependentSentences = set()
         #self.wordsToTags = self.getWordsToTags(rawWords) #It maps a word to a set of POS tags, as a specific word might have more than one pos tag.
         
-    def exstractWords(self, rawWords):
+    def exstractWords(self, rawWords, textDatabase):
         words = []
         for rawWord in rawWords:
             #Ignores word if 1 => length, as it is probably just something like a comma, a single character or \":
             if not shouldIgnore(rawWord):
-                word = cleanWord(rawWord)
-                if 0 < len(word):
-                    words.append(Word(word.lower(), self))
+                wordString = cleanWord(rawWord)
+                if 0 < len(wordString):                    
+                    newWord = Word(wordString.lower())
+                    #newWord is overwritten, in the case the word already exists in the database,
+                    #to avoid muliple divergent copies.
+                    newWord = textDatabase.addWordToDatabase(newWord)
+                    words.append(newWord)
         return words
 
     def splitCompoundWords(self, rawWords):
@@ -96,6 +100,9 @@ class Sentence:
             #Ensuring that the word's associated sentence points to this sentence.
             self.words[i].sentences[self.rawSentence] = self
 
+    def setWords(self):
+        for word in self.words:
+            word.sentences[self.rawSentence] = self
     
     def getWordsToTags(self, rawWords):   
         wordsToTags = {}

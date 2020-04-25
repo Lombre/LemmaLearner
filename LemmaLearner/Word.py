@@ -2,11 +2,11 @@
 
 class Word:
 
-    def __init__(self, rawWord, originSentence):
+    def __init__(self, rawWord):
         self.rawWord = rawWord
-        self.sentences = {originSentence.rawSentence: originSentence}
+        self.sentences = {}
         self.frequency = 1
-        self.lemmas = None
+        self.lemmas = set()
         self.MAX_TIMES_LEARNED = 1
         self.timesLearned = 0
         self.hasBeenLearned = False
@@ -18,7 +18,14 @@ class Word:
 
     def incrementTimesLearned(self):
         self.timesLearned += 1
-        self.lemmas[0].timesLearned += 1
+        list(self.lemmas)[0].timesLearned += 1
+
+    def setLemmas(self):
+        for lemma in self.lemmas:
+            lemma.conjugatedWords.add(self)
+
+    def getFirstLemma(self):
+        return list(self.lemmas)[0]
 
     def recoverLemma(self, allLemmas):
         #Ensuring that this words lemma points to the one that is in the complete list of lemmas.

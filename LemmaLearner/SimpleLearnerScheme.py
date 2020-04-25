@@ -28,10 +28,12 @@ import simpleLemmatizer
 missingWordFrequency = -100000000
 minSentenceLength = 5
 maxSentenceLength = 12
-MAX_TIMES_LEARNED_WORD = 2
-WORD_SCORING_MULTIPLIER = 2
+MAX_TIMES_LEARNED_WORD = 5
+WORD_SCORING_MULTIPLIER = 3
 SHOULD_LEARN_BASED_ON_LEMMAS = True
-TEXTS_LEMMAS_NEEDS_TO_BE_IN = set() #{"Texts\\Wheel of Time, The - Robert Jordan & Brandon Sanderson.txt", "Texts\\Dresden Files Omnibus (1-15), The - Jim Butcher.txt"} #If the set is empty, then there are no requirements for the lemmas.
+TEXTS_LEMMAS_NEEDS_TO_BE_IN = {"Texts\\Test\\HarryPotter.txt"} #{"Texts\\Wheel of Time, The - Robert Jordan & Brandon Sanderson.txt", "Texts\\Dresden Files Omnibus (1-15), The - Jim Butcher.txt"} #If the set is empty, then there are no requirements for the lemmas.
+LemmasFromRequiredTexts = set()
+
 
 class SentenceAndLemmaScores:
     """
@@ -72,12 +74,12 @@ def getSentenceScoreByConjugationFrequency(learnedSentence: Sentence) -> LemmaSc
     unlockedLemma = learnedSentence.getOnlyUncoveredLemma()
     totalConjugationFrequency = 0
     for word in set(learnedSentence.words):  
-        #if word.timesLearned < MAX_TIMES_LEARNED_WORD and word.lemmas[0].rawLemma != "NotALemma":
+        #if word.timesLearned < MAX_TIMES_LEARNED_WORD and word.getFirstLemma().rawLemma != "NotALemma":
         if SHOULD_LEARN_BASED_ON_LEMMAS:
-            timesLearned = word.lemmas[0].getTimesLearned()
+            timesLearned = word.getFirstLemma().getTimesLearned()
         else:
             timesLearned = word.timesLearned
-        if timesLearned < MAX_TIMES_LEARNED_WORD and word.lemmas[0].rawLemma != "NotALemma":
+        if timesLearned < MAX_TIMES_LEARNED_WORD and word.getFirstLemma().rawLemma != "NotALemma":
             learningModefier = (1/WORD_SCORING_MULTIPLIER)**(timesLearned+1)
             learningConstant = 1
             totalConjugationFrequency += learningConstant * learningModefier
@@ -115,18 +117,22 @@ def markConjugationInSentenceAsLearned(sentence, sentenceScores, getSentenceScor
     for word in set(sentence.words):
         word.hasBeenLearned = True        
         word.incrementTimesLearned()
-        if SHOULD_LEARN_BASED_ON_LEMMAS and word.lemmas[0].getTimesLearned() < MAX_TIMES_LEARNED_WORD:
+        if SHOULD_LEARN_BASED_ON_LEMMAS and word.getFirstLemma().getTimesLearned() < MAX_TIMES_LEARNED_WORD:
             # There might be some sentences in the priority queue with a score that depends on the number of times the lemma has been learned.
             # Their score therefore needs to be updated:
-            for sentence in word.lemmas[0].getSentences():
-                if isSentenceDirectlyUnlockable(sentence):                    
-                    sentenceScores[sentence] = getSentenceScore(sentence).score 
+            for wordSentence in word.getFirstLemma().getSentences():
+                if isSentenceDirectlyUnlockable(wordSentence):                    
+                    sentenceScores[wordSentence] = getSentenceScore(wordSentence).score 
         elif not SHOULD_LEARN_BASED_ON_LEMMAS and word.timesLearned < MAX_TIMES_LEARNED_WORD:
             # There might be some sentences in the priority queue with a score that depends on this conjugation.
             # Their score therefore needs to be updated:
-            for sentence in word.sentences.values():
-                if isSentenceDirectlyUnlockable(sentence):                    
-                    sentenceScores[sentence] = getSentenceScore(sentence).score 
+            for wordSentence in word.sentences.values():
+                if isSentenceDirectlyUnlockable(wordSentence):                    
+                    sentenceScores[wordSentence] = getSentenceScore(wordSentence).score 
+    #The sentence is added back into the priority quoue by the code above.
+    if (sentence in sentenceScores):
+        sentenceScores.pop(sentence)
+    #sentenceScores.pop(sentence)
 
 def learnListOfSentences(sentenceList, i, lemmasByFrequency, notForcedToLearn, orderedLearningList, sentenceAndLemmaScores: SentenceAndLemmaScores, getSentenceScore, shouldPrintToConsole):
     for sentence in sentenceList:
@@ -185,34 +191,25 @@ def printAlternativeSentences(count, currentSentence, getSentenceScore, i, sente
             #print(str(sortedSentencesWithScore[k][1]))
             print("      | " + str(sortedSentencesWithScore[k][1]) + " | " + sortedSentencesWithScore[k][0].rawSentence)
 
-def removeSentenceFromDatabase(sentence, textDatabase):
-    textDatabase.allSentences.pop(sentence.rawSentence)
-    for word in set(sentence.words):
-        word.sentences.pop(sentence.rawSentence)
-        lemma = word.lemmas[0]
-        if sentence in lemma.sentences:
-            lemma.sentences.remove(sentence)
-
-
 def removeSentencesOfIncorrectLength(textDatabase):
     sentencesOfIncorrectLength = []
     for sentence in textDatabase.allSentences.values():
         if not hasCorrectLength(sentence):
             sentencesOfIncorrectLength.append(sentence)
     for sentence in sentencesOfIncorrectLength:
-        removeSentenceFromDatabase(sentence, textDatabase)          
+        textDatabase.removeSentenceFromDatabase(sentence)          
 
 def removeSentencesContainingBannedLemmas(textDatabase):
     #Remove all sentences that involves lemmas that does not fullfill the requirements.
     for lemma in textDatabase.allLemmas.values():
-        if not isLemmaInRequiredTexts(lemma):
+        if not isLemmaInRequiredTexts(lemma, textDatabase):
             sentencesToRemove = set()
             for sentence in lemma.sentences:
                 #There might be multiple lemmas in the sentence, and the sentence can't be removed twice.
                 if sentence.rawSentence in textDatabase.allSentences: 
                     sentencesToRemove.add(sentence)
             for sentence in sentencesToRemove:
-                removeSentenceFromDatabase(sentence, textDatabase)
+                textDatabase.removeSentenceFromDatabase(sentence)
             lemma.sentences.clear()
             for word in lemma.conjugatedWords:
                 word.sentences.clear()
@@ -220,7 +217,7 @@ def removeSentencesContainingBannedLemmas(textDatabase):
 def removeUnlearnableSentences(textDatabase, shouldPrintToConsole):    
     if shouldPrintToConsole:
         print("Initial number of sentences: " + str(len(textDatabase.allSentences)))
-    removeSentencesOfIncorrectLength(textDatabase)
+    #removeSentencesOfIncorrectLength(textDatabase)
     removeSentencesContainingBannedLemmas(textDatabase)
     #removeSentencesToGivenLimit(textDatabase)
     if shouldPrintToConsole:
@@ -251,7 +248,7 @@ def removeSentencesToGivenLimit(textDatabase):
         textDatabase.allSentences[sentence.rawSentence] = sentence
         for word in sentence.words:
             word.sentences[sentence.rawSentence] = sentence
-            word.lemmas[0].sentences.add(sentence)
+            word.getFirstLemma().sentences.add(sentence)
 
         
 
@@ -264,7 +261,7 @@ def printInformationAboutLearnedLemmas(orderedLearningList, unforcedWordLearning
     print("Learned directly " + str(len(unforcedWordLearningList)) + " of " + str(len(orderedLearningList)) + " lemmas.")
 
     lemmasLearned = set([lemmaSentencePair[0] for lemmaSentencePair in orderedLearningList])
-    wordsWithLearnedLemmas = [word for word in  textDatabase.allWords.values() if (word.lemmas[0] in lemmasLearned) and word.lemmas[0] != textDatabase.NotAWordLemma]
+    wordsWithLearnedLemmas = [word for word in  textDatabase.allWords.values() if (word.getFirstLemma() in lemmasLearned) and word.getFirstLemma() != textDatabase.NotAWordLemma]
     print("Number of conjugations of learned lemmas: " + str(len(wordsWithLearnedLemmas)))
     for i in range(0, 11):
         wordLearnedITimes = set()
@@ -402,7 +399,7 @@ def hasNoNewLemmas(sentencePair):
 def getPriorityQueueOfLemmasByFrequency(textDatabase):
     mostFrequentLemmas = heapdict()
     for lemma in textDatabase.allLemmas.values():
-        if isLemmaInRequiredTexts(lemma):
+        if isLemmaInRequiredTexts(lemma, textDatabase):
             mostFrequentLemmas[lemma] = -lemma.getFrequency()
     return mostFrequentLemmas
 
@@ -427,34 +424,38 @@ def isSentenceEmpty(sentence):
     return sentence.getNumberOfUncoveredLemmas() == 0
 
 def isSentenceDirectlyUnlockable(sentence):
-    return sentence.getNumberOfUncoveredLemmas() == 1 and hasCorrectLength(sentence) and onlyContainWordsFromGivenTexts(sentence) #The lenght should also be such that we actually want to learn the sentence
+    return sentence.getNumberOfUncoveredLemmas() == 1 and hasCorrectLength(sentence) # and onlyContainWordsFromGivenTexts(sentence) #The lenght should also be such that we actually want to learn the sentence
 
 def isSecondaryUnlockable(sentence):
     return sentence.getNumberOfUncoveredLemmas() == 2 and hasCorrectLength(sentence)
 
 def onlyContainWordsFromGivenTexts(sentence: Sentence):
     for word in sentence.words:
-        lemma = word.lemmas[0]
+        lemma = word.getFirstLemma()
         if not isLemmaInRequiredTexts(lemma):
             return False
     return True
 
-def isLemmaInRequiredTexts(lemma: Lemma):
-     lemmaTextNames = set([text.name for text in lemma.texts])
-     return TEXTS_LEMMAS_NEEDS_TO_BE_IN.issubset(lemmaTextNames) or lemma.rawLemma == "NotALemma"
+def isLemmaInRequiredTexts(lemma: Lemma, textDatabase): 
+
+    textsToBeIn = [textDatabase.allTexts[textname] for textname in TEXTS_LEMMAS_NEEDS_TO_BE_IN]   
+    
+    for text in textsToBeIn:
+        if (lemma not in text.lemmas):
+            return False
+    return True
 
 def start():
-    shouldResetSaveData = True
+    shouldResetSaveData = False
     shouldComputeLearningList = True
-    loadTestText = False
+    loadTestText = True
     shouldPrintToConsole = True
     maxNumberOfLemmasToLearn = 12000
-    textDatabase = TextParser()
     textDatabase = TextParser()
     
     if shouldResetSaveData:
         if loadTestText:
-            textDatabase.addAllTextsFromDirectoryToDatabase("Texts/Test", shouldPrintToConsole)
+            textDatabase.addAllTextsFromDirectoryToDatabase("Texts\\Test", shouldPrintToConsole)
             textDatabase.saveProcessedData(textDatabase.everything, "test")
         else:
             textDatabase.addAllTextsFromDirectoryToDatabase("Texts", shouldPrintToConsole)
@@ -466,24 +467,7 @@ def start():
             textDatabase.loadProcessedData("everything")     
         #printWordsInDatabase(textDatabase)
         learningList = learnLemmasByOrderOfScore(maxNumberOfLemmasToLearn, textDatabase, getSentenceScoreByConjugationFrequency, shouldPrintToConsole)
-        #print(len(learningList))
-    #testTest()
-
-    #Mulige forbedringer:
-        #Bedre lemma classefier. 
-        #Fjern navne og lignende. -> Nope, løsningen vil være for afhængigt af sproget der skal læres.
-        #Hastighedsforbedinger. 
-        #Scoring af sætninger, så der ses på forskellige bøjninger af et ord.
-        #Split ord ved bindestreg
-        #Mere aggresiv frasortering af sætninger.
     print("done")
-
-
-#def testStanford():    
-#    nlp = stanfordnlp.Pipeline() # This sets up a default neural pipeline in English
-#    #nlp = stanfordnlp.Pipeline(processors='tokenize,mwt,pos,lemma')
-#    doc = nlp("Barack Obama was born in Hawaii.")
-#    print(*[f'word: {word.text+" "}\tlemma: {word.lemma}' for sent in doc.sentences for word in sent.words], sep='\n')
 
 
 def testTest():
